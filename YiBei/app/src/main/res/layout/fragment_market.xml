@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_or_division_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="132px"
+        android:background="@drawable/gradual_change_bg"
+        android:gravity="bottom"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/padding_left_and_right"
+        android:text="行情"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_54" />
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="72px"
+        android:background="@color/white">
+
+    </net.lucode.hackware.magicindicator.MagicIndicator>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48px"
+        android:background="@color/bg_or_division_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_left_and_right">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="@string/come_yibei"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_26" />
+
+        <TextView
+            android:layout_width="176px"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/new_price"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_26" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/rise_and_fall"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_26" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+</com.zhy.autolayout.AutoLinearLayout>

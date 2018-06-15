@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "27.0.1"
+    defaultConfig {
+        applicationId "com.ts.lys.yibei"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        /**
+         * 解决了butterknife编译不通过的问题
+         */
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:design:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    //******************************************************************************//
+    /**
+     * 百分比布局
+     */
+    compile 'com.zhy:autolayout:1.4.5'
+    /**
+     * 注解框架
+     */
+    compile 'com.jakewharton:butterknife:7.0.1'
+    /**
+     * 网络请求框架
+     */
+    compile 'com.zhy:okhttputils:2.6.2'
+    compile 'com.google.code.gson:gson:2.6.2'
+    /**
+     * 通信框架
+     */
+    compile 'org.greenrobot:eventbus:3.0.0'
+    /**
+     * 图片加载框架
+     */
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    /**
+     * 权限请求
+     */
+    compile 'com.lovedise:permissiongen:0.1.1'
+    /**
+     * 修改状态栏背景色
+     */
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
+    /**
+     * 指示器
+     */
+    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+    /**
+     * 轮播图
+     */
+    compile 'com.bigkoo:ConvenientBanner:2.1.4'
+
+
+}

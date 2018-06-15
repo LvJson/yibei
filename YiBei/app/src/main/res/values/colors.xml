@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_color">#FF6200</color>
+    <color name="btn_left_color">#FF6300</color>
+    <color name="btn_right_color">#FF893F</color>
+    <color name="rise_color">#F5524F</color>
+    <color name="fall_color">#11C971</color>
+
+    <color name="white">#ffffff</color>
+    <color name="dark">#000000</color>
+    <color name="one_text_color">#333333</color>
+    <color name="two_text_color">#AAAAAA</color>
+    <color name="three_text_color">#777777</color>
+    <color name="four_text_color">#E6E6E6</color>
+    <color name="five_text_color">#666666</color>
+
+    <color name="bg_or_division_color">#F8FAFE</color>
+</resources>

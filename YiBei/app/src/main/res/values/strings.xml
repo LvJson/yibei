@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">YiBei</string>
+    <string name="version_name">1.0</string>
+
+    <string name="home_see_all">查看全部</string>
+    <string name="home_hot_recommend">热门推荐</string>
+    <string name="home_more">更多</string>
+
+    <string name="come_yibei">来源于易贝</string>
+    <string name="new_price">最新价格</string>
+    <string name="rise_and_fall">涨跌幅</string>
+
+
+</resources>
