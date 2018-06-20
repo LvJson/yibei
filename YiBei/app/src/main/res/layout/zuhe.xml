@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_head"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/txt_delete"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/simple_sub_icon"
+            app:layout_auto_basewidth="height" />
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:text="0.01"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_28" />
+
+        <ImageView
+            android:id="@+id/txt_add"
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/simple_add_icon"
+            app:layout_auto_basewidth="height" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_one"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20px"
+        android:text="已用保证金：$ 0.00"
+        android:textColor="@color/two_text_color"
+        android:textSize="@dimen/text_size_22" />
+</com.zhy.autolayout.AutoRelativeLayout>

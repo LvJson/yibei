@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_left_and_right"
+    android:paddingRight="@dimen/padding_left_and_right"
+    android:paddingTop="84px">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/home_hot_foreign" />
+
+        <TextView
+            android:id="@+id/tv_free_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="26px"
+            android:text="可用保证金$ 0.00"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_22" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="25px"
+        android:paddingTop="62px"
+        android:text="@string/number_of_traders"
+        android:textColor="@color/one_text_color"
+        android:textSize="@dimen/text_size_34" />
+
+
+    <com.ts.lys.yibei.customeview.AddDeleteView
+        android:id="@+id/add_delete_view"
+        android:layout_width="352px"
+        android:layout_height="wrap_content"
+        app:left_pic="@mipmap/simple_sub_icon"
+        app:midd_text="0.01"
+        app:right_pic="@mipmap/simple_add_icon">
+
+
+    </com.ts.lys.yibei.customeview.AddDeleteView>
+
+    <com.ts.lys.yibei.customeview.ChooseTimesLayout
+        android:id="@+id/choose_times_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.ts.lys.yibei.customeview.ChooseTimesLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

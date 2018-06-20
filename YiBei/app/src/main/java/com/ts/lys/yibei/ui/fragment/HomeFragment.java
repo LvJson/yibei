@@ -1,5 +1,6 @@
 package com.ts.lys.yibei.ui.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.ts.lys.yibei.customeview.RecycleViewDivider;
 import com.ts.lys.yibei.customeview.ScrollRecyclerView;
 import com.ts.lys.yibei.customeview.SwitcherView;
 import com.ts.lys.yibei.customeview.Xcircleindicator;
+import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.Logger;
 import com.ts.lys.yibei.utils.NetworkImageHolderView;
@@ -201,6 +203,7 @@ public class HomeFragment extends BaseFragment {
             case R.id.ll_notice:
                 break;
             case R.id.ll_more:
+                startActivity(new Intent(getActivity(), QuotationsActivity.class));
                 break;
         }
     }

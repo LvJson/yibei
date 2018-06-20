@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.customeview.CustomProgress;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
@@ -113,6 +115,27 @@ public class BaseActivity extends Activity {
         toast.show();
     }
 
+    /**
+     * 返回按钮
+     */
+    protected void setBackButton() {
+        findViewById(R.id.ll_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 设置标题
+     *
+     * @param title
+     */
+    protected void setTitle(String title) {
+        TextView tvTitle = findViewById(R.id.tv_title);
+        tvTitle.setText(title);
+    }
 
     protected void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);

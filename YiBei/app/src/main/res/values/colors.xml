@@ -13,6 +13,7 @@
     <color name="three_text_color">#777777</color>
     <color name="four_text_color">#E6E6E6</color>
     <color name="five_text_color">#666666</color>
+    <color name="six_text_color">#A8A8A8</color>
 
     <color name="bg_or_division_color">#F8FAFE</color>
 </resources>

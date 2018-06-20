@@ -49,8 +49,30 @@ public class MarketFragment extends BaseFragment {
         fragmentList.add(new SelfSelectFragment());
         fragmentList.add(new SelfSelectFragment());
 
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragmentList));
         BaseUtils.setNavigator(getActivity(), mDataList, viewPager, magicIndicator, false);
+
+        initListener();
+
+    }
+
+    private void initListener() {
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //滚动之后会有监听，position 是位置
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingBottom="30dp"
+    android:paddingLeft="@dimen/padding_left_and_right"
+    android:paddingRight="@dimen/padding_left_and_right"
+    android:paddingTop="30dp">
+
+    <TextView
+        android:id="@+id/tv_one_times"
+        android:layout_width="0dp"
+        android:layout_height="54px"
+        android:layout_weight="1"
+        android:background="@drawable/btn_gradual_change_bg"
+        android:gravity="center"
+        android:text="@string/one_times"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_24" />
+
+    <TextView
+        android:id="@+id/tv_two_times"
+        android:layout_width="0dp"
+        android:layout_height="54px"
+        android:layout_marginLeft="20px"
+        android:layout_weight="1"
+        android:background="@drawable/simple_times_bg"
+        android:gravity="center"
+        android:text="@string/two_times"
+        android:textColor="@color/one_text_color"
+        android:textSize="@dimen/text_size_24" />
+
+    <TextView
+        android:id="@+id/tv_three_times"
+        android:layout_width="0dp"
+        android:layout_height="54px"
+        android:layout_marginLeft="20px"
+        android:layout_weight="1"
+        android:background="@drawable/simple_times_bg"
+        android:gravity="center"
+        android:text="@string/three_times"
+        android:textColor="@color/one_text_color"
+        android:textSize="@dimen/text_size_24" />
+
+    <TextView
+        android:id="@+id/tv_four_times"
+        android:layout_width="0dp"
+        android:layout_height="54px"
+        android:layout_marginLeft="20px"
+        android:layout_weight="1"
+        android:background="@drawable/simple_times_bg"
+        android:gravity="center"
+        android:text="@string/four_times"
+        android:textColor="@color/one_text_color"
+        android:textSize="@dimen/text_size_24" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

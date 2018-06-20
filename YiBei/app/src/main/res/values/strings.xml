@@ -10,5 +10,16 @@
     <string name="new_price">最新价格</string>
     <string name="rise_and_fall">涨跌幅</string>
 
+    <string name="simple">简单</string>
+    <string name="senior">高级</string>
+    <string name="number_of_traders">交易手数</string>
+    <string name="purchase">买入</string>
+    <string name="sell_out">卖出</string>
+
+    <string name="one_times">0.01手</string>
+    <string name="two_times">0.1手</string>
+    <string name="three_times">0.5手</string>
+    <string name="four_times">1手</string>
+
 
 </resources>

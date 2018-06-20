@@ -44,14 +44,13 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(getLayoutID(), null);
+            ButterKnife.bind(this, mRootView);
             initBaseView();
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
         if (parent != null) {
             parent.removeView(mRootView);
         }
-        ButterKnife.bind(this, mRootView);
-
         initBase();
         return mRootView;
     }

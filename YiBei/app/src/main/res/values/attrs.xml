@@ -18,4 +18,13 @@
         <attr name="switcherRollingTime" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="AddDeleteViewStyle">
+        <attr name="left_text" format="string" />
+        <attr name="right_text" format="string" />
+        <attr name="right_text_color" format="integer"></attr>
+        <attr name="midd_text" format="string"></attr>
+        <attr name="left_pic" format="integer"></attr>
+        <attr name="right_pic" format="integer"></attr>
+    </declare-styleable>
+
 </resources>

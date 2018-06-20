@@ -82,6 +82,14 @@ public class BaseUtils {
     }
 
     /**
+     * px转换成dp
+     */
+    public static int px2dp(Context context, float pxValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
      * 得到状态栏的高度
      *
      * @param context
@@ -550,7 +558,6 @@ public class BaseUtils {
                     return null;
             }
         });
-
         magicIndicator.setNavigator(commonNavigator);
         LinearLayout titleContainer = commonNavigator.getTitleContainer(); // must after setNavigator
         titleContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);

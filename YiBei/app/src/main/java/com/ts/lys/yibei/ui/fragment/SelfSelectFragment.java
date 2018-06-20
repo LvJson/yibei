@@ -21,6 +21,8 @@ public class SelfSelectFragment extends BaseFragment {
 
     SelfSelectAdapter selfSelectAdapter;
 
+
+
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_self_select;
