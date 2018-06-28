@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -35,24 +37,36 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
     private ImageView txtAdd;
     private EditText et_number;
     private RelativeLayout rlHead;
+    private TextView tvExplain;
+
     private OnAddDelClickLstener lister;
-    private static final int DECIMAL_DIGITS = 2;//小数的位数
-    private static DecimalFormat df0 = new DecimalFormat("0.00");
+    private int decimalDigits = 2;//小数的位数
+    private DecimalFormat df0;
     private Context mContent;
     private ScrollView scrollView;
     private LinearLayout llTest;
     private int advHeight = 0;
 
     private boolean onClick = false;
+    private double min = 0;
+    private double max = 100000000;
 
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
+                    if (getnumber() > max || max - getnumber() < 0.0000001 || max == getnumber()) {
+                        onClick = false;
+                        break;
+                    }
                     lister.onAddClick();
                     break;
                 case 1:
+                    if (getnumber() < min || getnumber() - min < 0.0000001 || min == getnumber()) {
+                        onClick = false;
+                        break;
+                    }
                     lister.onDelClick();
                     break;
             }
@@ -65,6 +79,8 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
         void onAddClick();
 
         void onDelClick();
+
+        void onEditText(double lots);
     }
 
     public void setOnAddDelClickLstener(OnAddDelClickLstener lister) {
@@ -95,6 +111,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
         txtAdd = findViewById(R.id.txt_add);
         et_number = findViewById(R.id.et_number);
         rlHead = findViewById(R.id.rl_head);
+        tvExplain = findViewById(R.id.tv_explain);
 
         TypedArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.AddDeleteViewStyle);
 //        String leftText = typeArray.getString(R.styleable.AddDeleteViewStyle_left_text);
@@ -124,6 +141,22 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 countrolPointCount(s, et_number);
+
+
+                String ss = s.toString().trim();
+                if (lister == null) return;
+                if (!TextUtils.isEmpty(ss)) {
+                    try {
+                        if (ss.contains(".") && s.length() - 1 - s.toString().indexOf(".") > decimalDigits)
+                            return;
+                        double sd = Double.valueOf(ss);
+                        lister.onEditText(sd);
+
+                    } catch (Exception e) {
+                        lister.onEditText(0);
+                    }
+                } else
+                    lister.onEditText(0);
             }
 
             @Override
@@ -212,6 +245,27 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
         return true;
     }
 
+    /**
+     * 设置取值范围
+     *
+     * @param min
+     * @param max
+     */
+    public void setLimit(double min, double max, int decimalDigits) {
+        if (min > 0)
+            this.min = min;
+        if (max > 0)
+            this.max = max;
+        if (decimalDigits > 0) {
+            this.decimalDigits = decimalDigits;
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("0.");
+            for (int i = 0; i < decimalDigits; i++) {
+                buffer.append("0");
+            }
+            df0 = new DecimalFormat(buffer.toString());
+        }
+    }
 
     /**
      * 控制scrollview滚动到自己想要的位置
@@ -242,10 +296,15 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
      * @param number
      */
     public void setnumber(double number) {
-        if (number > 0) {
+        if (number > 0 && df0 != null) {
             et_number.setText(df0.format(number));
         }
 
+    }
+
+    public void setTvExplain(String explain) {
+        if (tvExplain != null)
+            tvExplain.setText(explain);
     }
 
     /**
@@ -279,9 +338,9 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
          * 输入内容包含小数点且位数大于限制位数的
          */
         if (s.toString().contains(".")) {
-            if (s.length() - 1 - s.toString().indexOf(".") > DECIMAL_DIGITS) {
+            if (s.length() - 1 - s.toString().indexOf(".") > decimalDigits) {
                 s = s.toString().subSequence(0,
-                        s.toString().indexOf(".") + DECIMAL_DIGITS + 1);
+                        s.toString().indexOf(".") + decimalDigits + 1);
                 editText.setText(s);
                 editText.setSelection(s.length());
             }
@@ -320,7 +379,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
             else {
                 et_number.setCursorVisible(false);
                 //检查文本框 补全小数点位数
-                if (getnumber() > 0)
+                if (getnumber() > 0 && df0 != null)
                     et_number.setText(df0.format(getnumber()));
                 else
                     et_number.setText("0.01");

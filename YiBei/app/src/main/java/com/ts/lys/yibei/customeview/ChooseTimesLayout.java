@@ -35,7 +35,7 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
     /**
      * 最低购买手数
      */
-    private float mintimes = 0.01f;
+    private double mintimes = 0.01;
 
 
     public ChooseTimesLayout(Context context) {
@@ -81,7 +81,7 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
     /**
      * 最低购买手数
      */
-    public void setBaseTimes(float minTimes) {
+    public void setBaseTimes(double minTimes) {
         this.mintimes = minTimes;
     }
 

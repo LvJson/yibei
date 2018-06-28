@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_left_and_right"
+    android:paddingRight="@dimen/padding_left_and_right">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="196px"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trade_type"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <include layout="@layout/trade_type_choose_btn_layout" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/incloud_division_1dp_layout" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="196px"
+        android:paddingTop="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transaction_price"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <com.ts.lys.yibei.customeview.AddDeleteView
+            android:id="@+id/deal_price_adv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            app:left_pic="@mipmap/complex_sub_icon"
+            app:midd_text="0.01"
+            app:right_pic="@mipmap/complex_add_icon">
+
+
+        </com.ts.lys.yibei.customeview.AddDeleteView>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/incloud_division_1dp_layout" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="196px"
+        android:paddingTop="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trade_times"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <com.ts.lys.yibei.customeview.AddDeleteView
+            android:id="@+id/trade_times_adv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            app:left_pic="@mipmap/complex_sub_icon"
+            app:midd_text="0.01"
+            app:right_pic="@mipmap/complex_add_icon">
+
+
+        </com.ts.lys.yibei.customeview.AddDeleteView>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/incloud_division_1dp_layout" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="196px"
+        android:paddingTop="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop_loss_price"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <com.ts.lys.yibei.customeview.AddDeleteView
+            android:id="@+id/stop_loss_adv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            app:left_pic="@mipmap/complex_sub_icon"
+            app:midd_text="0.01"
+            app:right_pic="@mipmap/complex_add_icon">
+
+
+        </com.ts.lys.yibei.customeview.AddDeleteView>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/incloud_division_1dp_layout" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="196px"
+        android:paddingTop="50px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop_profit_price"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <com.ts.lys.yibei.customeview.AddDeleteView
+            android:id="@+id/stop_profit_adv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            app:left_pic="@mipmap/complex_sub_icon"
+            app:midd_text="0.01"
+            app:right_pic="@mipmap/complex_add_icon">
+
+
+        </com.ts.lys.yibei.customeview.AddDeleteView>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

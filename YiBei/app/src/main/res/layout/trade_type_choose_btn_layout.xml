@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:paddingRight="10dp">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_buy_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rise_bg"
+        android:gravity="center"
+        android:minHeight="80px"
+        android:minWidth="200px"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/tv_buy_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/purchase"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_30" />
+
+        <TextView
+            android:id="@+id/tv_buy_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.000000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_30" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_sell_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50px"
+        android:background="@drawable/simple_times_bg"
+        android:gravity="center"
+        android:minHeight="80px"
+        android:minWidth="200px"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/tv_sell_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sell_out"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <TextView
+            android:id="@+id/tv_sell_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.000000"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_30" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.customeview.CustomProgress;
+import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.SpUtils;
@@ -21,18 +22,25 @@ import butterknife.ButterKnife;
  * Created by jcdev1 on 2017/12/22.
  */
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends Activity implements BaseMvpView {
 
     private CustomProgress customProgress;
     public String className = "";
-    public String accToken = "";
-    public String telePhone = "";
     private Toast toast;
+    public String TAG = "";
+    public String accessToken = "";
+    public String userId = "";
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void initBaseData() {
+        TAG = getClass().getSimpleName();
+        accessToken = SpUtils.getString(this, "accessToken", "");
+        userId = SpUtils.getString(this, "userId");
     }
 
     @Override
@@ -76,8 +84,6 @@ public class BaseActivity extends Activity {
     protected void onViewCreated() {
         className = getClass().getName();
         CloseAllActivity.getScreenManager().pushActivity(this);
-        accToken = SpUtils.getString(this, "accessToken", "");
-        telePhone = SpUtils.getString(this, "phoneNum", "");
         /**
          * SDK版本>=23，可设置状态栏字体颜色
          */
@@ -96,7 +102,8 @@ public class BaseActivity extends Activity {
         }
     }
 
-    protected void showToast(String content) {
+    @Override
+    public void showToast(String content) {
 
         if (toast != null) {
             toast.cancel();
@@ -164,14 +171,16 @@ public class BaseActivity extends Activity {
     /**
      * 展示自定义dialog
      */
-    protected void showCustomProgress(boolean cancelable) {
+    @Override
+    public void showCustomProgress(boolean cancelable) {
         if (customProgress == null)
             customProgress = CustomProgress.show(this, cancelable);
         else
             customProgress.show();
     }
 
-    protected void disCustomProgress() {
+    @Override
+    public void disCustomProgress() {
         if (customProgress != null)
             customProgress.dismiss();
     }

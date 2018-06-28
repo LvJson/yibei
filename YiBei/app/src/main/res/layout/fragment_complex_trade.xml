@@ -1,13 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="50px">
 
-    <TextView
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:background="@color/main_color"
-        android:gravity="center"
-        android:text="复杂交易布局"
-        android:textColor="@color/white" />
+        android:layout_height="90px"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_left_and_right"
+        android:paddingRight="@dimen/padding_left_and_right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trade_style"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8" />
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            android:layout_width="350px"
+            android:layout_height="wrap_content">
+
+        </net.lucode.hackware.magicindicator.MagicIndicator>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/padding_left_and_right"
+        android:layout_marginRight="@dimen/padding_left_and_right"
+        android:background="@color/bg_or_division_color" />
+
+    <com.ts.lys.yibei.customeview.ScrollByViewpager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.ts.lys.yibei.customeview.ScrollByViewpager>
+
+
 </com.zhy.autolayout.AutoLinearLayout>

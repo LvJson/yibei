@@ -21,5 +21,29 @@
     <string name="three_times">0.5手</string>
     <string name="four_times">1手</string>
 
+    <string name="trade_style">交易方式</string>
+    <string name="trade_type">交易类型</string>
+    <string name="market_trade">市价交易</string>
+    <string name="pending_trade">挂单交易</string>
+    <string name="transaction_price">成交价格</string>
+    <string name="trade_times">交易手数</string>
+    <string name="stop_loss_price">止损价格</string>
+    <string name="stop_profit_price">止盈价格</string>
+    <string name="cl_buy">确认买入</string>
+    <string name="cl_sell">确认卖出</string>
+
+    <string name="time_sharing">分时</string>
+    <string name="one_minute">1分</string>
+    <string name="five_minute">5分</string>
+    <string name="fifteen_minute">15分</string>
+    <string name="thirty_minute">30分</string>
+    <string name="one_hour">1时</string>
+    <string name="four_hour">4时</string>
+    <string name="day_line">日线</string>
+    <string name="weeek_line">周线</string>
+    <string name="month_line">月线</string>
+
+    <string name="cancle_collection">取消收藏</string>
+
 
 </resources>

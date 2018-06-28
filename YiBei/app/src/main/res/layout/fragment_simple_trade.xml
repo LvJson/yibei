@@ -7,11 +7,12 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/padding_left_and_right"
     android:paddingRight="@dimen/padding_left_and_right"
-    android:paddingTop="84px">
+    android:paddingTop="50px">
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="25px"
-        android:paddingTop="62px"
+        android:paddingTop="42px"
         android:text="@string/number_of_traders"
         android:textColor="@color/one_text_color"
         android:textSize="@dimen/text_size_34" />

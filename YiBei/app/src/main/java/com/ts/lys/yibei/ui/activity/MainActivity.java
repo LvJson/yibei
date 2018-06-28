@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.EventBean;
+import com.ts.lys.yibei.constant.EventContents;
+import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.FragmentTabHost;
 import com.ts.lys.yibei.ui.fragment.HomeFragment;
 import com.ts.lys.yibei.ui.fragment.InfomationFragment;
@@ -20,7 +23,14 @@ import com.ts.lys.yibei.ui.fragment.OrderFragment;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.Logger;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.net.URISyntaxException;
+
 import butterknife.Bind;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabChangeListener {
 
@@ -39,6 +49,16 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
 
 
     private int clickNum = 0;
+
+    private Socket socket;
+
+    {
+        try {
+            //1.初始化socket.io，设置链接
+            socket = IO.socket(UrlContents.SOCKETIO_URL);
+        } catch (URISyntaxException e) {
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +89,35 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         mTabHost.getTabWidget().setDividerDrawable(android.R.color.transparent);
         StatusBarUtil.setTranslucentForImageViewInFragment(this, 0, null);
 
+        socket.connect();
+        socket.on("quote", socketIoListener);
+
+    }
+
+    //监听回调
+    private Emitter.Listener socketIoListener = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+//            Logger.e("quote-main", args[0].toString());
+            quota(args[0].toString());
+        }
+    };
+
+    private void quota(String json) {
+        EventBus.getDefault().post(new EventBean(EventContents.REAL_TIME_DATA, json));
+    }
+
+    public void changeAcc() {
+        socket.emit("quote", "1");
+//        if (spImp.getUserId() != -1) {
+//            if (spImp.getAccType() == 0) {
+//                socket.emit("quote", "1");
+//            } else {
+//                socket.emit("quote", spImp.getAccType() + "");
+//            }
+//        } else {
+//            socket.emit("quote", "1");
+//        }
     }
 
     @Override
@@ -116,6 +165,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     protected void onResume() {
         super.onResume();
         clickNum = 0;
+        changeAcc();
     }
 
     @Override
@@ -130,5 +180,12 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         }
         return false;
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socket.disconnect();
+        socket.off("quote", socketIoListener);
     }
 }

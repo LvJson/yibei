@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.customeview.CustomProgress;
+import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.SpUtils;
 
 import butterknife.ButterKnife;
 
@@ -19,17 +21,26 @@ import butterknife.ButterKnife;
  * Created by jcdev1 on 2017/12/22.
  */
 
-public class BaseFragmentActivity extends FragmentActivity {
+public class BaseFragmentActivity extends FragmentActivity implements BaseMvpView {
 
     public String className = "";
     public CustomProgress customProgress;
     private Toast toast;
     public String TAG = "";
 
+    public String accessToken = "";
+    public String userId = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBaseData();
+    }
+
+    private void initBaseData() {
         TAG = getClass().getSimpleName();
+        accessToken = SpUtils.getString(this, "accessToken", "");
+        userId = SpUtils.getString(this, "userId");
     }
 
     @Override
@@ -91,7 +102,8 @@ public class BaseFragmentActivity extends FragmentActivity {
         });
     }
 
-    protected void showToast(String content) {
+    @Override
+    public void showToast(String content) {
 
         if (toast != null) {
             toast.cancel();
@@ -133,7 +145,19 @@ public class BaseFragmentActivity extends FragmentActivity {
             customProgress.show();
     }
 
-    protected void disCustomProgress() {
+    /**
+     * 展示自定义dialog
+     */
+    @Override
+    public void showCustomProgress(boolean cancelable) {
+        if (customProgress == null)
+            customProgress = CustomProgress.show(this, cancelable);
+        else
+            customProgress.show();
+    }
+
+    @Override
+    public void disCustomProgress() {
         if (customProgress != null)
             customProgress.dismiss();
     }

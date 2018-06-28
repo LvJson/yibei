@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ts.lys.yibei.customeview.CustomProgress;
+import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.Logger;
 import com.ts.lys.yibei.utils.SpUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -19,14 +20,16 @@ import butterknife.ButterKnife;
  * Created by jcdev1 on 2017/12/22.
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements BaseMvpView {
 
     protected Fragment mFragment;
     protected View mRootView;
     private CustomProgress customProgress;
     public String className = "";
-    public String accToken = "";
-    public String telePhone = "";
+
+    public String userId = "";
+    public String accessToken = "";
+
     private Toast toast;
     public String TAG = "";
 
@@ -69,9 +72,8 @@ public abstract class BaseFragment extends Fragment {
 
     public void initBase() {
         className = getClass().getName();
-        accToken = SpUtils.getString(getActivity(), "accessToken", "");
-        telePhone = SpUtils.getString(getActivity(), "phoneNum", "");
-
+        accessToken = SpUtils.getString(getActivity(), "accessToken", "");
+        userId = SpUtils.getString(getActivity(), "userId");
     }
 
 
@@ -86,12 +88,25 @@ public abstract class BaseFragment extends Fragment {
                 customProgress.show();
     }
 
-    protected void disCustomProgress() {
+    /**
+     * 展示自定义dialog
+     */
+    @Override
+    public void showCustomProgress(boolean cancelable) {
+        if (customProgress == null)
+            customProgress = CustomProgress.show(getActivity(), cancelable);
+        else
+            customProgress.show();
+    }
+
+    @Override
+    public void disCustomProgress() {
         if (customProgress != null)
             customProgress.dismiss();
     }
 
-    protected void showToast(String content) {
+    @Override
+    public void showToast(String content) {
 
         if (toast != null) {
             toast.cancel();

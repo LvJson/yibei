@@ -37,6 +37,16 @@
                     app:layout_auto_basewidth="height" />
             </com.zhy.autolayout.AutoLinearLayout>
 
+            <ImageView
+                android:id="@+id/iv_collection"
+                android:layout_width="39px"
+                android:layout_height="37px"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="15dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/kline_not_collection" />
+
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator"
                 android:layout_width="wrap_content"
@@ -44,6 +54,7 @@
                 android:layout_centerInParent="true">
 
             </net.lucode.hackware.magicindicator.MagicIndicator>
+
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -57,16 +68,18 @@
             android:paddingLeft="15dp">
 
             <TextView
+                android:id="@+id/tv_en_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ABCDEGH"
+                android:text="******"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_32" />
 
             <TextView
+                android:id="@+id/tv_ch_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="name"
+                android:text="****"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_24" />
 
@@ -84,6 +97,7 @@
             android:paddingRight="15dp">
 
             <TextView
+                android:id="@+id/tv_mark_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_two"
@@ -100,6 +114,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_price_var"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.000000"
@@ -107,6 +122,7 @@
                     android:textSize="@dimen/text_size_24" />
 
                 <TextView
+                    android:id="@+id/tv_rate_of_change"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.00%"
@@ -153,6 +169,7 @@
     </ScrollView>
 
     <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_simple"
         android:layout_width="match_parent"
         android:layout_height="132px"
         android:layout_alignParentBottom="true"
@@ -165,6 +182,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_buy_in"
                 android:layout_width="327px"
                 android:layout_height="92px"
                 android:layout_marginRight="36px"
@@ -176,6 +194,7 @@
 
 
             <TextView
+                android:id="@+id/tv_sell_out"
                 android:layout_width="327px"
                 android:layout_height="92px"
                 android:background="@drawable/fall_bg"
@@ -186,6 +205,7 @@
         </com.zhy.autolayout.AutoLinearLayout>
 
         <TextView
+            android:id="@+id/tv_spread"
             android:layout_width="60px"
             android:layout_height="40px"
             android:layout_centerInParent="true"
@@ -196,6 +216,27 @@
             android:textSize="@dimen/text_size_24" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_complex"
+        android:layout_width="match_parent"
+        android:layout_height="132px"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_buy_or_sell"
+            android:layout_width="match_parent"
+            android:layout_height="92px"
+            android:layout_marginLeft="@dimen/padding_left_and_right"
+            android:layout_marginRight="@dimen/padding_left_and_right"
+            android:background="@drawable/btn_gradual_change_bg"
+            android:gravity="center"
+            android:text="@string/cl_buy"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_32" />
+    </com.zhy.autolayout.AutoLinearLayout>
 
 
 </com.ts.lys.yibei.customeview.KeyboardLayout>

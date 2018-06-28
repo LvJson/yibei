@@ -47,16 +47,16 @@ public class CustomHttpUtils {
         else
             map.putAll(mapPublic);
 
-        String accToken = "";
-        if (map.containsKey("access_token")) {
-            accToken = map.get("access_token");
-            map.remove("access_token");
-        }
-        Logger.e("accToken", accToken);
+//        String accToken = "";
+//        if (map.containsKey("access_token")) {
+//            accToken = map.get("access_token");
+//            map.remove("access_token");
+//        }
+//        Logger.e("accToken", accToken);
 
         OkHttpUtils
                 .post()
-                .url(getURL(url, accToken))
+                .url(url)
                 .tag(tag)
                 .params(map)
                 .build()
@@ -71,20 +71,18 @@ public class CustomHttpUtils {
 
                     @Override
                     public void onResponse(String response, int id) {
-
+                        Logger.e("DATAS", response);
                         if (response != null) {
                             JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
                             String code = "";
-                            if (!jsonObject.get("code").isJsonNull())
-                                code = jsonObject.get("code").getAsString();
+                            if (!jsonObject.get("err_code").isJsonNull())
+                                code = jsonObject.get("err_code").getAsString();
                             if (code.equals("10002")) {
 //                                EventBus.getDefault().post(new EventBean(EventContents.TOKEN_OVERDUE, ""));
                                 return;
                             }
                         }
 
-
-                        Logger.e("DATAS", response);
                         serviceStatus.success(response, id);
                     }
                 });
