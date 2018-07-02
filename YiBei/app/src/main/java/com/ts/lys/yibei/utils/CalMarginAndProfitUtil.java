@@ -90,4 +90,112 @@ public class CalMarginAndProfitUtil {
 
         return profit;
     }
+
+    /**
+     * 计算止盈、止损价格区间
+     *
+     * @param price
+     * @param stopLe
+     * @param digits
+     * @param cmd
+     * @param stopLossOrProfit
+     * @return
+     */
+    public static double stopLossOrprofitLimit(double[] price, double stopLe, int digits, int cmd, int stopLossOrProfit) {
+        double stoplever = Arith.div(stopLe, Math.pow(10, digits), digits);
+        switch (cmd) {
+            case 0://买涨
+                if (stopLossOrProfit == 0) {//止损
+                    double sub = Arith.sub(price[1], stoplever);
+                    return sub;
+                } else {//止盈
+                    double add = Arith.add(price[1], stoplever);
+                    return add;
+                }
+
+            case 1://买跌
+                if (stopLossOrProfit == 0) {//止损
+
+                    double add = Arith.add(price[0], stoplever);
+                    return add;
+
+                } else {//止盈
+                    double sub = Arith.sub(price[0], stoplever);
+                    return sub;
+                }
+
+        }
+        return 0;
+
+    }
+
+
+    public static double pendingStopLossOrprofitLimit(double pendingPrice, double stopLe, int digits, int cmd, int stopLossOrProfit) {
+        double stoplever = Arith.div(stopLe, Math.pow(10, digits), digits);
+        switch (cmd) {
+            case 0://买涨
+                if (stopLossOrProfit == 0) {//止损
+                    double sub = Arith.sub(pendingPrice, stoplever);
+                    return sub;
+                } else {//止盈
+                    double add = Arith.add(pendingPrice, stoplever);
+                    return add;
+                }
+
+            case 1://买跌
+                if (stopLossOrProfit == 0) {//止损
+
+                    double add = Arith.add(pendingPrice, stoplever);
+                    return add;
+
+                } else {//止盈
+                    double sub = Arith.sub(pendingPrice, stoplever);
+                    return sub;
+                }
+
+        }
+        return 0;
+
+    }
+
+
+    /**
+     * 挂单范围计算
+     *
+     * @param price
+     * @param stopLe
+     * @param digits
+     * @param cmd
+     * @param direction 取值方向  0: 正向 1：反向
+     * @return
+     */
+    public static double getPendingLimit(double[] price, double stopLe, int digits, int cmd, int direction) {
+        double stoplever = Arith.div(stopLe, Math.pow(10, digits), digits);
+        switch (cmd) {
+            case 0://买涨
+                if (direction == 1) {//反向
+                    double sub = Arith.sub(price[0], stoplever);
+                    return sub;
+                } else {//正向
+                    double add = Arith.add(price[0], stoplever);
+                    return add;
+                }
+
+            case 1://买跌
+                if (direction == 1) {//正向
+
+                    double add = Arith.add(price[1], stoplever);
+                    return add;
+
+                } else {//反向
+                    double sub = Arith.sub(price[1], stoplever);
+                    return sub;
+                }
+
+        }
+        return 0;
+
+    }
+
+
 }

@@ -123,6 +123,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     private QuotationPresenter quotationPresenter;
     private RealTimeDataPresenter realTimeDataPresenter;
 
+
     /**
      * 昨日收盘价
      */
@@ -156,7 +157,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     public int pendingDealStatus = 0;
 
     /**
-     * 第一次进入时请求一次所需产品的实时价格做缓存
+     * 第一次进入时请求一次所需产品的实时价格做缓存：因为部分品种数据波动小导致没有价格推送过来
      */
     public List<RealTimeQuoteDatas.DataBean.QuoteBean> quote;
 
@@ -191,6 +192,15 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
 
     private void initListener() {
 
+        keyboardLayout.setOnkbdStateListener(new KeyboardLayout.onKybdsChangeListener() {
+            @Override
+            public void onKeyBoardStateChange(int state) {
+                if (simpleTradeFragment != null)
+                    simpleTradeFragment.setKeyboardStatus(state);
+                if (complexTradeFragment != null)
+                    complexTradeFragment.setKeyboardStatus(state);
+            }
+        });
     }
 
     private void initData() {
@@ -427,8 +437,12 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
      */
     private void showRealTimeData(RealTimeBean realTimeBean) {
 
-        if (kLineFragment != null)
-            kLineFragment.setRealPrice(realTimeBean);
+        if (realTimeBean.getSymbol().equals(symbol)) {
+
+            setChangeRate(realTimeBean);
+            if (kLineFragment != null)
+                kLineFragment.setRealPrice(realTimeBean);
+        }
 
         if (simpleTradeFragment != null)
             simpleTradeFragment.setRealPrice(realTimeBean);
@@ -436,11 +450,15 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         if (complexTradeFragment != null)
             complexTradeFragment.setRealPrice(realTimeBean);
 
-        Logger.e(TAG, realTimeBean.getSymbol());
+    }
 
-        /**
-         *实时价格及其变化率
-         */
+    /**
+     * 实时价格及其变化率
+     *
+     * @param realTimeBean
+     */
+    private void setChangeRate(RealTimeBean realTimeBean) {
+
         tvMarkPrice.setText(BaseUtils.getDigitsData(realTimeBean.getMarket(), digits));
         tvBuyIn.setText(getString(R.string.purchase) + BaseUtils.getDigitsData(realTimeBean.getAsk(), digits));
         tvSellOut.setText(getString(R.string.sell_out) + BaseUtils.getDigitsData(realTimeBean.getBid(), digits));
@@ -457,7 +475,6 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
                 tvPriceVar.setText(BaseUtils.getDigitsData(d1, digits == -1 ? 2 : digits));
             }
         }
-
     }
 
     @Override
@@ -480,8 +497,8 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
      */
     @Override
     public void setSymbolPriceData(SymbolPrice symbolPrice) {
-        Logger.e("SymbolPrice", symbolPrice.getData().getPrice().getYesterdayClosePrice() + "");
-        yestodayClosePrice = symbolPrice.getData().getPrice().getYesterdayClosePrice();
+        if (symbolPrice != null)
+            yestodayClosePrice = symbolPrice.getData().getPrice().getYesterdayClosePrice();
 
     }
 
@@ -502,8 +519,6 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
 
         symbolMulti += "," + marginCalCurrency + "," + profitCalCurrency;
         getSymbolNewPrice(symbolMulti);
-
-
     }
 
     /**
@@ -524,6 +539,19 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     @Override
     public void showRealTimeData(RealTimeQuoteDatas realTimeQuoteDatas) {
         quote = realTimeQuoteDatas.getData().getQuote();
+        for (int i = 0; i < quote.size(); i++) {
+            RealTimeQuoteDatas.DataBean.QuoteBean quoteBean = quote.get(i);
+            if (quoteBean.getSymbol().equals(symbol)) {
+                RealTimeBean realTimeBean = new RealTimeBean();
+                realTimeBean.setAsk(quoteBean.getAsk());
+                realTimeBean.setBid(quoteBean.getBid());
+                realTimeBean.setMarket(quoteBean.getMarket());
+                realTimeBean.setSymbol(quoteBean.getSymbol());
+                realTimeBean.setTime(quoteBean.getTime());
+                setChangeRate(realTimeBean);
+            }
+        }
+
         if (simpleTradeFragment != null)
             simpleTradeFragment.setFirstRealTimePrice(quote);
     }

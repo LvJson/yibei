@@ -87,6 +87,18 @@ public class ComplexTradeFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 软键盘状态
+     *
+     * @param state
+     */
+    public void setKeyboardStatus(int state) {
+        if (marketTradeFragment != null)
+            marketTradeFragment.setKeyboardStatus(state);
+        if (pendingTradeFragment != null)
+            pendingTradeFragment.setKeyboardStatus(state);
+    }
+
 
     /**
      * 接收顺序 1

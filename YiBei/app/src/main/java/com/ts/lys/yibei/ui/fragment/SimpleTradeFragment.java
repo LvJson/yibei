@@ -101,15 +101,6 @@ public class SimpleTradeFragment extends BaseFragment {
             }
         });
 
-        parentActivity.keyboardLayout.setOnkbdStateListener(new KeyboardLayout.onKybdsChangeListener() {
-            @Override
-            public void onKeyBoardStateChange(int state) {
-                if (state == KeyboardLayout.KEYBOARD_STATE_HIDE) {
-                    addDeleteView.setEditTextStatus(false);
-                }
-
-            }
-        });
 
         chooseTimesLayout.setOnItemClickListener(new ChooseTimesLayout.OnItemClickListener() {
             @Override
@@ -127,6 +118,17 @@ public class SimpleTradeFragment extends BaseFragment {
             }
         });
 
+    }
+
+    /**
+     * 软键盘状态
+     *
+     * @param state
+     */
+    public void setKeyboardStatus(int state) {
+        if (state == KeyboardLayout.KEYBOARD_STATE_HIDE) {
+            addDeleteView.setEditTextStatus(false);
+        }
     }
 
 
@@ -168,8 +170,11 @@ public class SimpleTradeFragment extends BaseFragment {
         symbolInfoBean = sb;
         lots = sb.getMinVolume();
         transQuanty = sb.getMinVolume();
+        if (sb.getMinVolume() >= 1)
+            addDeleteView.setLimit(sb.getMinVolume(), 10, 0);//TODO 第二个参数待定
+        else
+            addDeleteView.setLimit(sb.getMinVolume(), 10, 2);//TODO 第二个参数待定
 
-        addDeleteView.setLimit(sb.getMinVolume(), 1, sb.getDigits());//TODO 第二个参数待定
         addDeleteView.setnumber(sb.getMinVolume());
         chooseTimesLayout.setBaseTimes(sb.getMinVolume());
     }

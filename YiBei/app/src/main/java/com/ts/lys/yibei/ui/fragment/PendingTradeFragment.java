@@ -13,6 +13,7 @@ import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.customeview.AddDeleteView;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
+import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -99,6 +100,22 @@ public class PendingTradeFragment extends BaseFragment {
 
     private SymbolInfo.DataBean.SymbolInfoBean symbolInfoBean;
 
+    /**
+     * 软键盘是否出现
+     */
+    private boolean isShowKeybord = false;
+    /**
+     * 挂单价
+     */
+    private double pendingPrice;
+
+    /**
+     * 成交价格加减按钮点击状态
+     * <p>
+     * 0：点击了减号 1：点击了加号 2：重置点击状态：即什么也没点击
+     */
+    private int pendingPriceClick = 2;
+
 
     @Override
     protected int getLayoutID() {
@@ -123,31 +140,18 @@ public class PendingTradeFragment extends BaseFragment {
          * 成交价格
          */
         dealPriceAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 2 * baseHeight);
-        dealPriceAdv.setLimit(0, 0, 5);
-        dealPriceAdv.setnumber(0.00001);
-
-
         /**
          * 交易手数
          */
         tradeTimesAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, baseHeight);
-
-
         /**
          *止损价格
          */
-
         stopLossAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 0);
-        stopLossAdv.setLimit(0, 0, 5);
-        stopLossAdv.setnumber(0.00001);
-
         /**
          *止盈价格
          */
-
         stopProfitAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 0);
-        stopProfitAdv.setLimit(0, 0, 5);
-        stopProfitAdv.setnumber(0.00001);
 
 
     }
@@ -168,6 +172,10 @@ public class PendingTradeFragment extends BaseFragment {
                 double getnumber = dealPriceAdv.getnumber();
                 getnumber += dealPriceLever;
                 dealPriceAdv.setnumber(getnumber);
+                pendingPriceClick = 1;
+                initPendingPrice();
+                initstopLossLimit();
+                initStopProfitLimit();
             }
 
             @Override
@@ -175,11 +183,17 @@ public class PendingTradeFragment extends BaseFragment {
                 double getnumber = dealPriceAdv.getnumber();
                 getnumber -= dealPriceLever;
                 dealPriceAdv.setnumber(getnumber);
+                pendingPriceClick = 0;
+                initPendingPrice();
+                initstopLossLimit();
+                initStopProfitLimit();
             }
 
             @Override
             public void onEditText(double lots) {
-
+                initPendingPrice();
+                initstopLossLimit();
+                initStopProfitLimit();
             }
         });
 
@@ -223,6 +237,8 @@ public class PendingTradeFragment extends BaseFragment {
                 double getnumber = stopLossAdv.getnumber();
                 getnumber += stopLossLever;
                 stopLossAdv.setnumber(getnumber);
+                initstopLossLimit();
+
             }
 
             @Override
@@ -230,10 +246,13 @@ public class PendingTradeFragment extends BaseFragment {
                 double getnumber = stopLossAdv.getnumber();
                 getnumber -= stopLossLever;
                 stopLossAdv.setnumber(getnumber);
+                initstopLossLimit();
+
             }
 
             @Override
             public void onEditText(double lots) {
+                initstopLossLimit();
 
             }
         });
@@ -248,6 +267,8 @@ public class PendingTradeFragment extends BaseFragment {
                 double getnumber = stopProfitAdv.getnumber();
                 getnumber += stopProfitLever;
                 stopProfitAdv.setnumber(getnumber);
+                initStopProfitLimit();
+
             }
 
             @Override
@@ -255,30 +276,36 @@ public class PendingTradeFragment extends BaseFragment {
                 double getnumber = stopProfitAdv.getnumber();
                 getnumber -= stopProfitLever;
                 stopProfitAdv.setnumber(getnumber);
+                initStopProfitLimit();
+
             }
 
             @Override
             public void onEditText(double lots) {
+                initStopProfitLimit();
 
             }
         });
 
 
-        /**
-         * 软键盘收起时，输入框失去焦点
-         */
-        parentActivity.keyboardLayout.setOnkbdStateListener(new KeyboardLayout.onKybdsChangeListener() {
-            @Override
-            public void onKeyBoardStateChange(int state) {
-                if (state == KeyboardLayout.KEYBOARD_STATE_HIDE) {
-                    tradeTimesAdv.setEditTextStatus(false);
-                    stopLossAdv.setEditTextStatus(false);
-                    stopProfitAdv.setEditTextStatus(false);
+    }
 
-                }
-
-            }
-        });
+    /**
+     * 软键盘状态
+     *
+     * @param state
+     */
+    public void setKeyboardStatus(int state) {
+        if (state == KeyboardLayout.KEYBOARD_STATE_HIDE) {
+            isShowKeybord = false;
+            dealPriceAdv.setEditTextStatus(false);
+            tradeTimesAdv.setEditTextStatus(false);
+            stopLossAdv.setEditTextStatus(false);
+            stopProfitAdv.setEditTextStatus(false);
+        } else if (state == KeyboardLayout.KEYBOARD_STATE_SHOW) {
+            pendingPriceClick = 2;
+            isShowKeybord = true;
+        }
     }
 
     @OnClick({R.id.ll_buy_price, R.id.ll_sell_price})
@@ -296,6 +323,10 @@ public class PendingTradeFragment extends BaseFragment {
                 tvSellPrice.setTextColor(getResources().getColor(R.color.two_text_color));
 
                 cmd = 0;
+
+                initPendingPrice();
+                initstopLossLimit();
+                initStopProfitLimit();
                 setMargin();
                 break;
             case R.id.ll_sell_price:
@@ -310,6 +341,10 @@ public class PendingTradeFragment extends BaseFragment {
                 tvSellPrice.setTextColor(getResources().getColor(R.color.white));
 
                 cmd = 1;
+
+                initPendingPrice();
+                initstopLossLimit();
+                initStopProfitLimit();
                 setMargin();
                 break;
         }
@@ -346,6 +381,9 @@ public class PendingTradeFragment extends BaseFragment {
                 profitCalCurrency[1] = quoteBeen.getBid();
             }
             setMargin();
+            initPendingPrice();
+            initstopLossLimit();
+            initStopProfitLimit();
         }
     }
 
@@ -357,11 +395,20 @@ public class PendingTradeFragment extends BaseFragment {
      * @param sb
      */
     public void setSymbolCalInfo(SymbolInfo.DataBean.SymbolInfoBean sb) {
+        if (sb == null) return;
         symbolInfoBean = sb;
         lots = sb.getMinVolume();
+        mapb.setSymbolInfoBean(sb);
         tradetimesLever = sb.getMinVolume();
-        tradeTimesAdv.setLimit(sb.getMinVolume(), 1, sb.getDigits());//TODO 第二个参数待定
+        if (sb.getMinVolume() >= 1)
+            tradeTimesAdv.setLimit(sb.getMinVolume(), 10, 0);//TODO 第二个参数待定
+        else
+            tradeTimesAdv.setLimit(sb.getMinVolume(), 10, 2);//TODO 第二个参数待定
         tradeTimesAdv.setnumber(sb.getMinVolume());
+        //************************止盈/止损步长***********************************//
+        stopLossLever = Arith.div(1, Math.pow(10, parentActivity.digits));
+        stopProfitLever = Arith.div(1, Math.pow(10, parentActivity.digits));
+        dealPriceLever = Arith.div(1, Math.pow(10, parentActivity.digits));
     }
 
     /**
@@ -372,16 +419,19 @@ public class PendingTradeFragment extends BaseFragment {
      * @param quote
      */
     public void setFirstRealTimePrice(List<RealTimeQuoteDatas.DataBean.QuoteBean> quote) {
+        if (quote == null) return;
         for (int i = 0; i < quote.size(); i++) {
-
-            if (quote.get(i).getSymbol().equals(symbolInfoBean.getMarginCalCurrency())) {
-                marginCalCurrency[0] = quote.get(i).getAsk();
-                marginCalCurrency[1] = quote.get(i).getBid();
-            }
 
             if (quote.get(i).getSymbol().equals(parentActivity.symbol)) {
                 currentCurrency[0] = quote.get(i).getAsk();
                 currentCurrency[1] = quote.get(i).getBid();
+                tvBuyPrice.setText(BaseUtils.getDigitsData(currentCurrency[0], parentActivity.digits));
+                tvSellPrice.setText(BaseUtils.getDigitsData(currentCurrency[1], parentActivity.digits));
+            }
+
+            if (quote.get(i).getSymbol().equals(symbolInfoBean.getMarginCalCurrency())) {
+                marginCalCurrency[0] = quote.get(i).getAsk();
+                marginCalCurrency[1] = quote.get(i).getBid();
             }
 
             if (quote.get(i).getSymbol().equals(symbolInfoBean.getProfitCalCurrency())) {
@@ -391,6 +441,123 @@ public class PendingTradeFragment extends BaseFragment {
 
         }
         setMargin();
+        dealPriceAdv.setLimit(0, 0, parentActivity.digits);
+        dealPriceAdv.setnumber(currentCurrency[0]);
+        initPendingPrice();
+        initstopLossLimit();
+        initStopProfitLimit();
+    }
+
+
+    private void initPendingPrice() {
+        double pendingLimitMax = CalMarginAndProfitUtil.getPendingLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
+        double pendingLimitMin = CalMarginAndProfitUtil.getPendingLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
+
+        if (!isShowKeybord) {
+            //1、输入框的内容不在范围内
+            if (dealPriceAdv.getnumber() > pendingLimitMin && dealPriceAdv.getnumber() < pendingLimitMax) {
+                //在没有点击过加减按钮的情况下
+                if (pendingPriceClick == 2) {
+                    //2、比较更靠近哪个范围的值则取该范围的初始值
+                    if (pendingLimitMax - dealPriceAdv.getnumber() > dealPriceAdv.getnumber() - pendingLimitMin)
+                        dealPriceAdv.setnumber(pendingLimitMin);
+                    else
+                        dealPriceAdv.setnumber(pendingLimitMax);
+                } else if (pendingPriceClick == 0) {//点击减号
+                    dealPriceAdv.setnumber(pendingLimitMin);
+                    pendingPriceClick = 2;
+                } else {//点击加号
+                    dealPriceAdv.setnumber(pendingLimitMax);
+                    pendingPriceClick = 2;
+                }
+            }
+        }
+
+        dealPriceAdv.setTvExplain("价格(≤" + BaseUtils.getDigitsData(pendingLimitMin, parentActivity.digits) + "或≥" + BaseUtils.getDigitsData(pendingLimitMax, parentActivity.digits) + ")");
+
+    }
+
+    /**
+     * 初始化止损价格列数据展示
+     */
+    private void initstopLossLimit() {
+        double stopLossLimit = CalMarginAndProfitUtil.pendingStopLossOrprofitLimit(dealPriceAdv.getnumber(), symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
+
+        stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+
+        /**
+         * 如果加减后的价格不在范围内则强制改变输入框的价格（注意：是点击加号和减号的处理逻辑）
+         *
+         * 如果软键盘出现，即手动输入时不允许强制修改输入框里的内容
+         */
+        if (!isShowKeybord)
+            switch (cmd) {
+                case 0:
+                    if (stopLossAdv.getnumber() > stopLossLimit) {
+                        stopLossAdv.setnumber(stopLossLimit);
+                    }
+                    break;
+                case 1:
+                    if (stopLossAdv.getnumber() < stopLossLimit) {
+                        stopLossAdv.setnumber(stopLossLimit);
+                    }
+                    break;
+            }
+
+        mapb.setLots(lots);
+        mapb.setCmd(cmd);
+        mapb.setProfitCalCurrency(profitCalCurrency);
+        mapb.setOpenPrice(dealPriceAdv.getnumber());
+        mapb.setClosePrice(stopLossAdv.getnumber());
+        double profit = CalMarginAndProfitUtil.getProfit(mapb);
+
+        String explain;
+        if (cmd == 0)
+            explain = "价格<" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+        else
+            explain = "价格>" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+        stopLossAdv.setTvExplain(explain);
+    }
+
+    /**
+     * 初始化止盈列表数据展示
+     */
+    private void initStopProfitLimit() {
+        double stopProfitLimit = CalMarginAndProfitUtil.pendingStopLossOrprofitLimit(dealPriceAdv.getnumber(), symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
+        stopProfitAdv.setLimit(stopProfitLimit, 0, parentActivity.digits);
+
+        /**
+         * 如果加减后的价格不在范围内则强制改变输入框的价格（注意：是点击加号和减号的处理逻辑）
+         *
+         * 如果软键盘出现，即手动输入时不允许强制修改输入框里的内容
+         */
+        if (!isShowKeybord)
+            switch (cmd) {
+                case 0:
+                    if (stopProfitAdv.getnumber() < stopProfitLimit) {
+                        stopProfitAdv.setnumber(stopProfitLimit);
+                    }
+                    break;
+                case 1:
+                    if (stopProfitAdv.getnumber() > stopProfitLimit) {
+                        stopProfitAdv.setnumber(stopProfitLimit);
+                    }
+                    break;
+            }
+
+        mapb.setLots(lots);
+        mapb.setCmd(cmd);
+        mapb.setProfitCalCurrency(profitCalCurrency);
+        mapb.setOpenPrice(dealPriceAdv.getnumber());
+        mapb.setClosePrice(stopProfitAdv.getnumber());
+        double profit = CalMarginAndProfitUtil.getProfit(mapb);
+
+        String explain;
+        if (cmd == 0)
+            explain = "价格>" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+        else
+            explain = "价格<" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+        stopProfitAdv.setTvExplain(explain);
     }
 
     /**

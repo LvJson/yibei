@@ -3,6 +3,7 @@ package com.ts.lys.yibei.customeview;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.ts.lys.yibei.utils.Logger;
 import com.zhy.autolayout.AutoRelativeLayout;
 
 /**

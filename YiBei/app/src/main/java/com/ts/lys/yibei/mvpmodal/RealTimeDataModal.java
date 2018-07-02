@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
-import com.ts.lys.yibei.utils.Logger;
 
 import java.util.Map;
 
@@ -26,7 +25,6 @@ public class RealTimeDataModal {
 
             @Override
             public void success(String response, int id) {
-                Logger.e("??????????", response);
                 Gson gson = new Gson();
                 RealTimeQuoteDatas scd = gson.fromJson(response, RealTimeQuoteDatas.class);
                 if (scd.getErr_code().equals("0"))

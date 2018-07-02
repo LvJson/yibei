@@ -45,7 +45,7 @@
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             app:left_pic="@mipmap/complex_sub_icon"
-            app:midd_text="0.01"
+            app:midd_text="100000"
             app:right_pic="@mipmap/complex_add_icon">
 
 
@@ -103,7 +103,7 @@
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
             app:left_pic="@mipmap/complex_sub_icon"
-            app:midd_text="0.01"
+            app:midd_text="100000"
             app:right_pic="@mipmap/complex_add_icon">
 
 

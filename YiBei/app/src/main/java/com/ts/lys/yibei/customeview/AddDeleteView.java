@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ts.lys.yibei.R;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -140,10 +141,17 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String ss = s.toString().trim();
+
+                //如果最小手数大于1，一旦出现小数点就禁止输入
+                if (min >= 1 && ss.contains(".") && decimalDigits == 0) {
+                    Toast.makeText(mContent, "最小手数：" + (int) min + "手", Toast.LENGTH_LONG).show();
+                    et_number.setText(ss.substring(0, ss.length() - 1));
+                    return;
+                }
+
                 countrolPointCount(s, et_number);
 
-
-                String ss = s.toString().trim();
                 if (lister == null) return;
                 if (!TextUtils.isEmpty(ss)) {
                     try {
@@ -256,15 +264,18 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
             this.min = min;
         if (max > 0)
             this.max = max;
+
+        this.decimalDigits = decimalDigits;
+
         if (decimalDigits > 0) {
-            this.decimalDigits = decimalDigits;
             StringBuffer buffer = new StringBuffer();
             buffer.append("0.");
             for (int i = 0; i < decimalDigits; i++) {
                 buffer.append("0");
             }
             df0 = new DecimalFormat(buffer.toString());
-        }
+        } else
+            df0 = new DecimalFormat("#");
     }
 
     /**
@@ -332,6 +343,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
      */
     private void countrolPointCount(CharSequence s, EditText editText) {
 
+
         editText.setSelection(s.length());
 
         /**
@@ -381,9 +393,9 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
                 //检查文本框 补全小数点位数
                 if (getnumber() > 0 && df0 != null)
                     et_number.setText(df0.format(getnumber()));
-                else
-                    et_number.setText("0.01");
-
+                else {
+                    et_number.setText(df0.format(min));
+                }
             }
 
     }
