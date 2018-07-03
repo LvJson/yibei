@@ -43,6 +43,10 @@ public class UrlContents {
      * 挂单
      */
     public static final String PENDING_ORDER = URLHEAD + "/pending/order";
+    /**
+     * 增减自选
+     */
+    public static final String DEAL_SYMBOL_DIYSYMBOL = URLHEAD + "/deal/symbol/diySymbol";
 
 
 }

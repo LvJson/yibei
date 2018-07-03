@@ -13,5 +13,7 @@ public class EventContents {
 
     public static final String LONG_CLICK = "004";
 
+    public static final String UPDATED_SELF_SYMBOL = "005";
+
 
 }

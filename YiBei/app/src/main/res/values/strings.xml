@@ -43,7 +43,18 @@
     <string name="weeek_line">周线</string>
     <string name="month_line">月线</string>
 
-    <string name="cancle_collection">取消收藏</string>
+    <string name="cancle_collection">取消自选</string>
+
+    <string name="price">价格</string>
+    <string name="expected_loss">预计亏损</string>
+    <string name="expected_profit">预计盈利</string>
+    <string name="not_setting">未设置</string>
+
+    <string name="about_use_margin">约使用保证金</string>
+    <string name="userful_margin">可用保证金</string>
+    <string name="network_error">网络异常</string>
+    <string name="cancle_collection_success">取消自选成功</string>
+    <string name="add_collection_success">添加自选成功</string>
 
 
 </resources>

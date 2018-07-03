@@ -15,16 +15,16 @@
         android:gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/home_hot_foreign" />
+            android:layout_width="154px"
+            android:layout_height="47px"
+            android:src="@mipmap/simple_mmig_icon"
+            app:layout_auto_basewidth="height" />
 
         <TextView
             android:id="@+id/tv_free_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="26px"
-            android:text="可用保证金$ 0.00"
             android:textColor="@color/two_text_color"
             android:textSize="@dimen/text_size_22" />
     </com.zhy.autolayout.AutoLinearLayout>

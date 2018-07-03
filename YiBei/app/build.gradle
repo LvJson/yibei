@@ -90,5 +90,4 @@ dependencies {
      * Recyclerview item动画
      */
     compile 'jp.wasabeef:recyclerview-animators:2.3.0'
-
 }

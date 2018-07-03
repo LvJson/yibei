@@ -52,6 +52,8 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
     private double min = 0;
     private double max = 100000000;
 
+    private boolean isStopLossOrProfit = false;
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -125,7 +127,10 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
 
         txtDelete.setImageDrawable(leftPic);
         txtAdd.setImageDrawable(rightPic);
-        et_number.setText(middText);
+        if (middText.equals("0"))
+            et_number.setText(null);
+        else
+            et_number.setText(middText);
         et_number.setCursorVisible(false);
         typeArray.recycle();
     }
@@ -264,6 +269,8 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
             this.min = min;
         if (max > 0)
             this.max = max;
+        if (min < 0)
+            this.min = min;
 
         this.decimalDigits = decimalDigits;
 
@@ -307,6 +314,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
      * @param number
      */
     public void setnumber(double number) {
+
         if (number > 0 && df0 != null) {
             et_number.setText(df0.format(number));
         }
@@ -316,6 +324,15 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
     public void setTvExplain(String explain) {
         if (tvExplain != null)
             tvExplain.setText(explain);
+    }
+
+    /**
+     * 是否用于止盈止损
+     *
+     * @param isStopLossOrProfit
+     */
+    public void setIsStopLossOrProfit(boolean isStopLossOrProfit) {
+        this.isStopLossOrProfit = isStopLossOrProfit;
     }
 
     /**
@@ -385,6 +402,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
      * @param status
      */
     public void setEditTextStatus(boolean status) {
+
         if (et_number != null)
             if (status)
                 et_number.setCursorVisible(true);
@@ -394,7 +412,10 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
                 if (getnumber() > 0 && df0 != null)
                     et_number.setText(df0.format(getnumber()));
                 else {
-                    et_number.setText(df0.format(min));
+                    if (isStopLossOrProfit)
+                        et_number.setText(null);
+                    else
+                        et_number.setText(df0.format(min));
                 }
             }
 

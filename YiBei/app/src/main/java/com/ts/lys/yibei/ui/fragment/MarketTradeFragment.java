@@ -94,6 +94,10 @@ public class MarketTradeFragment extends BaseFragment {
      * 软键盘是否出现
      */
     private boolean isShowKeybord = false;
+    /**
+     * 是否通过加减和输入设置过值了
+     */
+    private boolean isSettedValue = false;
 
 
     @Override
@@ -121,10 +125,15 @@ public class MarketTradeFragment extends BaseFragment {
          *止损价格
          */
         stopLossAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, baseHeight);
+        stopLossAdv.setLimit(-1, 0, parentActivity.digits);
+        stopLossAdv.setIsStopLossOrProfit(true);
+
         /**
          *止盈价格
          */
         stopProfitAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, baseHeight);
+        stopProfitAdv.setLimit(-1, 0, parentActivity.digits);
+        stopProfitAdv.setIsStopLossOrProfit(true);
     }
 
     private void initData() {
@@ -167,24 +176,39 @@ public class MarketTradeFragment extends BaseFragment {
         stopLossAdv.setOnAddDelClickLstener(new AddDeleteView.OnAddDelClickLstener() {
             @Override
             public void onAddClick() {
-                double getnumber = stopLossAdv.getnumber();
-                getnumber += stopLossLever;
-                stopLossAdv.setnumber(getnumber);
-                initstopLossLimit();
+                if (stopLossAdv.getnumber() != 0) {
+                    double getnumber = stopLossAdv.getnumber();
+                    getnumber += stopLossLever;
+                    stopLossAdv.setnumber(getnumber);
+                    initstopLossLimit();
+                } else {
+                    double stopLossLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
+                    stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    stopLossAdv.setnumber(stopLossLimit);
+                }
+
             }
 
             @Override
             public void onDelClick() {
-                double getnumber = stopLossAdv.getnumber();
-                getnumber -= stopLossLever;
-                stopLossAdv.setnumber(getnumber);
-                initstopLossLimit();
+                if (stopLossAdv.getnumber() != 0) {
+                    double getnumber = stopLossAdv.getnumber();
+                    getnumber -= stopLossLever;
+                    stopLossAdv.setnumber(getnumber);
+                    initstopLossLimit();
+                } else {
+                    double stopLossLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
+                    stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    stopLossAdv.setnumber(stopLossLimit);
+                }
 
             }
 
             @Override
             public void onEditText(double lots) {
-                initstopLossLimit();
+                if (stopLossAdv.getnumber() != 0) {
+                    initstopLossLimit();
+                }
             }
         });
         /**
@@ -193,24 +217,36 @@ public class MarketTradeFragment extends BaseFragment {
         stopProfitAdv.setOnAddDelClickLstener(new AddDeleteView.OnAddDelClickLstener() {
             @Override
             public void onAddClick() {
-                double getnumber = stopProfitAdv.getnumber();
-                getnumber += stopProfitLever;
-                stopProfitAdv.setnumber(getnumber);
-                initStopProfitLimit();
+                if (stopProfitAdv.getnumber() != 0) {
+                    double getnumber = stopProfitAdv.getnumber();
+                    getnumber += stopProfitLever;
+                    stopProfitAdv.setnumber(getnumber);
+                    initStopProfitLimit();
+                } else {
+                    double stopProfitLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
+                    stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
+                    stopProfitAdv.setnumber(stopProfitLimit);
+                }
             }
 
             @Override
             public void onDelClick() {
-                double getnumber = stopProfitAdv.getnumber();
-                getnumber -= stopProfitLever;
-                stopProfitAdv.setnumber(getnumber);
-                initStopProfitLimit();
+                if (stopProfitAdv.getnumber() != 0) {
+                    double getnumber = stopProfitAdv.getnumber();
+                    getnumber -= stopProfitLever;
+                    stopProfitAdv.setnumber(getnumber);
+                    initStopProfitLimit();
+                } else {
+                    double stopProfitLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
+                    stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
+                    stopProfitAdv.setnumber(stopProfitLimit);
+                }
             }
 
             @Override
             public void onEditText(double lots) {
-                initStopProfitLimit();
-
+                if (stopProfitAdv.getnumber() != 0)
+                    initStopProfitLimit();
             }
         });
 
@@ -373,6 +409,7 @@ public class MarketTradeFragment extends BaseFragment {
      * 初始化止损价格列数据展示
      */
     private void initstopLossLimit() {
+
         double stopLossLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
 
         stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
@@ -386,11 +423,13 @@ public class MarketTradeFragment extends BaseFragment {
             switch (cmd) {
                 case 0:
                     if (stopLossAdv.getnumber() > stopLossLimit) {
+                        if (stopLossAdv.getnumber() == 0) break;
                         stopLossAdv.setnumber(stopLossLimit);
                     }
                     break;
                 case 1:
                     if (stopLossAdv.getnumber() < stopLossLimit) {
+                        if (stopLossAdv.getnumber() == 0) break;
                         stopLossAdv.setnumber(stopLossLimit);
                     }
                     break;
@@ -405,9 +444,9 @@ public class MarketTradeFragment extends BaseFragment {
 
         String explain;
         if (cmd == 0)
-            explain = "价格<" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + "<" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  " + getString(R.string.expected_loss) + "：" + (stopLossAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         else
-            explain = "价格>" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + ">" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  " + getString(R.string.expected_loss) + "：" + (stopLossAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         stopLossAdv.setTvExplain(explain);
     }
 
@@ -415,6 +454,7 @@ public class MarketTradeFragment extends BaseFragment {
      * 初始化止盈列表数据展示
      */
     private void initStopProfitLimit() {
+
         double stopProfitLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
         stopProfitAdv.setLimit(stopProfitLimit, 0, parentActivity.digits);
 
@@ -427,11 +467,13 @@ public class MarketTradeFragment extends BaseFragment {
             switch (cmd) {
                 case 0:
                     if (stopProfitAdv.getnumber() < stopProfitLimit) {
+                        if (stopProfitAdv.getnumber() == 0) break;
                         stopProfitAdv.setnumber(stopProfitLimit);
                     }
                     break;
                 case 1:
                     if (stopProfitAdv.getnumber() > stopProfitLimit) {
+                        if (stopProfitAdv.getnumber() == 0) break;
                         stopProfitAdv.setnumber(stopProfitLimit);
                     }
                     break;
@@ -446,9 +488,9 @@ public class MarketTradeFragment extends BaseFragment {
 
         String explain;
         if (cmd == 0)
-            explain = "价格>" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + ">" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  " + getString(R.string.expected_profit) + "：" + (stopProfitAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         else
-            explain = "价格<" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + "<" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  " + getString(R.string.expected_profit) + "：" + (stopProfitAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         stopProfitAdv.setTvExplain(explain);
     }
 
@@ -462,7 +504,7 @@ public class MarketTradeFragment extends BaseFragment {
         mapb.setLots(lots);
         mapb.setCmd(cmd);
         double margin = CalMarginAndProfitUtil.getMargin(mapb);
-        tradeTimesAdv.setTvExplain("已用保证金：$ " + margin);
+        tradeTimesAdv.setTvExplain(getString(R.string.about_use_margin) + "：$ " + margin);
     }
 
 

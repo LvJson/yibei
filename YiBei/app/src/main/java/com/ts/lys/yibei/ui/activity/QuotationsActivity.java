@@ -16,6 +16,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jaeger.library.StatusBarUtil;
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.EventBean;
@@ -24,6 +26,7 @@ import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.bean.SymbolInfo;
 import com.ts.lys.yibei.bean.SymbolPrice;
 import com.ts.lys.yibei.constant.EventContents;
+import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.mvppresenter.QuotationPresenter;
 import com.ts.lys.yibei.mvppresenter.RealTimeDataPresenter;
@@ -60,6 +63,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 /**
  * Created by jcdev1 on 2018/6/19.
@@ -123,7 +127,10 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     private QuotationPresenter quotationPresenter;
     private RealTimeDataPresenter realTimeDataPresenter;
 
-
+    /**
+     * 所有自选项集合
+     */
+    private ArrayList<String> symbolList;
     /**
      * 昨日收盘价
      */
@@ -208,8 +215,15 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         symbolEN = getIntent().getStringExtra("symbol");
         symbolCN = getIntent().getStringExtra("symbolCn");
         digits = getIntent().getIntExtra("digits", 2);
+        symbolList = getIntent().getStringArrayListExtra("symbolList");
+        Logger.e("symbolList", symbolList.size() + "");
         tvChName.setText(symbolCN);
         tvEnName.setText(symbolEN);
+        String tags = getIntent().getStringExtra("tag");
+        if (tags.equals("自选")) {
+            ivCollection.setImageResource(R.mipmap.kline_have_collection);
+        } else
+            ivCollection.setImageResource(R.mipmap.kline_not_collection);
 
         realTimeDataPresenter = new RealTimeDataPresenter(this);
         realTimeDataPresenter.attachView(this);
@@ -390,10 +404,14 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         switch (view.getId()) {
             case R.id.tv_buy_in:
                 if (!ButtonUtils.isFastDoubleClick(R.id.tv_buy_in, 1500)) {
+                    if (simpleTradeFragment != null)
+                        simpleTradeFragment.buyIn();
                 }
                 break;
             case R.id.tv_sell_out:
                 if (!ButtonUtils.isFastDoubleClick(R.id.tv_sell_out, 1500)) {
+                    if (simpleTradeFragment != null)
+                        simpleTradeFragment.sellOut();
                 }
                 break;
             case R.id.btn_buy_or_sell:
@@ -418,12 +436,19 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
                 if (collectionStatus) {
                     //TODO 取消收藏
                     collectionStatus = false;
-                    ivCollection.setImageResource(R.mipmap.kline_not_collection);
+                    for (int i = 0; i < symbolList.size(); i++) {
+                        if (symbolList.get(i).equals(symbol)) {
+                            symbolList.remove(i);
+                            break;
+                        }
+                    }
+                    ditySymbol(symbolList);
 
                 } else {
                     //TODO 添加收藏
                     collectionStatus = true;
-                    ivCollection.setImageResource(R.mipmap.kline_have_collection);
+                    symbolList.add(symbol);
+                    ditySymbol(symbolList);
                 }
                 break;
         }
@@ -484,6 +509,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         CustomHttpUtils.cancelHttp(className + "1");
         CustomHttpUtils.cancelHttp(className + "2");
         CustomHttpUtils.cancelHttp(className + "3");
+        CustomHttpUtils.cancelHttp(className + "4");
 
         quotationPresenter.detachView();
         realTimeDataPresenter.detachView();
@@ -554,5 +580,61 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
 
         if (simpleTradeFragment != null)
             simpleTradeFragment.setFirstRealTimePrice(quote);
+    }
+
+    /**
+     * 增减自选
+     */
+    private void ditySymbol(ArrayList<String> symbol) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < symbol.size(); i++) {
+
+            if (i == 0)
+                stringBuffer.append(symbol.get(i));
+            else {
+                stringBuffer.append(",");
+                stringBuffer.append(symbol.get(i));
+            }
+
+        }
+        showCustomProgress();
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("symbol", stringBuffer.toString());
+        CustomHttpUtils.getServiceDatas(map, UrlContents.DEAL_SYMBOL_DIYSYMBOL, className + "4", new CustomHttpUtils.ServiceStatus() {
+            @Override
+            public void faild(Call call, Exception e, int id) {
+                disCustomProgress();
+                showToast(getString(R.string.network_error));
+            }
+
+            @Override
+            public void success(String response, int id) {
+                if (response != null) {
+                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
+                    String errCode = "";
+                    String errMsg = "";
+                    if (!jsonObject.get("err_code").isJsonNull())
+                        errCode = jsonObject.get("err_code").getAsString();
+                    if (!jsonObject.get("err_msg").isJsonNull())
+                        errMsg = jsonObject.get("err_msg").getAsString();
+
+                    if (errCode.equals("0")) {
+                        //通知更新行情自选列表
+                        EventBus.getDefault().post(new EventBean(EventContents.UPDATED_SELF_SYMBOL, null));
+                        if (collectionStatus) {
+                            showToast(getString(R.string.add_collection_success));
+                            ivCollection.setImageResource(R.mipmap.kline_have_collection);
+                        } else {
+                            showToast(getString(R.string.cancle_collection_success));
+                            ivCollection.setImageResource(R.mipmap.kline_not_collection);
+                        }
+                    } else
+                        showToast(errMsg);
+                }
+                disCustomProgress();
+            }
+        });
+
     }
 }

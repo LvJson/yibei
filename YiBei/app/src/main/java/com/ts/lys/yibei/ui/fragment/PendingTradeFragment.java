@@ -148,11 +148,14 @@ public class PendingTradeFragment extends BaseFragment {
          *止损价格
          */
         stopLossAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 0);
+        stopLossAdv.setLimit(-1, 0, parentActivity.digits);
+        stopLossAdv.setIsStopLossOrProfit(true);
         /**
          *止盈价格
          */
         stopProfitAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 0);
-
+        stopProfitAdv.setLimit(-1, 0, parentActivity.digits);
+        stopProfitAdv.setIsStopLossOrProfit(true);
 
     }
 
@@ -234,25 +237,39 @@ public class PendingTradeFragment extends BaseFragment {
         stopLossAdv.setOnAddDelClickLstener(new AddDeleteView.OnAddDelClickLstener() {
             @Override
             public void onAddClick() {
-                double getnumber = stopLossAdv.getnumber();
-                getnumber += stopLossLever;
-                stopLossAdv.setnumber(getnumber);
-                initstopLossLimit();
+                if (stopLossAdv.getnumber() != 0) {
+                    double getnumber = stopLossAdv.getnumber();
+                    getnumber += stopLossLever;
+                    stopLossAdv.setnumber(getnumber);
+                    initstopLossLimit();
+                } else {
+                    double stopLossLimit = CalMarginAndProfitUtil.pendingStopLossOrprofitLimit(dealPriceAdv.getnumber(), symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
+                    stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    stopLossAdv.setnumber(stopLossLimit);
+                }
 
             }
 
             @Override
             public void onDelClick() {
-                double getnumber = stopLossAdv.getnumber();
-                getnumber -= stopLossLever;
-                stopLossAdv.setnumber(getnumber);
-                initstopLossLimit();
+                if (stopLossAdv.getnumber() != 0) {
+                    double getnumber = stopLossAdv.getnumber();
+                    getnumber -= stopLossLever;
+                    stopLossAdv.setnumber(getnumber);
+                    initstopLossLimit();
+                } else {
+                    double stopLossLimit = CalMarginAndProfitUtil.pendingStopLossOrprofitLimit(dealPriceAdv.getnumber(), symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
+                    stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    stopLossAdv.setnumber(stopLossLimit);
+                }
 
             }
 
             @Override
             public void onEditText(double lots) {
-                initstopLossLimit();
+                if (stopLossAdv.getnumber() != 0) {
+                    initstopLossLimit();
+                }
 
             }
         });
@@ -264,25 +281,38 @@ public class PendingTradeFragment extends BaseFragment {
         stopProfitAdv.setOnAddDelClickLstener(new AddDeleteView.OnAddDelClickLstener() {
             @Override
             public void onAddClick() {
-                double getnumber = stopProfitAdv.getnumber();
-                getnumber += stopProfitLever;
-                stopProfitAdv.setnumber(getnumber);
-                initStopProfitLimit();
+                if (stopProfitAdv.getnumber() != 0) {
+                    double getnumber = stopProfitAdv.getnumber();
+                    getnumber += stopProfitLever;
+                    stopProfitAdv.setnumber(getnumber);
+                    initStopProfitLimit();
+                } else {
+                    double stopProfitLimit = CalMarginAndProfitUtil.pendingStopLossOrprofitLimit(dealPriceAdv.getnumber(), symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
+                    stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
+                    stopProfitAdv.setnumber(stopProfitLimit);
+                }
 
             }
 
             @Override
             public void onDelClick() {
-                double getnumber = stopProfitAdv.getnumber();
-                getnumber -= stopProfitLever;
-                stopProfitAdv.setnumber(getnumber);
-                initStopProfitLimit();
+                if (stopProfitAdv.getnumber() != 0) {
+                    double getnumber = stopProfitAdv.getnumber();
+                    getnumber -= stopProfitLever;
+                    stopProfitAdv.setnumber(getnumber);
+                    initStopProfitLimit();
+                } else {
+                    double stopProfitLimit = CalMarginAndProfitUtil.pendingStopLossOrprofitLimit(dealPriceAdv.getnumber(), symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
+                    stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
+                    stopProfitAdv.setnumber(stopProfitLimit);
+                }
 
             }
 
             @Override
             public void onEditText(double lots) {
-                initStopProfitLimit();
+                if (stopProfitAdv.getnumber() != 0)
+                    initStopProfitLimit();
 
             }
         });
@@ -473,7 +503,7 @@ public class PendingTradeFragment extends BaseFragment {
             }
         }
 
-        dealPriceAdv.setTvExplain("价格(≤" + BaseUtils.getDigitsData(pendingLimitMin, parentActivity.digits) + "或≥" + BaseUtils.getDigitsData(pendingLimitMax, parentActivity.digits) + ")");
+        dealPriceAdv.setTvExplain(getString(R.string.price) + "(≤" + BaseUtils.getDigitsData(pendingLimitMin, parentActivity.digits) + "或≥" + BaseUtils.getDigitsData(pendingLimitMax, parentActivity.digits) + ")");
 
     }
 
@@ -494,11 +524,13 @@ public class PendingTradeFragment extends BaseFragment {
             switch (cmd) {
                 case 0:
                     if (stopLossAdv.getnumber() > stopLossLimit) {
+                        if (stopLossAdv.getnumber() == 0) break;
                         stopLossAdv.setnumber(stopLossLimit);
                     }
                     break;
                 case 1:
                     if (stopLossAdv.getnumber() < stopLossLimit) {
+                        if (stopLossAdv.getnumber() == 0) break;
                         stopLossAdv.setnumber(stopLossLimit);
                     }
                     break;
@@ -513,9 +545,9 @@ public class PendingTradeFragment extends BaseFragment {
 
         String explain;
         if (cmd == 0)
-            explain = "价格<" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + "<" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  " + getString(R.string.expected_loss) + "：" + (stopLossAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         else
-            explain = "价格>" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + ">" + BaseUtils.getDigitsData(stopLossLimit, parentActivity.digits) + "  " + getString(R.string.expected_loss) + "：" + (stopLossAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         stopLossAdv.setTvExplain(explain);
     }
 
@@ -535,11 +567,13 @@ public class PendingTradeFragment extends BaseFragment {
             switch (cmd) {
                 case 0:
                     if (stopProfitAdv.getnumber() < stopProfitLimit) {
+                        if (stopProfitAdv.getnumber() == 0) break;
                         stopProfitAdv.setnumber(stopProfitLimit);
                     }
                     break;
                 case 1:
                     if (stopProfitAdv.getnumber() > stopProfitLimit) {
+                        if (stopProfitAdv.getnumber() == 0) break;
                         stopProfitAdv.setnumber(stopProfitLimit);
                     }
                     break;
@@ -554,9 +588,9 @@ public class PendingTradeFragment extends BaseFragment {
 
         String explain;
         if (cmd == 0)
-            explain = "价格>" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + ">" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  " + getString(R.string.expected_profit) + "：" + (stopProfitAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         else
-            explain = "价格<" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  预计盈亏：" + BaseUtils.dealSymbol(profit);
+            explain = getString(R.string.price) + "<" + BaseUtils.getDigitsData(stopProfitLimit, parentActivity.digits) + "  " + getString(R.string.expected_profit) + "：" + (stopProfitAdv.getnumber() == 0 ? "$0" : BaseUtils.dealSymbol(profit));
         stopProfitAdv.setTvExplain(explain);
     }
 
@@ -570,6 +604,6 @@ public class PendingTradeFragment extends BaseFragment {
         mapb.setLots(lots);
         mapb.setCmd(cmd);
         double margin = CalMarginAndProfitUtil.getMargin(mapb);
-        tradeTimesAdv.setTvExplain("已用保证金：$ " + margin);
+        tradeTimesAdv.setTvExplain(getString(R.string.about_use_margin) + "：$ " + margin);
     }
 }

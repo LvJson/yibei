@@ -55,6 +55,8 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
     private List<GetQuotesModel.DataBean.SymbolsBean> list2 = new ArrayList<>();//贵金属
     private List<GetQuotesModel.DataBean.SymbolsBean> list3 = new ArrayList<>();//能源
 
+    private ArrayList<String> selfSelectSymbol = new ArrayList<>();
+
 
     @Override
     protected int getLayoutID() {
@@ -107,7 +109,7 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         allSymbolPresenter = new AllSymbolPresenter(this);
         allSymbolPresenter.attachView(this);
         Map<String, String> map = new HashMap<>();
-        map.put("accessToken", "");
+        map.put("accessToken", accessToken);
         map.put("userId", userId);
         allSymbolPresenter.getCollectionSymbol(map, className + "1");
         allSymbolPresenter.getAllSymbol(map, className + "1");
@@ -122,7 +124,6 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
     @Override
     public void setAllSymbol(GetQuotesModel allSymbol) {
         if (getActivity() == null) return;
-        Logger.e(TAG, allSymbol.getData().getSymbols().size() + "");
         list0.clear();
         list1.clear();
         list2.clear();
@@ -168,8 +169,12 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         List<GetQuotesModel.DataBean.SymbolsBean> sb = collectionSymbol.getData().getSymbols();
         listColl = sb;
         ((AllSymbolMarketFragment) fragmentList.get(0)).setFirstList(listColl);
+        for (int i = 0; i < sb.size(); i++) {
+            selfSelectSymbol.add(sb.get(i).getSymbolEn());
+        }
 
-
+        for (int i = 0; i < fragmentList.size(); i++)
+            ((AllSymbolMarketFragment) fragmentList.get(i)).setSelfSelectSymbol(selfSelectSymbol);
     }
 
 
@@ -188,6 +193,11 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
                 }
             }
 
+        } else if (event.getTagOne().equals(EventContents.UPDATED_SELF_SYMBOL)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("accessToken", accessToken);
+            map.put("userId", userId);
+            allSymbolPresenter.getCollectionSymbol(map, className + "1");
         }
     }
 

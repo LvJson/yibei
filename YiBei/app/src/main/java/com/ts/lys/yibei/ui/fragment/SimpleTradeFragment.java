@@ -4,13 +4,17 @@ import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.MarginAndProfitBean;
+import com.ts.lys.yibei.bean.OpenTrader;
+import com.ts.lys.yibei.bean.PendingOrder;
 import com.ts.lys.yibei.bean.RealTimeBean;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.bean.SymbolInfo;
 import com.ts.lys.yibei.customeview.AddDeleteView;
 import com.ts.lys.yibei.customeview.ChooseTimesLayout;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
+import com.ts.lys.yibei.mvpview.ITradeOrPendingView;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
+import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 
 import java.util.List;
@@ -21,7 +25,7 @@ import butterknife.Bind;
  * Created by jcdev1 on 2018/6/19.
  */
 
-public class SimpleTradeFragment extends BaseFragment {
+public class SimpleTradeFragment extends BaseFragment implements ITradeOrPendingView {
     @Bind(R.id.tv_free_margin)
     TextView tvFreeMargin;
     @Bind(R.id.add_delete_view)
@@ -131,6 +135,7 @@ public class SimpleTradeFragment extends BaseFragment {
         }
     }
 
+    //************************************接收数据*********************************//
 
     /**
      * 接收顺序 1
@@ -170,6 +175,7 @@ public class SimpleTradeFragment extends BaseFragment {
         symbolInfoBean = sb;
         lots = sb.getMinVolume();
         transQuanty = sb.getMinVolume();
+        tvFreeMargin.setText(getString(R.string.userful_margin) + " ：" + BaseUtils.getDigitsData(sb.getAccAmt(), 2));
         if (sb.getMinVolume() >= 1)
             addDeleteView.setLimit(sb.getMinVolume(), 10, 0);//TODO 第二个参数待定
         else
@@ -203,6 +209,40 @@ public class SimpleTradeFragment extends BaseFragment {
         setMargin();
 
     }
+    //************************************提交数据*********************************//
+
+    /**
+     * 买入
+     */
+    public void buyIn() {
+
+    }
+
+    /**
+     * 卖出
+     */
+    public void sellOut() {
+
+    }
+
+    /**
+     * 交易返回数据
+     *
+     * @param openTrader
+     */
+    @Override
+    public void setTradeBackInfo(OpenTrader openTrader) {
+
+
+    }
+
+    @Override
+    public void setPendingBackInfo(PendingOrder pendingOrder) {
+
+    }
+
+    //************************************计算数据*********************************//
+
 
     /**
      * 计算保证金
@@ -214,7 +254,6 @@ public class SimpleTradeFragment extends BaseFragment {
         mapb.setLots(lots);
         mapb.setCmd(cmd);
         double margin = CalMarginAndProfitUtil.getMargin(mapb);
-        addDeleteView.setTvExplain("已用保证金：$ " + margin);
+        addDeleteView.setTvExplain(getString(R.string.about_use_margin) + "：$ " + margin);
     }
-
 }
