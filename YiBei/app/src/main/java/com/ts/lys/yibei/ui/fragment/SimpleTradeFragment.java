@@ -1,5 +1,9 @@
 package com.ts.lys.yibei.ui.fragment;
 
+import android.support.annotation.NonNull;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
@@ -11,13 +15,18 @@ import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.bean.SymbolInfo;
 import com.ts.lys.yibei.customeview.AddDeleteView;
 import com.ts.lys.yibei.customeview.ChooseTimesLayout;
+import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
+import com.ts.lys.yibei.mvppresenter.TradePresenter;
 import com.ts.lys.yibei.mvpview.ITradeOrPendingView;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
+import com.ts.lys.yibei.utils.CustomHttpUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -58,6 +67,8 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
 
     private SymbolInfo.DataBean.SymbolInfoBean symbolInfoBean;
 
+    private TradePresenter tradePresenter = new TradePresenter(this);
+
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_simple_trade;
@@ -70,6 +81,7 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
     }
 
     private void initView() {
+        tradePresenter.attachView(this);
         parentActivity = (QuotationsActivity) getActivity();
         addDeleteView.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 0);
 
@@ -215,13 +227,66 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
      * 买入
      */
     public void buyIn() {
-
+        showTradePop(getParameter(0), 0);
     }
+
 
     /**
      * 卖出
      */
     public void sellOut() {
+        showTradePop(getParameter(1), 1);
+    }
+
+    @NonNull
+    private String getParameter(int cmd) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(getString(R.string.remind_two));
+        buffer.append(cmd == 0 ? getString(R.string.purchase) : getString(R.string.sell_out));
+        buffer.append(lots);
+        buffer.append(getString(R.string.lots));
+        buffer.append(" ");
+        buffer.append(parentActivity.symbol);
+        buffer.append(" ");
+        buffer.append(getString(R.string.ma));
+        return buffer.toString();
+    }
+
+    private void showTradePop(String title, final int cmd) {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_trade_remind_layout, null);
+        TextView tvTitle = contentView.findViewById(R.id.tv_title);
+        TextView tvCancle = contentView.findViewById(R.id.tv_cancle);
+        TextView tvConfirm = contentView.findViewById(R.id.tv_confirm);
+        final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .create()
+                .showAtLocation(parentActivity.keyboardLayout, Gravity.CENTER, 0, 0);
+        tvTitle.setText(title);
+        tvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+            }
+        });
+
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+                //TODO 开仓
+                Map<String, String> map = new HashMap<>();
+                map.put("accessToken", accessToken);
+                map.put("symbol", parentActivity.symbol);
+                map.put("userId", userId);
+                map.put("cmd", cmd + "");
+                map.put("volume", lots + "");
+                map.put("tp", "");
+                map.put("sl", "");
+                tradePresenter.openPosition(map, className + "1");
+            }
+        });
 
     }
 
@@ -233,7 +298,46 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
     @Override
     public void setTradeBackInfo(OpenTrader openTrader) {
 
+        OpenTrader.DataBean.OpenTraderBean otb = openTrader.getData().getOpenTrader();
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_trade_back_info_layout, null);
+        TextView tvSymbol = contentView.findViewById(R.id.tv_symbol);
+        TextView tvDirection = contentView.findViewById(R.id.tv_direction);
+        TextView tvOpenPri = contentView.findViewById(R.id.tv_open_price);
+        TextView tvTradeTimes = contentView.findViewById(R.id.tv_trade_times);
+        TextView tvStopLossPri = contentView.findViewById(R.id.tv_stop_loss_pri);
+        TextView tvStopProfitPri = contentView.findViewById(R.id.tv_stop_profit_pri);
+        TextView tvUserMargin = contentView.findViewById(R.id.tv_user_margin);
+        TextView tvCancle = contentView.findViewById(R.id.tv_cancle);
+        TextView tvSeeOrder = contentView.findViewById(R.id.tv_see_order);
 
+        final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .create()
+                .showAtLocation(parentActivity.keyboardLayout, Gravity.CENTER, 0, 0);
+
+        tvSymbol.setText(otb.getSymbol());
+        tvDirection.setText(otb.getCmd() == 0 ? getString(R.string.purchase) : getString(R.string.sell_out));
+        tvOpenPri.setText(BaseUtils.getDigitsData(otb.getOpenPrice(), parentActivity.digits));
+        tvTradeTimes.setText(BaseUtils.getDigitsData(otb.getVolume(), 2));
+        tvStopLossPri.setText(otb.getSl() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(otb.getSl(), parentActivity.digits));
+        tvStopProfitPri.setText(otb.getTp() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(otb.getTp(), parentActivity.digits));
+        tvUserMargin.setText("$" + BaseUtils.getDigitsData(otb.getMargin(), 2));
+
+        tvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+            }
+        });
+        tvSeeOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+                showToast("TODO：查看订单记录");
+            }
+        });
     }
 
     @Override
@@ -255,5 +359,13 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
         mapb.setCmd(cmd);
         double margin = CalMarginAndProfitUtil.getMargin(mapb);
         addDeleteView.setTvExplain(getString(R.string.about_use_margin) + "：$ " + margin);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tradePresenter.detachView();
+        CustomHttpUtils.cancelHttp(className + "1");
+        CustomHttpUtils.cancelHttp(className + "2");
     }
 }

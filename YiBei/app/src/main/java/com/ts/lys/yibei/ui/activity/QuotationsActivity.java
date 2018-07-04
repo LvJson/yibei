@@ -418,14 +418,22 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
                 if (!ButtonUtils.isFastDoubleClick(R.id.btn_buy_or_sell, 1500)) {
                     if (marketOrPendingTrade == 0) {
                         if (marketDealStatus == 0) {
+                            if (complexTradeFragment != null)
+                                complexTradeFragment.complexBuyIn();
                             Logger.e(TAG, "复杂-市价-买入");
                         } else {
+                            if (complexTradeFragment != null)
+                                complexTradeFragment.complexSellOut();
                             Logger.e(TAG, "复杂-市价-卖出");
                         }
                     } else if (marketOrPendingTrade == 1) {
                         if (pendingDealStatus == 0) {
+                            if (complexTradeFragment != null)
+                                complexTradeFragment.complexPendingBuyIn();
                             Logger.e(TAG, "复杂-挂单-买入");
                         } else {
+                            if (complexTradeFragment != null)
+                                complexTradeFragment.complexPendingSellOut();
                             Logger.e(TAG, "复杂-挂单-卖出");
                         }
                     }

@@ -1,26 +1,37 @@
 package com.ts.lys.yibei.ui.fragment;
 
+import android.support.annotation.NonNull;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.bean.MarginAndProfitBean;
+import com.ts.lys.yibei.bean.OpenTrader;
+import com.ts.lys.yibei.bean.PendingOrder;
 import com.ts.lys.yibei.bean.RealTimeBean;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.bean.SymbolInfo;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.customeview.AddDeleteView;
+import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
+import com.ts.lys.yibei.mvppresenter.TradePresenter;
+import com.ts.lys.yibei.mvpview.ITradeOrPendingView;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
+import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -29,7 +40,7 @@ import butterknife.OnClick;
  * Created by jcdev1 on 2018/6/21.
  */
 
-public class PendingTradeFragment extends BaseFragment {
+public class PendingTradeFragment extends BaseFragment implements ITradeOrPendingView {
     @Bind(R.id.tv_buy_price)
     TextView tvBuyPrice;
     @Bind(R.id.tv_sell_price)
@@ -116,6 +127,8 @@ public class PendingTradeFragment extends BaseFragment {
      */
     private int pendingPriceClick = 2;
 
+    private TradePresenter tradePresenter = new TradePresenter(this);
+
 
     @Override
     protected int getLayoutID() {
@@ -132,6 +145,7 @@ public class PendingTradeFragment extends BaseFragment {
 
 
     private void initView() {
+        tradePresenter.attachView(this);
         parentActivity = (QuotationsActivity) getActivity();
         parentFragment = (ComplexTradeFragment) getParentFragment();
         int baseHeight = (int) (BaseUtils.getScreenHeight(getActivity()) * 0.14692654);
@@ -605,5 +619,143 @@ public class PendingTradeFragment extends BaseFragment {
         mapb.setCmd(cmd);
         double margin = CalMarginAndProfitUtil.getMargin(mapb);
         tradeTimesAdv.setTvExplain(getString(R.string.about_use_margin) + "：$ " + margin);
+    }
+
+
+    /**
+     * 复杂-挂单-买入
+     */
+    public void complexPendingBuyIn() {
+        showTradePop(getParameter(0), 0);
+
+    }
+
+    /**
+     * 复杂-挂单-卖出
+     */
+    public void complexPendingSellOut() {
+        showTradePop(getParameter(1), 1);
+
+    }
+
+
+    @NonNull
+    private String getParameter(int cmd) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(getString(R.string.pending));
+        buffer.append(parentActivity.symbol);
+        buffer.append(cmd == 0 ? getString(R.string.purchase) : getString(R.string.sell_out));
+        buffer.append(lots);
+        buffer.append(getString(R.string.lots));
+        return buffer.toString();
+    }
+
+    private void showTradePop(String title, final int cmd) {
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_pending_remind_layout, null);
+        TextView tvTitle = contentView.findViewById(R.id.tv_title);
+        TextView tvPendingPrice = contentView.findViewById(R.id.tv_pending_price);
+        TextView tvStopLossPri = contentView.findViewById(R.id.tv_stop_loss_pri);
+        TextView tvStopProfitPri = contentView.findViewById(R.id.tv_stop_profit_pri);
+        TextView tvCancle = contentView.findViewById(R.id.tv_cancle);
+        TextView tvConfirm = contentView.findViewById(R.id.tv_confirm);
+        final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .create()
+                .showAtLocation(parentActivity.keyboardLayout, Gravity.CENTER, 0, 0);
+        tvTitle.setText(title);
+        tvPendingPrice.setText(BaseUtils.getDigitsData(dealPriceAdv.getnumber(), parentActivity.digits));
+        tvStopLossPri.setText(stopLossAdv.getnumber() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(stopLossAdv.getnumber(), parentActivity.digits));
+        tvStopProfitPri.setText(stopProfitAdv.getnumber() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(stopProfitAdv.getnumber(), parentActivity.digits));
+        tvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+            }
+        });
+
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+
+                Map<String, String> map = new HashMap<>();
+                map.put("accessToken", accessToken);
+                map.put("symbol", parentActivity.symbol);
+                map.put("userId", userId);
+                map.put("cmd", cmd + "");
+                map.put("volume", lots + "");
+                map.put("tp", stopProfitAdv.getnumber() == 0 ? "" : String.valueOf(stopProfitAdv.getnumber()));
+                map.put("sl", stopLossAdv.getnumber() == 0 ? "" : String.valueOf(stopLossAdv.getnumber()));
+                map.put("pendingPrice", String.valueOf(dealPriceAdv.getnumber()));
+                map.put("market", cmd == 0 ? String.valueOf(currentCurrency[0]) : String.valueOf(currentCurrency[1]));
+
+                tradePresenter.pendingOrder(map, className + "1");
+            }
+        });
+
+    }
+
+    @Override
+    public void setTradeBackInfo(OpenTrader openTrader) {
+
+    }
+
+    @Override
+    public void setPendingBackInfo(PendingOrder pendingOrder) {
+
+        PendingOrder.DataBean.PendingOrderBean pob = pendingOrder.getData().getPendingOrder();
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_trade_back_info_layout, null);
+        TextView tvSymbol = contentView.findViewById(R.id.tv_symbol);
+        TextView tvDirection = contentView.findViewById(R.id.tv_direction);
+        TextView tvOpenPri = contentView.findViewById(R.id.tv_open_price);
+        TextView tvTradeTimes = contentView.findViewById(R.id.tv_trade_times);
+        TextView tvStopLossPri = contentView.findViewById(R.id.tv_stop_loss_pri);
+        TextView tvStopProfitPri = contentView.findViewById(R.id.tv_stop_profit_pri);
+        TextView tvUserMargin = contentView.findViewById(R.id.tv_user_margin);
+        TextView tvCancle = contentView.findViewById(R.id.tv_cancle);
+        TextView tvSeeOrder = contentView.findViewById(R.id.tv_see_order);
+        TextView tvPendingDirection = contentView.findViewById(R.id.tv_pending_direction);
+        TextView tvPendingPrice = contentView.findViewById(R.id.tv_pending_price);
+
+        final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .create()
+                .showAtLocation(parentActivity.keyboardLayout, Gravity.CENTER, 0, 0);
+
+        tvPendingDirection.setText(getString(R.string.pending_direction));
+        tvPendingPrice.setText(getString(R.string.pending_price));
+        tvSymbol.setText(pob.getSymbolCn());
+        tvDirection.setText(pob.getCmd() == 0 ? getString(R.string.purchase) : getString(R.string.sell_out));
+        tvOpenPri.setText(BaseUtils.getDigitsData(pob.getPendingPrice(), parentActivity.digits));
+        tvTradeTimes.setText(BaseUtils.getDigitsData(pob.getVolume(), 2));
+        tvStopLossPri.setText(pob.getSl() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(pob.getSl(), parentActivity.digits));
+        tvStopProfitPri.setText(pob.getTp() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(pob.getTp(), parentActivity.digits));
+        tvUserMargin.setVisibility(View.GONE);
+
+        tvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+            }
+        });
+        tvSeeOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+                showToast("TODO：查看订单记录");
+            }
+        });
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tradePresenter.detachView();
+        CustomHttpUtils.cancelHttp(className + "1");
     }
 }

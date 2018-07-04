@@ -114,5 +114,38 @@ public class ComplexTradeFragment extends BaseFragment {
             pendingTradeFragment.setRealPrice(quoteBeen);
     }
 
+    /**
+     * 复杂-市价-买入
+     */
+    public void complexBuyIn() {
+        if (marketTradeFragment != null)
+            marketTradeFragment.complexBuyIn();
+    }
+
+    /**
+     * 复杂-市价-卖出
+     */
+    public void complexSellOut() {
+        if (marketTradeFragment != null)
+            marketTradeFragment.complexSellOut();
+    }
+
+    /**
+     * 复杂-挂单-买入
+     */
+    public void complexPendingBuyIn() {
+
+        if (pendingTradeFragment != null)
+            pendingTradeFragment.complexPendingBuyIn();
+    }
+
+    /**
+     * 复杂-挂单-卖出
+     */
+    public void complexPendingSellOut() {
+        if (pendingTradeFragment != null)
+            pendingTradeFragment.complexPendingSellOut();
+    }
+
 
 }

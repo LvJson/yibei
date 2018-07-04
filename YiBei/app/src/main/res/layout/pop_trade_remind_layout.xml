@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="330px"
+        android:background="@drawable/pop_white_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="48px"
+        android:paddingTop="65px"
+        app:layout_auto_basewidth="height">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_28" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38px"
+            android:text="@string/remind_one"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_24"
+            app:layout_auto_basewidth="height" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginLeft="44px"
+            android:layout_marginRight="44px"
+            android:background="@color/bg_or_division_color" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35px"
+            app:layout_auto_basewidth="height">
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/cancle"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/text_size_32" />
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/text_size_32" />
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

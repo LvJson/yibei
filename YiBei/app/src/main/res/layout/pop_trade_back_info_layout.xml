@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_white_bg"
+        android:orientation="vertical"
+        android:paddingBottom="38px"
+        android:paddingLeft="40px"
+        android:paddingRight="33px"
+        android:paddingTop="39px"
+        app:layout_auto_basewidth="height">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_position_success"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_48" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="37px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trade_variety"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_symbol"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tv_pending_direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/opening_direction"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_direction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tv_pending_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/opening_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_open_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trade_times"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_trade_times"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_loss_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_stop_loss_pri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_profit_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_stop_profit_pri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_margin"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_26" />
+
+            <TextView
+                android:id="@+id/tv_user_margin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginLeft="44px"
+            android:layout_marginRight="44px"
+            android:layout_marginTop="39px"
+            android:background="@color/bg_or_division_color"
+            app:layout_auto_basewidth="height" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7px"
+            android:layout_marginTop="25px"
+            app:layout_auto_basewidth="height">
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/konw_it"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/text_size_32" />
+
+            <TextView
+                android:id="@+id/tv_see_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/view_order_record"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/text_size_32" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>
