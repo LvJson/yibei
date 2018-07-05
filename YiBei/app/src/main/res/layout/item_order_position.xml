@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:background="@drawable/all_list_bg_icon"
+    android:gravity="center">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingBottom="25px"
+        android:paddingLeft="30px"
+        android:paddingTop="25px">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_symbol_en"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RURCAD"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+
+            <TextView
+                android:id="@+id/tv_symbol_cn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="欧元加元"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+
+            <ImageView
+                android:id="@+id/iv_status"
+                android:layout_width="32px"
+                android:layout_height="32px"
+                android:layout_marginLeft="5dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/buy_icon"
+                app:layout_auto_basewidth="height" />
+
+            <TextView
+                android:id="@+id/tv_lots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="0.01手"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="39px">
+
+            <TextView
+                android:id="@+id/tv_open_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开仓价：0.00"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+
+            <TextView
+                android:id="@+id/tv_market_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="当前价：0.00"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="122px"
+        android:background="@color/four_text_color" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="42px"
+        android:paddingRight="35px">
+
+        <TextView
+            android:id="@+id/tv_float_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="$0.00"
+            android:textColor="@color/rise_color"
+            android:textSize="@dimen/text_size_28" />
+
+        <TextView
+            android:id="@+id/tv_colse_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/orange_frame_bg"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:text="@string/close_the_position"
+            android:textColor="@color/main_color"
+            android:textSize="@dimen/text_size_28" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

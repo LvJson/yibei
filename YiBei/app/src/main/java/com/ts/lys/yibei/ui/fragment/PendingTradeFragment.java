@@ -378,7 +378,7 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
                 EventBus.getDefault().post(new EventBean(EventContents.BUTTON_STATUS_CHANGE, null));
 
                 llBuyPrice.setBackgroundResource(R.drawable.simple_times_bg);
-                llSellPrice.setBackgroundResource(R.drawable.rise_bg);
+                llSellPrice.setBackgroundResource(R.drawable.fall_bg);
                 tvBuyIn.setTextColor(getResources().getColor(R.color.two_text_color));
                 tvBuyPrice.setTextColor(getResources().getColor(R.color.two_text_color));
                 tvSellOut.setTextColor(getResources().getColor(R.color.white));

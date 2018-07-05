@@ -75,4 +75,18 @@
     <string name="pending">挂单</string>
     <string name="pending_direction">开仓方向</string>
 
+
+    <string name="float_profit_loss">浮动盈亏</string>
+    <string name="have_used_margin">已用保证金</string>
+    <string name="account_worth">账户净值</string>
+    <string name="account_balance">账户余额</string>
+    <string name="position">持仓</string>
+    <string name="history">历史</string>
+    <string name="close_the_position">平仓</string>
+    <string name="withdrawal">撤单</string>
+    <string name="open_position_price">开仓价</string>
+    <string name="close_position_price">平仓价</string>
+    <string name="income">收益</string>
+
+
 </resources>

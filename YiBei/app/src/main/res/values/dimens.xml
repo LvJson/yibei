@@ -21,6 +21,7 @@
     <dimen name="text_size_36">36px</dimen>
     <dimen name="text_size_48">48px</dimen>
     <dimen name="text_size_54">54px</dimen>
+    <dimen name="text_size_60">60px</dimen>
 
 
 </resources>

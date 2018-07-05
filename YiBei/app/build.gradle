@@ -90,4 +90,8 @@ dependencies {
      * Recyclerview item动画
      */
     compile 'jp.wasabeef:recyclerview-animators:2.3.0'
+    /**
+     * 下拉刷新，上拉加载更多
+     */
+    compile 'com.jcodecraeer:xrecyclerview:1.5.9'
 }
