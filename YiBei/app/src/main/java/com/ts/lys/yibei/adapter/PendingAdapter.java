@@ -32,6 +32,8 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
     private List<double[]> realTimeData;//0:market,1:ask,2:bid
     private double[] realTimeProfit;
 
+    private OnItemClickListener listener;
+
 //    public OrderPositionAdapter(Context context, List<OrderPositionModel.DataBean.TraderOrderBean> list, Handler handler) {
 //        mContext = context;
 //        mList = list;
@@ -57,11 +59,31 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+
+        this.listener = listener;
+    }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvFloatPrice.setVisibility(View.GONE);
         holder.tvClosePosition.setText(mContext.getString(R.string.withdrawal));
         holder.ivStatus.setImageResource(R.mipmap.pending_icon);
+
+        holder.tvClosePosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCanclePendingClick();
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick();
+            }
+        });
 //        final OrderPositionModel.DataBean.TraderOrderBean model = mList.get(position);
 //        double fee = Arith.add(model.getSwaps(), model.getCommission());
 //        int digits = model.getDigits();
@@ -165,5 +187,12 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
             ButterKnife.bind(this, itemView);
             AutoUtils.autoSize(itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+
+        void onItemClick();
+
+        void onCanclePendingClick();
     }
 }

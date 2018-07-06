@@ -19,6 +19,7 @@
     <dimen name="text_size_32">32px</dimen>
     <dimen name="text_size_34">34px</dimen>
     <dimen name="text_size_36">36px</dimen>
+    <dimen name="text_size_44">44px</dimen>
     <dimen name="text_size_48">48px</dimen>
     <dimen name="text_size_54">54px</dimen>
     <dimen name="text_size_60">60px</dimen>

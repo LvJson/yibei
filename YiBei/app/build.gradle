@@ -94,4 +94,8 @@ dependencies {
      * 下拉刷新，上拉加载更多
      */
     compile 'com.jcodecraeer:xrecyclerview:1.5.9'
+    /**
+     * webagent
+     */
+    compile 'com.just.agentweb:agentweb:1.2.3'
 }

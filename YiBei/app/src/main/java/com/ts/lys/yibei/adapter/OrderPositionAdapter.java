@@ -28,6 +28,7 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
     private List<OrderPositionModel.DataBean.TraderOrderBean> mList;
     private Handler mHandler;
     private int tag = 0;// 标记是否是第一次进入
+    private OnItemClickListener listener;
 
     private List<double[]> realTimeData;//0:market,1:ask,2:bid
     private double[] realTimeProfit;
@@ -40,6 +41,10 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
 
     public OrderPositionAdapter(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -59,6 +64,16 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+        if (holder instanceof ViewHolder) {
+
+            holder.tvClosePosition.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClosePositionClick();
+                }
+            });
+        }
 //        final OrderPositionModel.DataBean.TraderOrderBean model = mList.get(position);
 //        double fee = Arith.add(model.getSwaps(), model.getCommission());
 //        int digits = model.getDigits();
@@ -162,5 +177,12 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
             ButterKnife.bind(this, itemView);
             AutoUtils.autoSize(itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+
+        void onItemClick();
+
+        void onClosePositionClick();
     }
 }

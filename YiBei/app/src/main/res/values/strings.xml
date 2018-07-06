@@ -87,6 +87,10 @@
     <string name="open_position_price">开仓价</string>
     <string name="close_position_price">平仓价</string>
     <string name="income">收益</string>
+    <string name="confirm_close_position">确认平仓</string>
+    <string name="expected_profit_loss">预计盈亏</string>
+    <string name="current_price">当前价格</string>
+    <string name="order_number">订单编号</string>
 
 
 </resources>
