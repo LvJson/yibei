@@ -24,6 +24,7 @@ import com.ts.lys.yibei.customeview.RecycleViewDivider;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import butterknife.OnClick;
 import okhttp3.Call;
 
 /**
@@ -47,12 +48,18 @@ public class AllSymbolMarketFragment extends BaseFragment {
     RecyclerView recyclerView;
 
     SelfSelectAdapter selfSelectAdapter;
+    @Bind(R.id.ll_net_not_work)
+    AutoLinearLayout llNetNotWork;
+    @Bind(R.id.ll_not_data)
+    AutoLinearLayout llNotData;
     private String tag;
 
     private int position = -1;//待删除条目位置
     private MyDialogFragment myDialogFragment;
 
     private ArrayList<String> selfSelectSymbol = new ArrayList<>();
+
+    private MarketFragment marketFragment;
 
     @Override
     protected int getLayoutID() {
@@ -73,13 +80,15 @@ public class AllSymbolMarketFragment extends BaseFragment {
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayout.VERTICAL, BaseUtils.dip2px(getActivity(), 1), getResources().getColor(R.color.bg_or_division_color)));
         recyclerView.setAdapter(selfSelectAdapter = new SelfSelectAdapter(getActivity(), tag));
-        recyclerView.setItemAnimator(new SlideInLeftAnimator());
+//        recyclerView.setItemAnimator(new SlideInLeftAnimator());//item 移除动画
+//        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);//取消item默认动画
+
     }
 
     //"自选", "外汇", "指数", "贵金属", "原油"
     private void initData() {
         tag = getArguments().getString("tag");
-
+        marketFragment = (MarketFragment) getParentFragment();
     }
 
     private void initListener() {
@@ -167,6 +176,11 @@ public class AllSymbolMarketFragment extends BaseFragment {
         CustomHttpUtils.cancelHttp(className);
     }
 
+    @OnClick(R.id.tv_reload)
+    public void onViewClicked() {
+        marketFragment.refreshData();
+    }
+
     public static class MyDialogFragment extends DialogFragment {
         @Nullable
         @Override
@@ -193,7 +207,6 @@ public class AllSymbolMarketFragment extends BaseFragment {
             ditySymbol(selfSelectSymbol, position);
         }
     }
-
 
     /**
      * 增减自选
@@ -247,5 +260,23 @@ public class AllSymbolMarketFragment extends BaseFragment {
 
     }
 
+    /**
+     * 展示网络错误或者无数据界面
+     *
+     * @param errorStatus
+     */
+    public void setErrorStatus(int errorStatus) {
+
+        if (errorStatus == 0) {//网络错误
+            llNetNotWork.setVisibility(View.VISIBLE);
+            llNotData.setVisibility(View.GONE);
+        } else if (errorStatus == 1) {//数据为空
+            llNetNotWork.setVisibility(View.GONE);
+            llNotData.setVisibility(View.VISIBLE);
+        } else {
+            llNetNotWork.setVisibility(View.GONE);
+            llNotData.setVisibility(View.GONE);
+        }
+    }
 
 }

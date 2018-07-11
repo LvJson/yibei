@@ -15,5 +15,7 @@ public class EventContents {
 
     public static final String UPDATED_SELF_SYMBOL = "005";
 
+    public static final String NET_NOT_ERROR = "006";//网络错误
+
 
 }

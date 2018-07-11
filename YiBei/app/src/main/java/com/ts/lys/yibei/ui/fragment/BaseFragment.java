@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.customeview.CustomProgress;
 import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.Logger;
@@ -107,6 +109,8 @@ public abstract class BaseFragment extends Fragment implements BaseMvpView {
 
     @Override
     public void showToast(String content) {
+        if (content.equals(BaseContents.NET_ERROR))
+            content = getString(R.string.net_error);
 
         if (toast != null) {
             toast.cancel();

@@ -91,6 +91,63 @@
     <string name="expected_profit_loss">预计盈亏</string>
     <string name="current_price">当前价格</string>
     <string name="order_number">订单编号</string>
+    <string name="margin_and_null">保证金&#12288;</string>
+
+    <string name="phone_quick_login">手机快捷登录</string>
+    <string name="login_explain">未注册易贝外汇的手机号，登录时将自动注册</string>
+    <string name="please_write_phone_num">请输入手机号码</string>
+    <string name="please_write_verify_code">请输入验证码</string>
+    <string name="get_verify_code">获取验证码</string>
+    <string name="login">登录</string>
+
+    <string name="yibei_forex">易贝外汇</string>
+    <string name="asset_balance">资产余额</string>
+    <string name="profit_rate">盈利订单率</string>
+    <string name="open_account_explain">马上开户让赚钱变成现实</string>
+    <string name="open_account_step">填写身份信息-经纪商审核-绑定账户</string>
+    <string name="open_real_account">开设真实账户</string>
+    <string name="position_amount">持仓量</string>
+    <string name="cumulative_income">累计收益</string>
+    <string name="bi">笔</string>
+    <string name="standard_hand">标准手</string>
+    <string name="data_statistics">数据统计</string>
+    <string name="trade_report">交易报表</string>
+    <string name="help_center">帮助中心</string>
+    <string name="feedback">意见反馈</string>
+    <string name="about_yibei">关于易贝</string>
+    <string name="demo_account">模拟账户</string>
+    <string name="account_manager">账户管理</string>
+    <string name="open_new_account">开设新账户</string>
+    <string name="illegal_phone">手机号码输入错误</string>
+    <string name="incomplete_info">请将信息填写完整</string>
+    <string name="net_not_work">网络不可用</string>
+    <string name="check_your_net_setting">请检查您的网络设置</string>
+    <string name="reload">重新加载</string>
+    <string name="not_data">暂时没有相关数据</string>
+    <string name="net_error">网络异常</string>
 
 
+    <string name="choose_broker_explain">易贝外汇平台选择的经济商是经过严格筛选审核的，具有从事相关行业牌照，且受相关机构和部门的监管的合法正规平台，xxx并不给你提供交易软件(如MT4)及交易技术支持，也不对交易资金做任何担保。您在合作经纪商平台交易的资金风险和使用交易软件存在风险，xxx概不负担任何法律风险。</string>
+    <string name="expand">展开</string>
+    <string name="close">收起</string>
+    <string name="choose_boker">选择经纪商</string>
+    <string name="account_opening_tutorial">开户教程</string>
+    <string name="aetos_explain">AETOS Capital Group艾拓思资本集团为国际知名的金融交易服务商，致力于为零售客户及金融机构提供广泛的金融衍生产品交易，主要包括外汇等CFD产品。优势：手机在线出入金。</string>
+    <string name="regulatory_mechanism">监管机构：FCA&amp;ASIC</string>
+    <string name="withdraw_stytle">入金方式：首次最低入金$250,支持支付宝入金。</string>
+    <string name="aetos_net">详情请至经纪商官网：http://www.aetoscg.asia</string>
+    <string name="have_trade_account">已有交易真实账号,</string>
+    <string name="quick_bind">立即绑定>></string>
+    <string name="quick_bind2">立即绑定</string>
+
+    <string name="account_bind">账户绑定</string>
+    <string name="mt4_account">MT4账户</string>
+    <string name="mt4_password">MT4账户密码</string>
+    <string name="login_server">登录服务器</string>
+    <string name="bind_explain">说明：您在经纪商注册开户后，经纪商会将MT4账户和密码已经登录服务器名称通过邮件/短信的方式发送给您，您可以在您的注册邮箱中查看。此账户信息与易贝无关。</string>
+
+    <string name="withdraw_recharge">&#8194;去出入金&#8194;</string>
+
+    <string name="financial_calendar">财经日历</string>
+    <string name="infomation">资讯</string>
 </resources>

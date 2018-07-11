@@ -2,6 +2,7 @@ package com.ts.lys.yibei.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.customeview.CustomProgress;
 import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.CloseAllActivity;
@@ -35,6 +38,7 @@ public class BaseActivity extends Activity implements BaseMvpView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBaseData();
     }
 
     private void initBaseData() {
@@ -84,12 +88,18 @@ public class BaseActivity extends Activity implements BaseMvpView {
     protected void onViewCreated() {
         className = getClass().getName();
         CloseAllActivity.getScreenManager().pushActivity(this);
+
+    }
+
+    protected void setStatusBarStatus() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);
         /**
          * SDK版本>=23，可设置状态栏字体颜色
          */
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
     }
 
     protected boolean filterException(Exception e) {
@@ -104,6 +114,8 @@ public class BaseActivity extends Activity implements BaseMvpView {
 
     @Override
     public void showToast(String content) {
+        if (content.equals(BaseContents.NET_ERROR))
+            content = getString(R.string.net_error);
 
         if (toast != null) {
             toast.cancel();

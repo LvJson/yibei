@@ -102,7 +102,6 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             }
 
-
             DecimalFormat df = new DecimalFormat("######0.00");
 
 
@@ -160,6 +159,63 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+
+            final GetQuotesModel.DataBean.SymbolsBean model = mList.get(position);
+            model.setPosition(position);
+
+            int digits = model.getDigits();
+            if (model.getBid() == 0) {
+                ((HotForeignViewholder) holder).tvPrice.setText("0.00");
+            } else {
+                if (digits != -1) {
+                    ((HotForeignViewholder) holder).tvPrice.setText(AppUtils.getDigitsData(model.getBid(), digits));
+                }
+            }
+            DecimalFormat df = new DecimalFormat("######0.00");
+
+
+            if (model.getIsOpen().equals("0") && model.getDifference() == 0) {
+                ((HotForeignViewholder) holder).tvPersent.setText(df.format(model.getGains()) + "%");
+
+                if (model.getGains() > 0) {
+                    ((HotForeignViewholder) holder).tvPersent.setTextColor(mContext.getResources().getColor(R.color.rise_color));
+
+                } else if (model.getGains() < 0) {
+                    ((HotForeignViewholder) holder).tvPersent.setTextColor(mContext.getResources().getColor(R.color.fall_color));
+                }
+            } else {
+                //计算百分比
+                double percent = (model.getBid() - model.getYesterdayClosePrice()) / model.getYesterdayClosePrice() * 100;
+                ((HotForeignViewholder) holder).tvPersent.setText(df.format(percent) + "%");
+
+                if (model.getBid() > model.getYesterdayClosePrice()) {
+                    ((HotForeignViewholder) holder).tvPersent.setTextColor(mContext.getResources().getColor(R.color.rise_color));
+                    ((HotForeignViewholder) holder).tvPersent.setText("+" + df.format(percent) + "%");
+                } else if (model.getBid() == model.getYesterdayClosePrice()) {
+                    ((HotForeignViewholder) holder).tvPersent.setTextColor(mContext.getResources().getColor(R.color.rise_color));
+                } else {
+                    ((HotForeignViewholder) holder).tvPersent.setTextColor(mContext.getResources().getColor(R.color.fall_color));
+                    ((HotForeignViewholder) holder).tvPersent.setText(df.format(percent) + "%");
+                }
+                if (model.getState() == 1) {
+                    ((HotForeignViewholder) holder).llPriceBg.setBackgroundResource(R.drawable.rise_bg);
+                    ((HotForeignViewholder) holder).ivStatus.setImageResource(R.mipmap.white_arrow_rise);
+                    ((HotForeignViewholder) holder).ivStatus.setVisibility(View.VISIBLE);
+                } else if (model.getState() == -1) {
+                    ((HotForeignViewholder) holder).llPriceBg.setBackgroundResource(R.drawable.fall_bg);
+                    ((HotForeignViewholder) holder).ivStatus.setImageResource(R.mipmap.white_arrow_fall);
+                    ((HotForeignViewholder) holder).ivStatus.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+    }
+
     /**
      * 取消收藏
      *
@@ -178,7 +234,7 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     long updateTime = 0;
 
-    public void setUpdateModel(RealTimeBean model) {
+    public synchronized void setUpdateModel(RealTimeBean model) {
         if (realList == null || realList.size() == 0) return;
         for (int i = 0; i < realList.size(); i++) {
             if (realList.get(i).getSymbol().equals(model.getSymbol())) {
@@ -190,12 +246,9 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         }
 
-        if (updateTime == 0 || System.currentTimeMillis() - updateTime > 1000) {
-            updateTime = System.currentTimeMillis();
-        } else {
-            return;
-        }
-
+        /**
+         * 实时刷新:问题->更新的条目会整个闪烁
+         */
         for (int i = 0; i < mList.size(); i++) {
             GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
             RealTimeBean um = realList.get(i);
@@ -205,12 +258,48 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             m.setMarket(um.getMarket());
             if (m.getDifference() > 0) {
                 m.setState(1);
+                localNotify(i);
             } else if (m.getDifference() < 0) {
                 m.setState(-1);
+                localNotify(i);
             }
 
         }
-        notifyDataSetChanged();
+
+        /**
+         * 间隔一秒后刷新
+         */
+//
+//        if (updateTime == 0 || System.currentTimeMillis() - updateTime > 500) {
+//            updateTime = System.currentTimeMillis();
+//        } else {
+//            return;
+//        }
+//
+//        for (int i = 0; i < mList.size(); i++) {
+//            GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
+//            RealTimeBean um = realList.get(i);
+//            m.setDifference(um.getBid() - m.getBid());
+//            m.setAsk(um.getAsk());
+//            m.setBid(um.getBid());
+//            m.setMarket(um.getMarket());
+//            if (m.getDifference() > 0) {
+//                m.setState(1);
+//            } else if (m.getDifference() < 0) {
+//                m.setState(-1);
+//            }
+//        }
+//        notifyDataSetChanged();
+    }
+
+    /**
+     * 局部刷新，减少性能消耗
+     *
+     * @param i
+     */
+    private void localNotify(int i) {
+
+        notifyItemChanged(i, "lys");
     }
 
 

@@ -4,9 +4,13 @@ import android.text.TextUtils;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ts.lys.yibei.bean.EventBean;
+import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.ui.activity.App;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,8 +68,9 @@ public class CustomHttpUtils {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         serviceStatus.faild(call, e, id);
-                        if (e.getMessage() != null)
-                            Logger.e("faild", e.getMessage());
+                        if (e.getMessage() != null) {
+                            EventBus.getDefault().post(new EventBean(EventContents.NET_NOT_ERROR, null));
+                        }
 
                     }
 

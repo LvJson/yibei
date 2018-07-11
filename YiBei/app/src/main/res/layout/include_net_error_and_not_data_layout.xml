@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
+    android:layout_marginTop="50dp">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_net_not_work"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="329px"
+            android:layout_height="389px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/net_error_icon"
+            app:layout_auto_basewidth="height" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:text="@string/net_not_work"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_28" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:text="@string/check_your_net_setting"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_28" />
+
+        <TextView
+            android:id="@+id/tv_reload"
+            android:layout_width="216px"
+            android:layout_height="84px"
+            android:layout_marginTop="51px"
+            android:background="@drawable/light_gray_frame"
+            android:gravity="center"
+            android:text="@string/reload"
+            android:textColor="@color/one_text_color"
+            android:textSize="@dimen/text_size_30"
+            app:layout_auto_basewidth="height" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_not_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="255px"
+            android:layout_height="299px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/data_not_icon"
+            app:layout_auto_basewidth="height" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:text="@string/not_data"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_28" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+</com.zhy.autolayout.AutoRelativeLayout>

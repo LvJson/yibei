@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
 import android.support.v4.view.ViewPager;
@@ -564,5 +565,31 @@ public class BaseUtils {
 //        titleContainer.setDividerPadding(UIUtil.dip2px(this, 5));
 //        titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter));
         ViewPagerHelper.bind(magicIndicator, viewPager);
+    }
+
+    public static int getColor(Context context, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getResources().getColor(color, null);
+        } else {
+            return context.getResources().getColor(color);
+        }
+    }
+
+    /**
+     * 字符串中某个字符出现的次数
+     *
+     * @param str
+     * @param s
+     * @return
+     */
+    public static int countString(String str, String s) {
+        int count = 0;
+        char[] ar = str.toCharArray();
+        for (int i = 0; i < ar.length; i++) {
+            if (String.valueOf(ar[i]).equals(s)) {
+                count++;
+            }
+        }
+        return count;
     }
 }

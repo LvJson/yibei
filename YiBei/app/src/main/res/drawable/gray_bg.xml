@@ -14,7 +14,7 @@
     <!--android:color="@color/main_color" />-->
     <gradient
         android:angle="180"
-        android:endColor="@color/four_text_color"
-        android:startColor="@color/four_text_color" />
+        android:endColor="@color/eight_text_color"
+        android:startColor="@color/eight_text_color" />
 
 </shape>

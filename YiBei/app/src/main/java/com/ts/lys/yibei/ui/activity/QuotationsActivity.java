@@ -109,6 +109,8 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     ImageView ivCollection;
     @Bind(R.id.tv_spread)
     TextView tvSpread;
+    @Bind(R.id.ll_head)
+    RelativeLayout llHead;
 
     private String[] CHANNELS;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
@@ -503,9 +505,14 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
             if (d1 > 0) {
                 tvRateOfChange.setText("+" + BaseUtils.getDigitsData(d2, 2) + "%");
                 tvPriceVar.setText("+" + BaseUtils.getDigitsData(d1, digits == -1 ? 2 : digits));
+                llHead.setBackgroundColor(getResources().getColor(R.color.rise_color));
+                StatusBarUtil.setColor(this, getResources().getColor(R.color.rise_color), 0);
             } else {
                 tvRateOfChange.setText(BaseUtils.getDigitsData(d2, 2) + "%");
                 tvPriceVar.setText(BaseUtils.getDigitsData(d1, digits == -1 ? 2 : digits));
+                llHead.setBackgroundColor(getResources().getColor(R.color.fall_color));
+                StatusBarUtil.setColor(this, getResources().getColor(R.color.fall_color), 0);
+
             }
         }
     }

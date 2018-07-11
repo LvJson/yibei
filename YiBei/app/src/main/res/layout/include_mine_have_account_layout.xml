@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/include_have_account"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_choose_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_account_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demo_account"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_30" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@mipmap/mine_choose_account_icon" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_manager_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingRight="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:text="@string/account_manager"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_30" />
+
+            <ImageView
+                android:layout_width="17px"
+                android:layout_height="31px"
+                android:src="@mipmap/right_gray_arrow_icon"
+                app:layout_auto_basewidth="height" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <Button
+        android:id="@+id/btn_open_new_account"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="27px"
+        android:background="@drawable/btn_gradual_change_bg"
+        android:text="@string/open_new_account"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_26" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

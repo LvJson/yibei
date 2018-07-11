@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ts.lys.yibei.customeview.KeyboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyboard_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/in_one"
+        layout="@layout/bar_white_bg_layout" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/in_one">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15px"
+                android:paddingTop="10dp"
+                android:text="@string/phone_quick_login"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_64" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15px"
+                android:paddingTop="10dp"
+                android:text="@string/login_explain"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_24" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120px">
+
+                <EditText
+                    android:id="@+id/et_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:hint="@string/please_write_phone_num"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/one_text_color"
+                    android:textColorHint="@color/two_text_color"
+                    android:textSize="18dp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/four_text_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="100px"
+                android:gravity="center_vertical|bottom">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/et_verify_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:background="@null"
+                        android:hint="@string/please_write_verify_code"
+                        android:inputType="number"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/one_text_color"
+                        android:textColorHint="@color/two_text_color"
+                        android:textSize="18dp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_get_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/get_verify_code"
+                    android:textColor="@color/main_color"
+                    android:textSize="@dimen/text_size_28" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/four_text_color" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="90px"
+                android:background="@drawable/gradual_change_up_down_bg"
+                android:enabled="true"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_32" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+
+</com.ts.lys.yibei.customeview.KeyboardLayout>

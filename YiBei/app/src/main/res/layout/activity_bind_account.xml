@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ts.lys.yibei.customeview.KeyboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/in_one"
+        layout="@layout/bar_white_bg_layout" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/in_one"
+
+        android:layout_marginTop="50px">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="477px"
+                android:layout_height="107px"
+                android:scaleType="fitXY"
+                android:src="@mipmap/mmignz_icon"
+                app:layout_auto_basewidth="height" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70px">
+
+                <EditText
+                    android:id="@+id/et_mt4_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:hint="@string/mt4_account"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/one_text_color"
+                    android:textColorHint="@color/two_text_color"
+                    android:textSize="18dp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/four_text_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="50px"
+                android:gravity="center_vertical|bottom">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/et_mt_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/mt4_password"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/one_text_color"
+                        android:textColorHint="@color/two_text_color"
+                        android:textSize="18dp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/four_text_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="50px"
+                android:gravity="center_vertical|bottom">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/et_login_server"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/login_server"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/one_text_color"
+                        android:textColorHint="@color/two_text_color"
+                        android:textSize="18dp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/four_text_color" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="50px"
+                android:background="@drawable/gradual_change_up_down_bg"
+                android:enabled="true"
+                android:text="@string/quick_bind2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_32" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll_view"
+        android:padding="@dimen/padding_left_and_right"
+        android:text="@string/bind_explain"
+        android:textColor="@color/two_text_color"
+        android:textSize="@dimen/text_size_24" />
+
+</com.ts.lys.yibei.customeview.KeyboardLayout>

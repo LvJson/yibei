@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ts.lys.yibei.bean.OpenTrader;
 import com.ts.lys.yibei.bean.PendingOrder;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 
@@ -23,7 +24,7 @@ public class TradeModal {
         CustomHttpUtils.getServiceDatas(map, UrlContents.PENDING_ORDER, tag, new CustomHttpUtils.ServiceStatus() {
             @Override
             public void faild(Call call, Exception e, int id) {
-                listener.faild(e.getMessage());
+                listener.faild(BaseContents.NET_ERROR);
             }
 
             @Override
@@ -51,7 +52,7 @@ public class TradeModal {
         CustomHttpUtils.getServiceDatas(map, UrlContents.TRADER_OPEN, tag, new CustomHttpUtils.ServiceStatus() {
             @Override
             public void faild(Call call, Exception e, int id) {
-                listener.faild(e.getMessage());
+                listener.faild(BaseContents.NET_ERROR);
             }
 
             @Override

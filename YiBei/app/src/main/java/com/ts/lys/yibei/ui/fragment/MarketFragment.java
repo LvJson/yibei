@@ -152,7 +152,25 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         ((AllSymbolMarketFragment) fragmentList.get(2)).setFirstList(list1);
         ((AllSymbolMarketFragment) fragmentList.get(3)).setFirstList(list2);
         ((AllSymbolMarketFragment) fragmentList.get(4)).setFirstList(list3);
+        if (list0 == null || list0.size() == 0)
+            ((AllSymbolMarketFragment) fragmentList.get(1)).setErrorStatus(1);
+        else
+            ((AllSymbolMarketFragment) fragmentList.get(1)).setErrorStatus(2);
 
+        if (list1 == null || list1.size() == 0)
+            ((AllSymbolMarketFragment) fragmentList.get(2)).setErrorStatus(1);
+        else
+            ((AllSymbolMarketFragment) fragmentList.get(2)).setErrorStatus(2);
+
+        if (list2 == null || list2.size() == 0)
+            ((AllSymbolMarketFragment) fragmentList.get(3)).setErrorStatus(1);
+        else
+            ((AllSymbolMarketFragment) fragmentList.get(3)).setErrorStatus(2);
+
+        if (list3 == null || list3.size() == 0)
+            ((AllSymbolMarketFragment) fragmentList.get(4)).setErrorStatus(1);
+        else
+            ((AllSymbolMarketFragment) fragmentList.get(4)).setErrorStatus(2);
 
     }
 
@@ -164,11 +182,15 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
     @Override
     public void setCollectionSymbol(GetQuotesModel collectionSymbol) {
         if (getActivity() == null) return;
-        Logger.e(TAG, collectionSymbol.getData().getSymbols().size() + "");
         listColl.clear();
         List<GetQuotesModel.DataBean.SymbolsBean> sb = collectionSymbol.getData().getSymbols();
         listColl = sb;
         ((AllSymbolMarketFragment) fragmentList.get(0)).setFirstList(listColl);
+        if (listColl == null || listColl.size() == 0)
+            ((AllSymbolMarketFragment) fragmentList.get(0)).setErrorStatus(1);
+        else
+            ((AllSymbolMarketFragment) fragmentList.get(0)).setErrorStatus(2);
+
         for (int i = 0; i < sb.size(); i++) {
             selfSelectSymbol.add(sb.get(i).getSymbolEn());
         }
@@ -198,6 +220,11 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
             map.put("accessToken", accessToken);
             map.put("userId", userId);
             allSymbolPresenter.getCollectionSymbol(map, className + "1");
+        } else if (event.getTagOne().equals(EventContents.NET_NOT_ERROR)) {
+            for (int i = 0; i < fragmentList.size(); i++) {
+                ((AllSymbolMarketFragment) fragmentList.get(i)).setErrorStatus(0);
+                Logger.e("NET_NOT_ERROR", "收到消息");
+            }
         }
     }
 
@@ -208,6 +235,23 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         allSymbolPresenter.detachView();
         CustomHttpUtils.cancelHttp(className + "1");
         CustomHttpUtils.cancelHttp(className + "2");
+
+    }
+
+    /**
+     * 刷新数据
+     */
+    public void refreshData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("accessToken", accessToken);
+        map.put("userId", userId);
+        allSymbolPresenter.getCollectionSymbol(map, className + "1");
+        allSymbolPresenter.getAllSymbol(map, className + "1");
+    }
+
+    @Override
+    public void showToast(String content) {
+        super.showToast(content);
 
     }
 }

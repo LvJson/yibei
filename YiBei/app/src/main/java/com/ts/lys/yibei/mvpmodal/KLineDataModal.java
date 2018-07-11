@@ -2,6 +2,7 @@ package com.ts.lys.yibei.mvpmodal;
 
 import com.google.gson.Gson;
 import com.ts.lys.yibei.bean.StockChartDatas;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 
@@ -20,7 +21,7 @@ public class KLineDataModal {
         CustomHttpUtils.getServiceDatas(map, UrlContents.STOCK_CHART_ACTIVITY_HISTORYQUOTE, tag, new CustomHttpUtils.ServiceStatus() {
             @Override
             public void faild(Call call, Exception e, int id) {
-                listener.faild(e.getMessage());
+                listener.faild(BaseContents.NET_ERROR);
             }
 
             @Override
