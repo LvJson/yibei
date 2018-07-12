@@ -150,4 +150,5 @@
 
     <string name="financial_calendar">财经日历</string>
     <string name="infomation">资讯</string>
+    <string name="stop_loss_profit">止损/止盈</string>
 </resources>

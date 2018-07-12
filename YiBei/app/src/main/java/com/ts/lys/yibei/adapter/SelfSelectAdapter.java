@@ -249,33 +249,6 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         /**
          * 实时刷新:问题->更新的条目会整个闪烁
          */
-        for (int i = 0; i < mList.size(); i++) {
-            GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
-            RealTimeBean um = realList.get(i);
-            m.setDifference(um.getBid() - m.getBid());
-            m.setAsk(um.getAsk());
-            m.setBid(um.getBid());
-            m.setMarket(um.getMarket());
-            if (m.getDifference() > 0) {
-                m.setState(1);
-                localNotify(i);
-            } else if (m.getDifference() < 0) {
-                m.setState(-1);
-                localNotify(i);
-            }
-
-        }
-
-        /**
-         * 间隔一秒后刷新
-         */
-//
-//        if (updateTime == 0 || System.currentTimeMillis() - updateTime > 500) {
-//            updateTime = System.currentTimeMillis();
-//        } else {
-//            return;
-//        }
-//
 //        for (int i = 0; i < mList.size(); i++) {
 //            GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
 //            RealTimeBean um = realList.get(i);
@@ -285,11 +258,38 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //            m.setMarket(um.getMarket());
 //            if (m.getDifference() > 0) {
 //                m.setState(1);
+//                localNotify(i);
 //            } else if (m.getDifference() < 0) {
 //                m.setState(-1);
+//                localNotify(i);
 //            }
+//
 //        }
-//        notifyDataSetChanged();
+
+        /**
+         * 间隔一秒后刷新
+         */
+
+        if (updateTime == 0 || System.currentTimeMillis() - updateTime > 500) {
+            updateTime = System.currentTimeMillis();
+        } else {
+            return;
+        }
+
+        for (int i = 0; i < mList.size(); i++) {
+            GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
+            RealTimeBean um = realList.get(i);
+            m.setDifference(um.getBid() - m.getBid());
+            m.setAsk(um.getAsk());
+            m.setBid(um.getBid());
+            m.setMarket(um.getMarket());
+            if (m.getDifference() > 0) {
+                m.setState(1);
+            } else if (m.getDifference() < 0) {
+                m.setState(-1);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     /**

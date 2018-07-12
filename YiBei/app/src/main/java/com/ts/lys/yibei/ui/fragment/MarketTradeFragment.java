@@ -24,6 +24,7 @@ import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
+import com.ts.lys.yibei.utils.Logger;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -138,14 +139,14 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
          *止损价格
          */
         stopLossAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, baseHeight);
-        stopLossAdv.setLimit(-1, 0, parentActivity.digits);
+        stopLossAdv.setLimit(-1, 10000000, parentActivity.digits);
         stopLossAdv.setIsStopLossOrProfit(true);
 
         /**
          *止盈价格
          */
         stopProfitAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, baseHeight);
-        stopProfitAdv.setLimit(-1, 0, parentActivity.digits);
+        stopProfitAdv.setLimit(-1, 10000000, parentActivity.digits);
         stopProfitAdv.setIsStopLossOrProfit(true);
     }
 
@@ -196,7 +197,10 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
                     initstopLossLimit();
                 } else {
                     double stopLossLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
-                    stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    if (cmd == 0)
+                        stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    else
+                        stopLossAdv.setLimit(stopLossLimit, 10000000, parentActivity.digits);
                     stopLossAdv.setnumber(stopLossLimit);
                 }
 
@@ -211,7 +215,10 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
                     initstopLossLimit();
                 } else {
                     double stopLossLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
-                    stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    if (cmd == 0)
+                        stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+                    else
+                        stopLossAdv.setLimit(stopLossLimit, 10000000, parentActivity.digits);
                     stopLossAdv.setnumber(stopLossLimit);
                 }
 
@@ -237,13 +244,17 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
                     initStopProfitLimit();
                 } else {
                     double stopProfitLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
-                    stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
+                    if (cmd == 0)
+                        stopProfitAdv.setLimit(stopProfitLimit, 10000000, parentActivity.digits);
+                    else
+                        stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
                     stopProfitAdv.setnumber(stopProfitLimit);
                 }
             }
 
             @Override
             public void onDelClick() {
+                Logger.e("number", stopProfitAdv.getnumber() + "");
                 if (stopProfitAdv.getnumber() != 0) {
                     double getnumber = stopProfitAdv.getnumber();
                     getnumber -= stopProfitLever;
@@ -251,7 +262,10 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
                     initStopProfitLimit();
                 } else {
                     double stopProfitLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
-                    stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
+                    if (cmd == 0)
+                        stopProfitAdv.setLimit(stopProfitLimit, 10000000, parentActivity.digits);
+                    else
+                        stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
                     stopProfitAdv.setnumber(stopProfitLimit);
                 }
             }
@@ -424,8 +438,13 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
     private void initstopLossLimit() {
 
         double stopLossLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 0);
-
-        stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+        if (cmd == 0) {
+            stopLossAdv.setLimit(0, stopLossLimit, parentActivity.digits);
+            Logger.e("买入", stopLossLimit + "");
+        } else {
+            Logger.e("卖出", stopLossLimit + "");
+            stopLossAdv.setLimit(stopLossLimit, 10000000, parentActivity.digits);
+        }
 
         /**
          * 如果加减后的价格不在范围内则强制改变输入框的价格（注意：是点击加号和减号的处理逻辑）
@@ -469,7 +488,10 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
     private void initStopProfitLimit() {
 
         double stopProfitLimit = CalMarginAndProfitUtil.stopLossOrprofitLimit(currentCurrency, symbolInfoBean.getStopsLevel(), parentActivity.digits, cmd, 1);
-        stopProfitAdv.setLimit(stopProfitLimit, 0, parentActivity.digits);
+        if (cmd == 0)
+            stopProfitAdv.setLimit(stopProfitLimit, 10000000, parentActivity.digits);
+        else
+            stopProfitAdv.setLimit(0, stopProfitLimit, parentActivity.digits);
 
         /**
          * 如果加减后的价格不在范围内则强制改变输入框的价格（注意：是点击加号和减号的处理逻辑）

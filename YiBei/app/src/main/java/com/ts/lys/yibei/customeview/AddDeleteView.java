@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.utils.Logger;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import java.text.DecimalFormat;
@@ -50,27 +51,35 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
 
     private boolean onClick = false;
     private double min = 0;
-    private double max = 100000000;
+    private double max = 1000000;
 
     private boolean isStopLossOrProfit = false;
+    private boolean isAddFirst = true;
+    private boolean isDelFirst = true;
 
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    if (getnumber() > max || max - getnumber() < 0.0000001 || max == getnumber()) {
-                        onClick = false;
-                        break;
-                    }
+                    Logger.e("max", max + "  getnumber: " + getnumber());
+                    if (!isAddFirst)
+                        if (getnumber() > max || max - getnumber() < 0.0000001 || max == getnumber()) {
+                            onClick = false;
+                            break;
+                        }
                     lister.onAddClick();
+                    isAddFirst = false;
                     break;
                 case 1:
-                    if (getnumber() < min || getnumber() - min < 0.0000001 || min == getnumber()) {
-                        onClick = false;
-                        break;
-                    }
+                    Logger.e("min", min + "  getnumber: " + getnumber());
+                    if (!isDelFirst)
+                        if (getnumber() < min || getnumber() - min < 0.0000001 || min == getnumber()) {
+                            onClick = false;
+                            break;
+                        }
                     lister.onDelClick();
+                    isDelFirst = false;
                     break;
             }
 
@@ -265,13 +274,8 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
      * @param max
      */
     public void setLimit(double min, double max, int decimalDigits) {
-        if (min > 0)
-            this.min = min;
-        if (max > 0)
-            this.max = max;
-        if (min < 0)
-            this.min = min;
-
+        this.min = min;
+        this.max = max;
         this.decimalDigits = decimalDigits;
 
         if (decimalDigits > 0) {
@@ -314,6 +318,11 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
      * @param number
      */
     public void setnumber(double number) {
+
+        if (df0 == null)
+            Logger.e("dfo", "null");
+        else
+            Logger.e("dfo", "not null");
 
         if (number > 0 && df0 != null) {
             et_number.setText(df0.format(number));

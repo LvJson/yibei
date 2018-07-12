@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/bar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include"
+        android:fillViewport="true">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.zhy.autolayout.AutoFrameLayout
+                android:id="@+id/frame_layout_k_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.zhy.autolayout.AutoFrameLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_left_and_right">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/float_profit_loss"
+                        android:textColor="@color/one_text_color"
+                        android:textSize="@dimen/text_size_32" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15px"
+                        android:text="@string/float_profit_loss"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_22" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="@dimen/text_size_46" />
+
+                <ImageView
+                    android:layout_width="27px"
+                    android:layout_height="15px"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/history_arrow_down"
+                    app:layout_auto_basewidth="height" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/padding_left_and_right"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="@dimen/padding_left_and_right">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0.00"
+                        android:textColor="@color/one_text_color"
+                        android:textSize="@dimen/text_size_30" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="$0.00"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_26" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0.00"
+                        android:textColor="@color/one_text_color"
+                        android:textSize="@dimen/text_size_30" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="$0.00"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_26" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0.00"
+                        android:textColor="@color/one_text_color"
+                        android:textSize="@dimen/text_size_30" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="$0.00"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_26" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/incloud_division_1dp_layout" />
+
+            <include layout="@layout/include_trade_detail_layout" />
+        </com.zhy.autolayout.AutoLinearLayout>
+    </ScrollView>
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/light_gray_frame2"
+        android:paddingBottom="6dp"
+        android:paddingLeft="@dimen/padding_left_and_right"
+        android:paddingRight="@dimen/padding_left_and_right"
+        android:paddingTop="6dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="92px"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_select"
+            android:text="@string/stop_loss_profit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_30" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="92px"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_select"
+            android:text="@string/close_the_position"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_30" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoRelativeLayout>
