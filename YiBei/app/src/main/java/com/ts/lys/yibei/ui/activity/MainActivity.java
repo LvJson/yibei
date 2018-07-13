@@ -126,6 +126,10 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         mTabHost.setCurrentTabByTag(tabId);
         updateTab(mTabHost);
         Logger.e(TAG, tabId);
+        if (tabId.equals("行情")) {
+            EventBus.getDefault().post(new EventBean(EventContents.MARKET_CLICK, null));
+        } else
+            EventBus.getDefault().post(new EventBean(EventContents.MARKET_NOT_CLICK, null));
     }
 
     /**

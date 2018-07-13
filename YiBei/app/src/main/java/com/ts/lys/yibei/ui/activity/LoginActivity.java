@@ -36,6 +36,10 @@ public class LoginActivity extends BaseActivity {
     TextView tvGetCode;
     @Bind(R.id.btn_login)
     Button btnLogin;
+    @Bind(R.id.tv_one)
+    TextView tvOne;
+    @Bind(R.id.tv_two)
+    TextView tvTwo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class LoginActivity extends BaseActivity {
 
     private void initView() {
         setBackButton();
+        setStatusBarStatus();
 
     }
 
@@ -59,12 +64,19 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onKeyBoardStateChange(int state) {
                 if (state == KeyboardLayout.KEYBOARD_STATE_SHOW) {
+                    tvOne.setVisibility(View.INVISIBLE);
+                    tvTwo.setVisibility(View.INVISIBLE);
+                    setTitle(getString(R.string.phone_quick_login));
                     scrollView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             scrollView.scrollTo(0, scrollView.getHeight());
                         }
                     }, 300);
+                } else {
+                    tvOne.setVisibility(View.VISIBLE);
+                    tvTwo.setVisibility(View.VISIBLE);
+                    setTitle("");
                 }
             }
         });

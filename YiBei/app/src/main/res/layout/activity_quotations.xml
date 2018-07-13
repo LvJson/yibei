@@ -12,7 +12,7 @@
         android:id="@+id/ll_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rise_color"
+        android:background="@color/eight_text_color"
         android:orientation="vertical">
 
         <com.zhy.autolayout.AutoRelativeLayout

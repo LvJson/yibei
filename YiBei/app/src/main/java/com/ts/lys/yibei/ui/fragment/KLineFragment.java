@@ -244,7 +244,7 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
 //                        Collections.reverse(qb);
         oldTime = qb.get(qb.size() - 1).getTime();
         String d1 = BaseUtils.getDateFromMillionSeconds(oldTime);
-        oldTime = BaseUtils.getMillionSecondsFromDate(d1);
+        oldTime = BaseUtils.getMillionSecondsFromDateKLine(d1);
 
         oldOpenPrice = qb.get(qb.size() - 1).getOpenPrice();
         oldHigt = qb.get(qb.size() - 1).getHigh();
@@ -336,9 +336,12 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
 
         Long newTime = quoteBeen.getTime();
         String n1 = BaseUtils.getDateFromMillionSeconds(newTime);
-        newTime = BaseUtils.getMillionSecondsFromDate(n1);
+
+        newTime = BaseUtils.getMillionSecondsFromDateKLine(n1);
+
         Double market = quoteBeen.getMarket();
         String newData = BaseUtils.millionToDate(quoteBeen.getTime());
+
         if (newTime - oldTime < timeDiff) {
             oldHigt = Math.max(market, oldHigt);
             oldLow = Math.min(market, oldLow);
@@ -375,8 +378,35 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
      * @param newData
      */
     private void changeLastData(String newData, long newDate2) {
-        EntrySet entrySets = new EntrySet();
-        List<Entry> en = kLine.getRender().getEntrySet().getEntryList();
+
+        /**
+         *  方法一：对集合认识不到位，会频繁创建对象导致内存抖动
+         */
+//        EntrySet entrySets = new EntrySet();
+//        List<Entry> en = kLine.getRender().getEntrySet().getEntryList();
+//        if (timeLineTag == 0) {
+//            if (realDataSize > 0 && en.size() > 1) {
+//                if (en.size() >= realDataSize)
+//                    en.remove(realDataSize - 1);
+//                en.add(realDataSize - 1, new Entry((float) oldOpenPrice, (float) oldHigt, (float) oldLow, (float) oldClose, 0, String.valueOf(newDate2)));
+//            }
+//        } else {
+//            if (realDataSize > 0 && en.size() > 1) {
+//                en.remove(en.size() - 1);
+//                en.add(new Entry((float) oldOpenPrice, (float) oldHigt, (float) oldLow, (float) oldClose, 0, newData));
+//            }
+//        }
+//
+//        entrySets.addEntries(en);
+//        entrySets.computeStockIndex();
+//        kLine.setEntrySet(entrySets);
+//        kLine.notifyDataSetChanged();
+
+        /**
+         *  方法二：去掉对象的频繁创建，去掉非必要指标的展示，解决了界面卡顿的问题
+         */
+        EntrySet entrySet = kLine.getRender().getEntrySet();
+        List<Entry> en = entrySet.getEntryList();
         if (timeLineTag == 0) {
             if (realDataSize > 0 && en.size() > 1) {
                 if (en.size() >= realDataSize)
@@ -390,9 +420,7 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
             }
         }
 
-        entrySets.addEntries(en);
-        entrySets.computeStockIndex();
-        kLine.setEntrySet(entrySets);
+        entrySet.computeMA();
         kLine.notifyDataSetChanged();
     }
 

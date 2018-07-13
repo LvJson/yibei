@@ -31,4 +31,9 @@
         android:textColor="@color/one_text_color"
         android:textSize="@dimen/text_size_36" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_or_division_color" />
 </com.zhy.autolayout.AutoRelativeLayout>

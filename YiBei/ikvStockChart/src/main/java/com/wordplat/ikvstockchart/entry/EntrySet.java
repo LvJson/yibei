@@ -251,7 +251,7 @@ public class EntrySet {
     /**
      * 计算 MA
      */
-    private void computeMA() {
+    public void computeMA() {//private修改成了public +++++++++++++
         float ma5 = 0;
         float ma10 = 0;
         float ma20 = 0;

@@ -16,6 +16,8 @@ public class EventContents {
     public static final String UPDATED_SELF_SYMBOL = "005";
 
     public static final String NET_NOT_ERROR = "006";//网络错误
+    public static final String MARKET_CLICK = "007";//行情Tab被点击
+    public static final String MARKET_NOT_CLICK = "008";//行情Tab没有被点击
 
 
 }

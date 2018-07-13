@@ -57,6 +57,8 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
 
     private ArrayList<String> selfSelectSymbol = new ArrayList<>();
 
+    public boolean isShowRealData;
+
 
     @Override
     protected int getLayoutID() {
@@ -205,7 +207,11 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         /**
          * 实时数据
          */
-        if (event.getTagOne().equals(EventContents.REAL_TIME_DATA)) {
+
+        String tagOne = event.getTagOne();
+
+        if (tagOne.equals(EventContents.REAL_TIME_DATA)) {
+            if (!isShowRealData) return;
             String json = (String) event.getResponse();
             RealTimeBean realTimeBean = new Gson().fromJson(json, RealTimeBean.class);
             if (realTimeBean == null) return;
@@ -215,17 +221,41 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
                 }
             }
 
-        } else if (event.getTagOne().equals(EventContents.UPDATED_SELF_SYMBOL)) {
+        } else if (tagOne.equals(EventContents.UPDATED_SELF_SYMBOL)) {
             Map<String, String> map = new HashMap<>();
             map.put("accessToken", accessToken);
             map.put("userId", userId);
             allSymbolPresenter.getCollectionSymbol(map, className + "1");
-        } else if (event.getTagOne().equals(EventContents.NET_NOT_ERROR)) {
+        } else if (tagOne.equals(EventContents.NET_NOT_ERROR)) {
             for (int i = 0; i < fragmentList.size(); i++) {
                 ((AllSymbolMarketFragment) fragmentList.get(i)).setErrorStatus(0);
                 Logger.e("NET_NOT_ERROR", "收到消息");
             }
+        } else if (tagOne.equals(EventContents.MARKET_CLICK)) {
+            isShowRealData = true;
+
+        } else if (tagOne.equals(EventContents.MARKET_NOT_CLICK)) {
+            isShowRealData = false;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isShowRealData = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isShowRealData = false;
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isShowRealData = false;
     }
 
     @Override

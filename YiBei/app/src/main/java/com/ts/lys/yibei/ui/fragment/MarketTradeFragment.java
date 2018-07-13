@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
@@ -576,8 +577,21 @@ public class MarketTradeFragment extends BaseFragment implements ITradeOrPending
     private void showTradePop(String title, final int cmd) {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_trade_remind_layout, null);
         TextView tvTitle = contentView.findViewById(R.id.tv_title);
+        TextView tvContent = contentView.findViewById(R.id.tv_content);
         TextView tvCancle = contentView.findViewById(R.id.tv_cancle);
         TextView tvConfirm = contentView.findViewById(R.id.tv_confirm);
+        LinearLayout llStopLossProfit = contentView.findViewById(R.id.ll_stop_loss_profit);
+        TextView tvStopLossPri = contentView.findViewById(R.id.tv_stop_loss_pri);
+        TextView tvStopProfitPri = contentView.findViewById(R.id.tv_stop_profit_pri);
+        if (stopProfitAdv.getnumber() == 0 && stopLossAdv.getnumber() == 0) {
+            llStopLossProfit.setVisibility(View.GONE);
+            tvContent.setVisibility(View.VISIBLE);
+        } else {
+            llStopLossProfit.setVisibility(View.VISIBLE);
+            tvContent.setVisibility(View.GONE);
+            tvStopLossPri.setText(stopLossAdv.getnumber() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(stopLossAdv.getnumber(), parentActivity.digits));
+            tvStopProfitPri.setText(stopProfitAdv.getnumber() == 0 ? getString(R.string.not_setting) : BaseUtils.getDigitsData(stopProfitAdv.getnumber(), parentActivity.digits));
+        }
         final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
                 .setView(contentView)
                 .enableBackgroundDark(true)

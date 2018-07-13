@@ -159,6 +159,13 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
+    /**
+     * 通过payloads可有效防止局部刷新导致的item闪烁问题
+     *
+     * @param holder
+     * @param position
+     * @param payloads
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
         if (payloads.isEmpty()) {
@@ -235,17 +242,23 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     long updateTime = 0;
 
     public synchronized void setUpdateModel(RealTimeBean model) {
-        if (realList == null || realList.size() == 0) return;
-        for (int i = 0; i < realList.size(); i++) {
-            if (realList.get(i).getSymbol().equals(model.getSymbol())) {
-                realList.get(i).setBid(model.getBid());
-                realList.get(i).setMarket(model.getMarket());
-                realList.get(i).setAsk(model.getAsk());
-                realList.get(i).setTime(model.getTime());
-                break;
-            }
-        }
 
+
+//******************************************************方法一代码块：要解开需同时解开所有注释********************************************************//
+        /**
+         * 方法一：多次循环，保持上次数据，新数据再与老数据进行比较
+         */
+//        if (realList == null || realList.size() == 0) return;
+//        for (int i = 0; i < realList.size(); i++) {
+//            if (realList.get(i).getSymbol().equals(model.getSymbol())) {
+//                realList.get(i).setBid(model.getBid());
+//                realList.get(i).setMarket(model.getMarket());
+//                realList.get(i).setAsk(model.getAsk());
+//                realList.get(i).setTime(model.getTime());
+//                break;
+//            }
+//        }
+//
         /**
          * 实时刷新:问题->更新的条目会整个闪烁
          */
@@ -266,30 +279,60 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //
 //        }
 
+// *****************************************************************************************************************************************************//
+
         /**
          * 间隔一秒后刷新
          */
 
-        if (updateTime == 0 || System.currentTimeMillis() - updateTime > 500) {
-            updateTime = System.currentTimeMillis();
-        } else {
-            return;
-        }
+//        if (updateTime == 0 || System.currentTimeMillis() - updateTime > 500) {
+//            updateTime = System.currentTimeMillis();
+//        } else {
+//            return;
+//        }
+//
+//        for (int i = 0; i < mList.size(); i++) {
+//            GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
+//            RealTimeBean um = realList.get(i);
+//            m.setDifference(um.getBid() - m.getBid());
+//            m.setAsk(um.getAsk());
+//            m.setBid(um.getBid());
+//            m.setMarket(um.getMarket());
+//            if (m.getDifference() > 0) {
+//                m.setState(1);
+//            } else if (m.getDifference() < 0) {
+//                m.setState(-1);
+//            }
+//        }
+//        notifyDataSetChanged();
 
+
+//**************************************************方法二代码块：要注释需全部注释***************************************************//
+        /**
+         * 方法二：改变局部数据做局部刷新
+         */
+        if (mList == null || mList.size() == 0) return;
         for (int i = 0; i < mList.size(); i++) {
-            GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
-            RealTimeBean um = realList.get(i);
-            m.setDifference(um.getBid() - m.getBid());
-            m.setAsk(um.getAsk());
-            m.setBid(um.getBid());
-            m.setMarket(um.getMarket());
-            if (m.getDifference() > 0) {
-                m.setState(1);
-            } else if (m.getDifference() < 0) {
-                m.setState(-1);
+            if (mList.get(i).getSymbolEn().equals(model.getSymbol())) {
+                GetQuotesModel.DataBean.SymbolsBean m = mList.get(i);
+                m.setDifference(model.getBid() - m.getBid());
+                m.setAsk(model.getAsk());
+                m.setBid(model.getBid());
+                m.setMarket(model.getMarket());
+                if (m.getDifference() > 0) {
+                    m.setState(1);
+                    localNotify(i);
+                } else if (m.getDifference() < 0) {
+                    m.setState(-1);
+                    localNotify(i);
+                }
+
+                break;
             }
         }
-        notifyDataSetChanged();
+// *************************************************************************************************************************************//
+
+
     }
 
     /**

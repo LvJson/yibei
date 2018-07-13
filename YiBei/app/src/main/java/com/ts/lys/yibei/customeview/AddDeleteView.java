@@ -63,21 +63,33 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
             switch (msg.what) {
                 case 0:
                     Logger.e("max", max + "  getnumber: " + getnumber());
-                    if (!isAddFirst)
+                    if (!isAddFirst && isStopLossOrProfit) {
                         if (getnumber() > max || max - getnumber() < 0.0000001 || max == getnumber()) {
                             onClick = false;
                             break;
                         }
+                    } else if (!isStopLossOrProfit) {
+                        if (getnumber() > max || max - getnumber() < 0.0000001 || max == getnumber()) {
+                            onClick = false;
+                            break;
+                        }
+                    }
                     lister.onAddClick();
                     isAddFirst = false;
                     break;
                 case 1:
                     Logger.e("min", min + "  getnumber: " + getnumber());
-                    if (!isDelFirst)
+                    if (!isDelFirst && isStopLossOrProfit) {
                         if (getnumber() < min || getnumber() - min < 0.0000001 || min == getnumber()) {
                             onClick = false;
                             break;
                         }
+                    } else if (!isStopLossOrProfit) {
+                        if (getnumber() < min || getnumber() - min < 0.0000001 || min == getnumber()) {
+                            onClick = false;
+                            break;
+                        }
+                    }
                     lister.onDelClick();
                     isDelFirst = false;
                     break;

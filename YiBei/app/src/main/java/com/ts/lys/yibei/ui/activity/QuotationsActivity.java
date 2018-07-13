@@ -194,7 +194,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         mFragmentContainerHelper.handlePageSelected(0, false);
         switchPages(0);
         setBackButton();
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.rise_color), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.eight_text_color), 0);
 
     }
 

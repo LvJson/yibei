@@ -303,6 +303,22 @@ public class BaseUtils {
         }
     }
 
+
+    //将指定日期转化为秒数
+    public static long getMillionSecondsFromDateKLine(String expireDate) {
+        if (expireDate == null || expireDate.trim().equals(""))
+            return 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        try {
+            date = sdf.parse(expireDate);
+            return (date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     //秒数转化为日期
     public static String getDateFromMillionSeconds(long million) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
