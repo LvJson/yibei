@@ -7,6 +7,7 @@
     android:gravity="center">
 
     <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_father"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

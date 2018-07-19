@@ -14,9 +14,9 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingBottom="25px"
+        android:paddingBottom="20px"
         android:paddingLeft="30px"
-        android:paddingTop="25px">
+        android:paddingTop="20px">
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="wrap_content"
@@ -31,14 +31,6 @@
                 android:textColor="@color/one_text_color"
                 android:textSize="@dimen/text_size_28" />
 
-            <TextView
-                android:id="@+id/tv_symbol_cn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:text="欧元加元"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_24" />
 
             <ImageView
                 android:id="@+id/iv_status"
@@ -59,10 +51,20 @@
                 android:textSize="@dimen/text_size_28" />
         </com.zhy.autolayout.AutoLinearLayout>
 
+
+        <TextView
+            android:id="@+id/tv_symbol_cn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="欧元加元"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_24" />
+
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="39px">
+            android:layout_marginTop="35px">
 
             <TextView
                 android:id="@+id/tv_open_price"

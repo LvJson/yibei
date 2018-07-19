@@ -1,13 +1,20 @@
 package com.ts.lys.yibei.ui.fragment;
 
 import android.content.Intent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.ui.activity.ChooseBrokerActivity;
 import com.ts.lys.yibei.ui.activity.LoginActivity;
+import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
 import com.ts.lys.yibei.ui.activity.WebViewActivity;
+import com.ts.lys.yibei.utils.BaseUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import butterknife.Bind;
@@ -37,6 +44,8 @@ public class MineFragment extends BaseFragment {
     TextView tvLots;
     @Bind(R.id.tv_cumulative_income)
     TextView tvCumulativeIncome;
+    @Bind(R.id.ll_father)
+    LinearLayout llFather;
 
     @Override
     protected int getLayoutID() {
@@ -54,6 +63,7 @@ public class MineFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_customer:
+                switchAccount();
                 break;
             case R.id.tv_open_real_account:
                 startActivity(new Intent(getActivity(), ChooseBrokerActivity.class));
@@ -77,9 +87,26 @@ public class MineFragment extends BaseFragment {
             case R.id.ll_help_center:
                 break;
             case R.id.ll_feedback:
+                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
                 break;
             case R.id.ll_about_yibei:
                 break;
         }
+    }
+
+    /**
+     * 切换账户
+     */
+    private void switchAccount() {
+        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.pop_switch_account_layout, null);
+
+        CustomPopWindow popupWindowBuilder = new CustomPopWindow.PopupWindowBuilder(getContext())
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .size(BaseUtils.getScreenWidth(getContext()), ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setAnimationStyle(R.style.mypopwindow_anim_style)
+                .create()
+                .showAtLocation(llFather, Gravity.BOTTOM, 0, 0);
     }
 }

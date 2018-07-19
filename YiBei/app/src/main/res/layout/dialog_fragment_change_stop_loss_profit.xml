@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="600px"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_white_bg"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="30dp">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_symbol_en"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AAAAAA"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_36" />
+
+            <ImageView
+                android:id="@+id/iv_status"
+                android:layout_width="32px"
+                android:layout_height="32px"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/buy_icon"
+                app:layout_auto_basewidth="height" />
+
+            <TextView
+                android:id="@+id/tv_lots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lots"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_20" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_symbol_cn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textColor="@color/two_text_color"
+            android:textSize="28px" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/opening_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+
+            <TextView
+                android:id="@+id/tv_open_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/current_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+
+            <TextView
+                android:id="@+id/tv_current_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_loss_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+
+            <com.ts.lys.yibei.customeview.AddDeleteView
+                android:id="@+id/stop_loss_adv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                app:left_pic="@mipmap/orange_sub_icon"
+                app:midd_text="0"
+                app:right_pic="@mipmap/orange_add_icon">
+
+
+            </com.ts.lys.yibei.customeview.AddDeleteView>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_profit_price"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_28" />
+
+            <com.ts.lys.yibei.customeview.AddDeleteView
+                android:id="@+id/stop_profit_adv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                app:left_pic="@mipmap/orange_sub_icon"
+                app:midd_text="0"
+                app:right_pic="@mipmap/orange_add_icon">
+
+
+            </com.ts.lys.yibei.customeview.AddDeleteView>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/four_text_color" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_auto_basewidth="height">
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/cancle"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/text_size_32" />
+
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/text_size_32" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -7,7 +7,6 @@ import com.ts.lys.yibei.bean.RealTimeBean;
 import com.ts.lys.yibei.bean.StockChartDatas;
 import com.ts.lys.yibei.mvppresenter.KLineDataPresenter;
 import com.ts.lys.yibei.mvpview.IViewKLineData;
-import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.wordplat.ikvstockchart.InteractiveKLineView;
 import com.wordplat.ikvstockchart.drawing.HighlightDrawing;
@@ -44,7 +43,8 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
 
     private Map<String, String> map = new HashMap<>();
 
-    QuotationsActivity parentActivity;
+    private String symbol;
+    private int digits;
 
 
     /**
@@ -116,13 +116,15 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
     }
 
     private void initData() {
-        parentActivity = (QuotationsActivity) getActivity();
+
+        symbol = getArguments().getString("symbol");
+        digits = getArguments().getInt("digits");
         kLineDataPresenter = new KLineDataPresenter(this);
         kLineDataPresenter.attachView(this);
         map.put("accessToken", "");
-        map.put("symbol", parentActivity.symbol);
+        map.put("symbol", symbol);
         map.put("type", "0");
-        kLineDataPresenter.getKLineData(map, className);
+        kLineDataPresenter.getKLineData(map, className,true);
     }
 
     /**
@@ -224,7 +226,7 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
                 break;
 
         }
-        kLineDataPresenter.getKLineData(map, className);
+        kLineDataPresenter.getKLineData(map, className,true);
     }
 
     /**
@@ -288,14 +290,14 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
 
         }
         if (isKLine) {//K线图数据
-            kLine.setRender(new KLineRender(getActivity(), parentActivity.digits, intDigit));
+            kLine.setRender(new KLineRender(getActivity(), digits, intDigit));
             entrySet.computeStockIndex();//计算其它附带指标
             kLine.setEntrySet(entrySet);
             KLineRender kr = (KLineRender) kLine.getRender();
 
             // MACD
             HighlightDrawing macdHighlightDrawing = new HighlightDrawing();
-            macdHighlightDrawing.addMarkerView(new YAxisTextMarkerView(BaseUtils.dip2px(getActivity(), 10f), parentActivity.digits));
+            macdHighlightDrawing.addMarkerView(new YAxisTextMarkerView(BaseUtils.dip2px(getActivity(), 10f), digits));
 
             StockMACDIndex macdIndex = new StockMACDIndex();
             macdIndex.addDrawing(new MACDDrawing());
@@ -305,17 +307,17 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
 //            kr.addStockIndex(macdIndex);//指标展示
 
             //下面两行代码可以控制十字线两端是否有文本展示
-            kr.addMarkerView(new YAxisTextMarkerView(stockMarkerViewHeight, parentActivity.digits));
+            kr.addMarkerView(new YAxisTextMarkerView(stockMarkerViewHeight, digits));
             kr.addMarkerView(new XAxisTextMarkerView(stockMarkerViewHeight));
 
 
         } else {//分时图数据
-            kLine.setRender(new TimeLineRender(timeLineTag, realDataSize, parentActivity.digits, intDigit));
+            kLine.setRender(new TimeLineRender(timeLineTag, realDataSize, digits, intDigit));
             entrySet.computeStockIndex();
             kLine.setEntrySet(entrySet);
             TimeLineRender tr = (TimeLineRender) kLine.getRender();
 
-            tr.addMarkerView(new YAxisTextMarkerView(stockMarkerViewHeight, parentActivity.digits));
+            tr.addMarkerView(new YAxisTextMarkerView(stockMarkerViewHeight, digits));
             tr.addMarkerView(new XAxisTextMarkerView(stockMarkerViewHeight));
         }
         kLine.notifyDataSetChanged();
@@ -358,7 +360,7 @@ public class KLineFragment extends BaseFragment implements IViewKLineData {
 
             if (timeLineTag == 0) {
                 map.put("type", "0");
-                kLineDataPresenter.getKLineData(map, className);
+                kLineDataPresenter.getKLineData(map, className, false);
             } else {
                 //增加一条K线图新数据
                 EntrySet entrySett = new EntrySet();

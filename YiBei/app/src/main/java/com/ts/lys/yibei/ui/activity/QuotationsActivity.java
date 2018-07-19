@@ -189,6 +189,13 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     }
 
     private void initView() {
+
+        symbol = getIntent().getStringExtra("symbol");
+        symbolEN = getIntent().getStringExtra("symbol");
+        symbolCN = getIntent().getStringExtra("symbolCn");
+        digits = getIntent().getIntExtra("digits", 2);
+        symbolList = getIntent().getStringArrayListExtra("symbolList");
+
         initFragments();
         initMagicIndicator();
         mFragmentContainerHelper.handlePageSelected(0, false);
@@ -213,12 +220,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
     }
 
     private void initData() {
-        symbol = getIntent().getStringExtra("symbol");
-        symbolEN = getIntent().getStringExtra("symbol");
-        symbolCN = getIntent().getStringExtra("symbolCn");
-        digits = getIntent().getIntExtra("digits", 2);
-        symbolList = getIntent().getStringArrayListExtra("symbolList");
-        Logger.e("symbolList", symbolList.size() + "");
+
         tvChName.setText(symbolCN);
         tvEnName.setText(symbolEN);
         String tags = getIntent().getStringExtra("tag");
@@ -252,8 +254,11 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         complexTradeFragment = new ComplexTradeFragment();
         mFragments.add(simpleTradeFragment);
         mFragments.add(complexTradeFragment);
-
         kLineFragment = new KLineFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("symbol", symbol);
+        bundle.putInt("digits", digits);
+        kLineFragment.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.frame_layout_k_line, kLineFragment);

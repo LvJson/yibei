@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ts.lys.yibei.R;
@@ -101,6 +102,16 @@ public class BaseFragmentActivity extends FragmentActivity implements BaseMvpVie
                 finish();
             }
         });
+    }
+
+    /**
+     * 设置标题
+     *
+     * @param title
+     */
+    protected void setTitle(String title) {
+        TextView tvTitle = findViewById(R.id.tv_title);
+        tvTitle.setText(title);
     }
 
     @Override

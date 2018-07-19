@@ -51,6 +51,16 @@ public class BasePresenter<V extends BaseMvpView> implements BaseMvpPresenter<V>
         });
     }
 
+    public void showDialog(final BaseMvpView baseMvpView, boolean isShowDialog) {
+        if (isShowDialog)
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    baseMvpView.showCustomProgress(true);
+                }
+            });
+    }
+
     public void dissDialog(final BaseMvpView baseMvpView) {
         handler.post(new Runnable() {
             @Override

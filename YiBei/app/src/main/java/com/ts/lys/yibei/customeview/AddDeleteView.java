@@ -267,12 +267,13 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
                 if (MotionEvent.ACTION_DOWN == event.getAction()) {
                     et_number.setCursorVisible(true);// 再次点击显示光标
 
-                    scrollView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.scrollTo(0, llTest.getBottom() - advHeight - scrollView.getHeight());
-                        }
-                    }, 300);
+                    if (scrollView != null)
+                        scrollView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollView.scrollTo(0, llTest.getBottom() - advHeight - scrollView.getHeight());
+                            }
+                        }, 300);
                 }
                 return false;
         }

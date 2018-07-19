@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
@@ -35,6 +36,8 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private OnItemClickListenerr listenerr;
     private List<?> activityBeanList;
+    private int llMoreHegiht;
+    private boolean isFirst = true;
 
     /**
      * 记录详情被打开的位置
@@ -71,31 +74,54 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof HistoryViewholder) {
-
-            if (map.get(position))
-                ((HistoryViewholder) holder).llMore.setVisibility(View.VISIBLE);
-            else
-                ((HistoryViewholder) holder).llMore.setVisibility(View.GONE);
+            if (isFirst) {
+                ((HistoryViewholder) holder).llMore.measure(0, 0);
+                llMoreHegiht = ((HistoryViewholder) holder).llMore.getMeasuredHeight();
+                isFirst = false;
+            }
 
             ((HistoryViewholder) holder).ivDown.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((HistoryViewholder) holder).llMore.measure(0, 0);
-                    openAnim(((HistoryViewholder) holder).llMore, ((HistoryViewholder) holder).llMore.getMeasuredHeight());
-                    map.put(position, true);
+
+                    ((HistoryViewholder) holder).llMore.setVisibility(View.VISIBLE);
                     ((HistoryViewholder) holder).ivDown.setVisibility(View.GONE);
 
+                    openAnim(((HistoryViewholder) holder).llMore, llMoreHegiht);
+
+                    map.put(position, true);
                 }
             });
 
             ((HistoryViewholder) holder).ivUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     closeAnimate(((HistoryViewholder) holder).llMore);
-                    map.put(position, false);
                     ((HistoryViewholder) holder).ivDown.setVisibility(View.VISIBLE);
+
+                    map.put(position, false);
                 }
             });
+
+
+            if (map.get(position)) {
+                /**
+                 * 一下三行代码说明：由于属性动画的原因导致setVisibility()无效
+                 * 可能原因是：执行动画的view属性被修改（即高度被修改为0），所以
+                 * 在下次未通过动画显示该view的时候需从新设置该view的高度。
+                 */
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ((HistoryViewholder) holder).llMore.getLayoutParams();
+                layoutParams.height = llMoreHegiht;
+                ((HistoryViewholder) holder).llMore.setLayoutParams(layoutParams);
+
+                ((HistoryViewholder) holder).llMore.setVisibility(View.VISIBLE);
+                ((HistoryViewholder) holder).ivDown.setVisibility(View.GONE);
+
+            } else {
+                ((HistoryViewholder) holder).llMore.setVisibility(View.GONE);
+                ((HistoryViewholder) holder).ivDown.setVisibility(View.VISIBLE);
+            }
 
         }
 
@@ -117,12 +143,8 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ImageView ivStatus;
         @Bind(R.id.tv_open_price)
         TextView tvOpenPrice;
-        @Bind(R.id.ll_one)
-        AutoLinearLayout llOne;
         @Bind(R.id.tv_position_price)
         TextView tvPositionPrice;
-        @Bind(R.id.tv_one)
-        TextView tvOne;
         @Bind(R.id.tv_income)
         TextView tvIncome;
         @Bind(R.id.tv_date)
@@ -168,9 +190,15 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return formatter.format(calendar.getTime());
     }
 
-    private void openAnim(View v, int mHeight) {
-        v.setVisibility(View.VISIBLE);
+    private void openAnim(final View v, int mHeight) {
+
         ValueAnimator animator = createDropAnimator(v, 0, mHeight);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                v.clearAnimation();
+            }
+        });
         animator.start();
     }
 
@@ -180,10 +208,12 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                view.clearAnimation();
                 view.setVisibility(View.GONE);
             }
         });
         animator.start();
+
     }
 
     private ValueAnimator createDropAnimator(final View v, int start, int end) {

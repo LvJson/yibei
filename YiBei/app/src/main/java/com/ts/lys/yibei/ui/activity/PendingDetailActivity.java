@@ -7,8 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,10 +23,8 @@ import com.ts.lys.yibei.mvppresenter.QuotationPresenter;
 import com.ts.lys.yibei.mvppresenter.RealTimeDataPresenter;
 import com.ts.lys.yibei.mvpview.IQuotationView;
 import com.ts.lys.yibei.mvpview.IRealTimeView;
-import com.ts.lys.yibei.ui.fragment.ChangeStopLossOrProfitFragment;
 import com.ts.lys.yibei.ui.fragment.KLineFragment;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
-import com.ts.lys.yibei.utils.HiddenAnimUtils;
 import com.ts.lys.yibei.utils.Logger;
 import com.zhy.autolayout.AutoFrameLayout;
 
@@ -47,20 +43,10 @@ import butterknife.OnClick;
  * Created by jcdev1 on 2018/7/12.
  */
 
-public class PositionDetailActivity extends BaseFragmentActivity implements IQuotationView, IRealTimeView {
+public class PendingDetailActivity extends BaseFragmentActivity implements IQuotationView, IRealTimeView {
 
     @Bind(R.id.frame_layout_k_line)
     AutoFrameLayout frameLayoutKLine;
-    @Bind(R.id.tv_float_profit)
-    TextView tvFloatProfit;
-    @Bind(R.id.iv_arrow)
-    ImageView ivArrow;
-    @Bind(R.id.tv_profit_and_loss)
-    TextView tvProfitAndLoss;
-    @Bind(R.id.tv_inventory_fee)
-    TextView tvInventoryFee;
-    @Bind(R.id.tv_handling_fee)
-    TextView tvHandlingFee;
     @Bind(R.id.tv_order_num)
     TextView tvOrderNum;
     @Bind(R.id.tv_open_price)
@@ -77,8 +63,8 @@ public class PositionDetailActivity extends BaseFragmentActivity implements IQuo
     TextView tvStopProfitPri;
     @Bind(R.id.tv_date)
     TextView tvDate;
-    @Bind(R.id.ll_more)
-    LinearLayout llMore;
+    @Bind(R.id.tv_pending_price)
+    TextView tvPendingPrice;
     @Bind(R.id.rl_father)
     RelativeLayout rlFather;
 
@@ -117,7 +103,7 @@ public class PositionDetailActivity extends BaseFragmentActivity implements IQuo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_position_detail);
+        setContentView(R.layout.activity_pending_detail);
         EventBus.getDefault().register(this);
         initView();
         initData();
@@ -157,28 +143,23 @@ public class PositionDetailActivity extends BaseFragmentActivity implements IQuo
         quotationPresenter.getSymbolCalInfo(map1, className + "1");
     }
 
-    @OnClick({R.id.ll_float_profit, R.id.btn_stop_loss_profit, R.id.btn_position})
+    @OnClick({R.id.btn_cancel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_float_profit:
-                llMore.measure(0, 0);
-                HiddenAnimUtils.newInstance(getApplicationContext(), llMore, ivArrow, llMore.getMeasuredHeight()).toggle();
-                break;
-            case R.id.btn_stop_loss_profit:
-                ChangeStopLossOrProfitFragment changeStopLossOrProfitFragment = new ChangeStopLossOrProfitFragment();
-                changeStopLossOrProfitFragment.show(getSupportFragmentManager(), "change");
-                break;
-            case R.id.btn_position:
-                showPositionPop();
+            case R.id.btn_cancel:
+                showCancelPop();
                 break;
         }
     }
 
     /**
-     * 平仓确认
+     * 撤销前确认
      */
-    private void showPositionPop() {
-        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_close_position_remind_layout, null);
+    private void showCancelPop() {
+
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_base_remind_layout, null);
+        TextView tvTitle = contentView.findViewById(R.id.tv_title);
+        tvTitle.setText("您确定撤销（订单123456）挂单？");
 
         CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                 .setView(contentView)

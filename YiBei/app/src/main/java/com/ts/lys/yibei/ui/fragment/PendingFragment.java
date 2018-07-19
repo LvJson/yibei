@@ -1,5 +1,6 @@
 package com.ts.lys.yibei.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.adapter.PendingAdapter;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
+import com.ts.lys.yibei.ui.activity.PendingDetailActivity;
 
 import butterknife.Bind;
 
@@ -53,7 +55,11 @@ public class PendingFragment extends BaseFragment {
         adapter.setOnItemClickListener(new PendingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick() {
-
+                Intent intent = new Intent(getActivity(), PendingDetailActivity.class);
+                intent.putExtra("symbol", "EURUSD");
+                intent.putExtra("symbolCn", "欧元美元");
+                intent.putExtra("digits", 5);
+                startActivity(intent);
             }
 
             @Override

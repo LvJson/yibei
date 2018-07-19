@@ -113,4 +113,23 @@ public class WebViewFragment extends BaseFragment {
             return super.onJsPrompt(view, url, message, defaultValue, result);
         }
     };
+
+    @Override
+    public void onPause() {
+        mAgentWeb.getWebLifeCycle().onPause();
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        mAgentWeb.getWebLifeCycle().onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mAgentWeb.getWebLifeCycle().onDestroy();
+        super.onDestroyView();
+    }
 }

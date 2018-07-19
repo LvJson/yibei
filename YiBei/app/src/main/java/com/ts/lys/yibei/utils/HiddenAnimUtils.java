@@ -43,7 +43,8 @@ public class HiddenAnimUtils {
         this.hideView = hideView;
         this.down = down;
         float mDensity = context.getResources().getDisplayMetrics().density;
-        mHeight = (int) (mDensity * height + 0.5);//伸展高度
+//        mHeight = (int) (mDensity * height + 0.5);//伸展高度
+        mHeight = height;
     }
 
     /**
@@ -67,7 +68,7 @@ public class HiddenAnimUtils {
         } else {
             animation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         }
-        animation.setDuration(30);//设置动画持续时间
+        animation.setDuration(300);//设置动画持续时间
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatMode(Animation.REVERSE);//设置反方向执行
         animation.setFillAfter(true);//动画执行完后是否停留在执行完的状态

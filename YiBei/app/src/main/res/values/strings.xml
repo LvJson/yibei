@@ -72,6 +72,8 @@
     <string name="view_order_record">查看订单记录</string>
 
     <string name="pending_price">委托价格</string>
+    <string name="pending_price2">挂单价格</string>
+
     <string name="pending">挂单</string>
     <string name="pending_direction">开仓方向</string>
 
@@ -151,4 +153,21 @@
     <string name="financial_calendar">财经日历</string>
     <string name="infomation">资讯</string>
     <string name="stop_loss_profit">止损/止盈</string>
+    <string name="float_profit_explain">含手续费 库存费</string>
+    <string name="profit_and_loss">盈亏</string>
+    <string name="inventory_fee">库存费</string>
+    <string name="handling_fee">手续费</string>
+
+    <string name="cancel">撤销</string>
+    <string name="switch_account">切换账户</string>
+    <string name="simulation_account">模拟账号</string>
+
+    <string name="head">头像</string>
+    <string name="nickname">昵称</string>
+    <string name="bind_phone_num">绑定手机号</string>
+    <string name="sign_out">退出登录</string>
+    <string name="photo_dialog_photo">相机</string>
+    <string name="photo_dialog_album">选取图片</string>
+    <string name="edit_person_info">个人信息编辑</string>
+
 </resources>

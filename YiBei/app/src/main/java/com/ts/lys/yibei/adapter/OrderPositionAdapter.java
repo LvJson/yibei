@@ -73,6 +73,13 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
                     listener.onClosePositionClick();
                 }
             });
+
+            ((ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick();
+                }
+            });
         }
 //        final OrderPositionModel.DataBean.TraderOrderBean model = mList.get(position);
 //        double fee = Arith.add(model.getSwaps(), model.getCommission());

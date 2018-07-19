@@ -2,6 +2,7 @@
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/rl_father"
     android:layout_height="match_parent"
     android:background="@color/white">
 
@@ -12,6 +13,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
         android:layout_below="@+id/include"
         android:fillViewport="true">
 
@@ -51,33 +53,47 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15px"
-                        android:text="@string/float_profit_loss"
+                        android:text="@string/float_profit_explain"
                         android:textColor="@color/two_text_color"
                         android:textSize="@dimen/text_size_22" />
 
                 </com.zhy.autolayout.AutoLinearLayout>
 
-                <TextView
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/ll_float_profit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$0.00"
-                    android:textSize="@dimen/text_size_46" />
+                    android:gravity="center"
+                    android:padding="3dp">
 
-                <ImageView
-                    android:layout_width="27px"
-                    android:layout_height="15px"
-                    android:layout_marginLeft="5dp"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/history_arrow_down"
-                    app:layout_auto_basewidth="height" />
+                    <TextView
+                        android:id="@+id/tv_float_profit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0.00"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_46" />
+
+                    <ImageView
+                        android:id="@+id/iv_arrow"
+                        android:layout_width="27px"
+                        android:layout_height="15px"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/history_arrow_down"
+                        app:layout_auto_basewidth="height" />
+                </com.zhy.autolayout.AutoLinearLayout>
+
             </com.zhy.autolayout.AutoLinearLayout>
 
             <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/padding_left_and_right"
                 android:paddingLeft="@dimen/padding_left_and_right"
-                android:paddingRight="@dimen/padding_left_and_right">
+                android:paddingRight="@dimen/padding_left_and_right"
+                android:visibility="gone">
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="0dp"
@@ -87,6 +103,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_profit_and_loss"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0.00"
@@ -97,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="$0.00"
+                        android:text="@string/profit_and_loss"
                         android:textColor="@color/two_text_color"
                         android:textSize="@dimen/text_size_26" />
 
@@ -111,6 +128,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_inventory_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0.00"
@@ -121,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="$0.00"
+                        android:text="@string/inventory_fee"
                         android:textColor="@color/two_text_color"
                         android:textSize="@dimen/text_size_26" />
 
@@ -135,6 +153,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_handling_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0.00"
@@ -145,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="$0.00"
+                        android:text="@string/handling_fee"
                         android:textColor="@color/two_text_color"
                         android:textSize="@dimen/text_size_26" />
 
@@ -153,7 +172,6 @@
 
             </com.zhy.autolayout.AutoLinearLayout>
 
-            <include layout="@layout/incloud_division_1dp_layout" />
 
             <include layout="@layout/include_trade_detail_layout" />
         </com.zhy.autolayout.AutoLinearLayout>
@@ -161,16 +179,18 @@
 
 
     <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/light_gray_frame2"
-        android:paddingBottom="6dp"
+        android:paddingBottom="5dp"
         android:paddingLeft="@dimen/padding_left_and_right"
         android:paddingRight="@dimen/padding_left_and_right"
-        android:paddingTop="6dp">
+        android:paddingTop="5dp">
 
         <Button
+            android:id="@+id/btn_stop_loss_profit"
             android:layout_width="0dp"
             android:layout_height="92px"
             android:layout_marginRight="10dp"
@@ -178,9 +198,11 @@
             android:background="@drawable/btn_select"
             android:text="@string/stop_loss_profit"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_30" />
+            android:textSize="@dimen/text_size_30"
+            app:layout_auto_basewidth="height" />
 
         <Button
+            android:id="@+id/btn_position"
             android:layout_width="0dp"
             android:layout_height="92px"
             android:layout_marginLeft="10dp"
@@ -188,6 +210,7 @@
             android:background="@drawable/btn_select"
             android:text="@string/close_the_position"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_30" />
+            android:textSize="@dimen/text_size_30"
+            app:layout_auto_basewidth="height" />
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoRelativeLayout>

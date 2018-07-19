@@ -22,9 +22,9 @@ public class KLineDataPresenter extends BasePresenter {
         kLineDataModal = new KLineDataModal();
     }
 
-    public void getKLineData(Map<String, String> map, String tag) {
+    public void getKLineData(Map<String, String> map, String tag, boolean isShowDialog) {
 
-        showDialog(iViewKLineData);
+        showDialog(iViewKLineData, isShowDialog);
 
         kLineDataModal.getStockChartData(map, tag, new IRequestServiceListener<StockChartDatas>() {
             @Override
