@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/bar_white_bg_layout" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_or_division_color"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/padding_left_and_right"
+        android:paddingTop="10dp"
+        android:text="@string/trade_report_explain"
+        android:textColor="@color/two_text_color"
+        android:textSize="@dimen/text_size_26" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingLeft="@dimen/padding_left_and_right"
+        android:paddingTop="20dp"
+        android:text="@string/total_revenue_net_worth"
+        android:textColor="@color/one_text_color"
+        android:textSize="@dimen/text_size_26" />
+
+    <include layout="@layout/incloud_division_1dp_layout" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <include layout="@layout/incloud_division_10dp_layout" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingLeft="@dimen/padding_left_and_right"
+        android:paddingTop="20dp"
+        android:text="@string/day_profit"
+        android:textColor="@color/one_text_color"
+        android:textSize="@dimen/text_size_26" />
+
+    <include layout="@layout/incloud_division_1dp_layout" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+
+</com.zhy.autolayout.AutoLinearLayout>

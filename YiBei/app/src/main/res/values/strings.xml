@@ -169,5 +169,11 @@
     <string name="photo_dialog_photo">相机</string>
     <string name="photo_dialog_album">选取图片</string>
     <string name="edit_person_info">个人信息编辑</string>
+    <string name="cancel_do">操作取消</string>
 
+    <string name="trade_report_explain">图表截止于每日24:00，次日清晨更新。</string>
+    <string name="total_revenue_net_worth">总收益/净值</string>
+    <string name="day_profit">每日收益</string>
+    <string name="total_profit">总收益</string>
+    <string name="net_worth">净值</string>
 </resources>

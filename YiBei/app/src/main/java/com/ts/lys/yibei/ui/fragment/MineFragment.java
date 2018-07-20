@@ -13,6 +13,7 @@ import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.ui.activity.ChooseBrokerActivity;
 import com.ts.lys.yibei.ui.activity.LoginActivity;
 import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
+import com.ts.lys.yibei.ui.activity.TradeReportActivity;
 import com.ts.lys.yibei.ui.activity.WebViewActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -83,6 +84,7 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.ll_trade_report:
+                startActivity(new Intent(getActivity(), TradeReportActivity.class));
                 break;
             case R.id.ll_help_center:
                 break;

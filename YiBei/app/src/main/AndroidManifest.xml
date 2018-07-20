@@ -50,6 +50,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PersonInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.TradeReportActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

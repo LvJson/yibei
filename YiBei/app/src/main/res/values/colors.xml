@@ -19,4 +19,8 @@
 
     <color name="bg_or_division_color">#F8FAFE</color>
     <color name="blue">#437EFF</color>
+    <color name="multiple_image_select_primaryDark">#FF6200</color>
+    <color name="multiple_image_select_primary">#FF6200</color>
+
+    <color name="chart_yellow">#FFC316</color>
 </resources>
