@@ -65,7 +65,7 @@ public class SymbolInfo extends ErrorStatus {
             private int stopsLevel;
             private int type;
             private int digits;
-            private int accAmt;
+            private double accAmt;
             private boolean openAcc;
             private String marginCalCurrency;
             private String profitCalCurrency;
@@ -128,11 +128,11 @@ public class SymbolInfo extends ErrorStatus {
                 this.digits = digits;
             }
 
-            public int getAccAmt() {
+            public double getAccAmt() {
                 return accAmt;
             }
 
-            public void setAccAmt(int accAmt) {
+            public void setAccAmt(double accAmt) {
                 this.accAmt = accAmt;
             }
 

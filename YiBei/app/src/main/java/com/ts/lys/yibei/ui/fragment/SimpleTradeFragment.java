@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.bean.MarginAndProfitBean;
 import com.ts.lys.yibei.bean.OpenTrader;
 import com.ts.lys.yibei.bean.PendingOrder;
 import com.ts.lys.yibei.bean.RealTimeBean;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.bean.SymbolInfo;
+import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.customeview.AddDeleteView;
 import com.ts.lys.yibei.customeview.ChooseTimesLayout;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
@@ -23,6 +25,8 @@ import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -335,7 +339,8 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
             @Override
             public void onClick(View v) {
                 customPopWindow.dissmiss();
-                showToast("TODO：查看订单记录");
+                parentActivity.finish();
+                EventBus.getDefault().post(new EventBean(EventContents.NEW_TRADING, null));
             }
         });
     }

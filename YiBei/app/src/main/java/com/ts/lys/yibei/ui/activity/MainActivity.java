@@ -1,6 +1,7 @@
 package com.ts.lys.yibei.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.Logger;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.net.URISyntaxException;
 
@@ -64,6 +67,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         initView();
     }
 
@@ -108,7 +112,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     }
 
     public void changeAcc() {
-        socket.emit("quote", "1");
+        socket.emit("quote", "4");
 //        if (spImp.getUserId() != -1) {
 //            if (spImp.getAccType() == 0) {
 //                socket.emit("quote", "1");
@@ -126,10 +130,17 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         mTabHost.setCurrentTabByTag(tabId);
         updateTab(mTabHost);
         Logger.e(TAG, tabId);
+
         if (tabId.equals("行情")) {
             EventBus.getDefault().post(new EventBean(EventContents.MARKET_CLICK, null));
         } else
             EventBus.getDefault().post(new EventBean(EventContents.MARKET_NOT_CLICK, null));
+
+        if (tabId.equals("订单"))
+            EventBus.getDefault().post(new EventBean(EventContents.ORDER_CLICK, null));
+        else
+            EventBus.getDefault().post(new EventBean(EventContents.ORDER_NOT_CLICK, null));
+
     }
 
     /**
@@ -164,6 +175,54 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         }
     }
 
+    /**
+     * 跳转到某个Tag界面
+     *
+     * @param tagName
+     * @param secondTab : 二级tab的位置
+     */
+    public void goSomeTab(final String tagName, final int secondTab) {
+        mTabHost.onTabChanged(tagName);
+
+        /**
+         *跳转到订单界面，并延迟0.5秒后定位到订单中的某个tab
+         */
+        if (tagName.equals(mTextviewArray[3])) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    OrderFragment orderFragment = (OrderFragment) getSupportFragmentManager().findFragmentByTag(tagName);
+                    if (orderFragment != null)
+                        orderFragment.setCurrentPosition(secondTab);
+                }
+            }, 300);
+
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventBean event) {
+        /**
+         * 有新的开仓
+         */
+        if (event.getTagOne().equals(EventContents.NEW_TRADING)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    goSomeTab("订单", 0);
+                }
+            }, 300);
+        } else if (event.getTagOne().equals(EventContents.NEW_PENDING)) {//有新的挂单
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    goSomeTab("订单", 1);
+                }
+            }, 300);
+        }
+    }
+
 
     @Override
     protected void onResume() {
@@ -189,6 +248,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         socket.disconnect();
         socket.off("quote", socketIoListener);
     }

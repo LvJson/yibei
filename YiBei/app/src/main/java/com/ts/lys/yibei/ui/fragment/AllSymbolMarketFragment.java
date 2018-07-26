@@ -270,12 +270,15 @@ public class AllSymbolMarketFragment extends BaseFragment {
         if (errorStatus == 0) {//网络错误
             llNetNotWork.setVisibility(View.VISIBLE);
             llNotData.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         } else if (errorStatus == 1) {//数据为空
             llNetNotWork.setVisibility(View.GONE);
             llNotData.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             llNetNotWork.setVisibility(View.GONE);
             llNotData.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 

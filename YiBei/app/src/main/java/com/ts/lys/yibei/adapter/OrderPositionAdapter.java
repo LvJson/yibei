@@ -1,16 +1,18 @@
 package com.ts.lys.yibei.adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.OrderPositionModel;
+import com.ts.lys.yibei.utils.Arith;
+import com.ts.lys.yibei.utils.BaseUtils;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
@@ -25,22 +27,34 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
 
 
     private Context mContext;
-    private List<OrderPositionModel.DataBean.TraderOrderBean> mList;
-    private Handler mHandler;
-    private int tag = 0;// 标记是否是第一次进入
     private OnItemClickListener listener;
+    List<OrderPositionModel.DataBean.TraderOrderBean> traderOrderBeanList;
 
-    private List<double[]> realTimeData;//0:market,1:ask,2:bid
-    private double[] realTimeProfit;
-
-//    public OrderPositionAdapter(Context context, List<OrderPositionModel.DataBean.TraderOrderBean> list, Handler handler) {
-//        mContext = context;
-//        mList = list;
-//        mHandler = handler;
-//    }
 
     public OrderPositionAdapter(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public void setData(List<OrderPositionModel.DataBean.TraderOrderBean> traderOrderBeanList) {
+        this.traderOrderBeanList = traderOrderBeanList;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * price中包括[ask,bid,market,profit]
+     *
+     * @param position
+     * @param price
+     */
+    public synchronized void upData(int position, String symbolEn, double[] price) {
+        if (traderOrderBeanList != null && price != null && price.length == 4 && traderOrderBeanList.get(position) != null && traderOrderBeanList.get(position).getSymbolEn().equals(symbolEn)) {
+            OrderPositionModel.DataBean.TraderOrderBean traderOrderBean = traderOrderBeanList.get(position);
+            traderOrderBean.setAsk(price[0]);
+            traderOrderBean.setBid(price[1]);
+            traderOrderBean.setMarket(price[2]);
+            traderOrderBean.setProfit(price[3]);
+            notifyDataSetChanged();
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -54,111 +68,56 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
         return holder;
     }
 
-    public void setDatas(List<OrderPositionModel.DataBean.TraderOrderBean> traderOrderList, int tag, List<double[]> realTimeData, double[] realTimeProfit) {
-        mList = traderOrderList;
-        this.realTimeData = realTimeData;
-        this.tag = tag;
-        this.realTimeProfit = realTimeProfit;
-        notifyDataSetChanged();
-    }
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         if (holder instanceof ViewHolder) {
+            final OrderPositionModel.DataBean.TraderOrderBean tb = traderOrderBeanList.get(position);
 
-            holder.tvClosePosition.setOnClickListener(new View.OnClickListener() {
+            holder.tvSymbolEn.setText(tb.getSymbolEn());
+            holder.tvSymbolCn.setText(tb.getSymbolCn());
+            if (tb.getCmd() == 0) {
+                holder.ivStatus.setImageResource(R.mipmap.buy_icon);
+                holder.tvMarketPrice.setText(mContext.getResources().getString(R.string.current_price2) + ":" + BaseUtils.getDigitsData(tb.getMarket(), tb.getDigits()));
+            } else {
+                holder.ivStatus.setImageResource(R.mipmap.sell_icon);
+                holder.tvMarketPrice.setText(mContext.getResources().getString(R.string.current_price2) + ":" + BaseUtils.getDigitsData(tb.getAsk(), tb.getDigits()));
+
+            }
+            holder.tvLots.setText(tb.getVolume() + mContext.getResources().getString(R.string.lots));
+            holder.tvOpenPrice.setText(mContext.getResources().getString(R.string.open_position_price) + ":" + BaseUtils.getDigitsData(tb.getOpenPrice(), tb.getDigits()));
+
+
+            double fee = Arith.add(tb.getSwaps(), tb.getCommission());
+            double realProfit = Arith.add(tb.getProfit(), fee);
+            holder.tvFloatPrice.setText(BaseUtils.dealSymbol(realProfit));
+            if (realProfit < 0)
+                holder.tvFloatPrice.setTextColor(mContext.getResources().getColor(R.color.fall_color));
+            else
+                holder.tvFloatPrice.setTextColor(mContext.getResources().getColor(R.color.rise_color));
+
+
+            /****************************************以下为点击监听*********************************************************/
+
+            holder.llQuickDo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClosePositionClick();
+                    listener.onClosePositionClick(tb);
                 }
             });
 
             ((ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick();
+                    listener.onItemClick(tb);
                 }
             });
         }
-//        final OrderPositionModel.DataBean.TraderOrderBean model = mList.get(position);
-//        double fee = Arith.add(model.getSwaps(), model.getCommission());
-//        int digits = model.getDigits();
-//
-//        String en = model.getSymbolEn();
-//        holder.en_name_textview.setText(en);
-//        holder.ch_name_textview.setText(model.getSymbolCn());
-//
-//        if (model.getCmd() == 0) {
-//            holder.status_imageview.setImageResource(R.mipmap.p_icon_buy);
-//        } else {
-//            holder.status_imageview.setImageResource(R.mipmap.p_icon_sell);
-//        }
-//
-//        holder.volume_textview.setText(model.getVolume() + "手");
-//        holder.open_textview.setText(BaseUtils.getDigitsData(model.getOpenPrice(), model.getDigits()) + " - ");
-//        if (tag == 0) {
-//            holder.close_textview.setText(BaseUtils.getDigitsData(model.getMarket(), model.getDigits()) + "");
-//            holder.total_textview.setText(BaseUtils.dealSymbol(Arith.add(model.getProfit(), fee)));
-//            if (model.getProfit() > 0) {
-//                holder.total_textview.setTextColor(mContext.getResources().getColor(R.color.account_login_red));
-//            } else {
-//                holder.total_textview.setTextColor(mContext.getResources().getColor(R.color.account_login_green));
-//            }
-//        } else {
-//            //实时计算盈亏
-//            double[] rdt = realTimeData.get(position);
-//            double realTP = Arith.add(realTimeProfit[position], fee);
-//
-//            if (rdt != null) {
-//                if (model.getCmd() == 0) {
-//                    model.setClosePrice(rdt[2]);
-//                    holder.close_textview.setText(BaseUtils.getDigitsData(rdt[2], digits) + "");//market
-//                } else {
-//                    model.setClosePrice(rdt[1]);
-//                    holder.close_textview.setText(BaseUtils.getDigitsData(rdt[1], digits) + "");//ask
-//                }
-//                if (realTP > 0) {
-//                    holder.total_textview.setTextColor(mContext.getResources().getColor(R.color.account_login_red));
-//                } else {
-//                    holder.total_textview.setTextColor(mContext.getResources().getColor(R.color.account_login_green));
-//                }
-//                holder.total_textview.setText(BaseUtils.dealSymbol(Arith.round(realTP, 2)));
-//                model.setProfit(realTP);
-//            }
-//        }
-//
-//        //跳转页面
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Message msg = new Message();
-//                msg.what = 0;
-//                msg.obj = model;
-//                mHandler.sendMessage(msg);
-//            }
-//        });
-//        //平仓
-//        holder.close_imageview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Message msg = new Message();
-//                msg.what = 1;
-//                msg.obj = model;
-//                mHandler.sendMessage(msg);
-//            }
-//        });
     }
 
     @Override
     public int getItemCount() {
-//        return mList == null ? 0 : mList.size();
-        return 10;
-    }
-
-    public void update(List<OrderPositionModel.DataBean.TraderOrderBean> list) {
-        mList = list;
-        notifyDataSetChanged();
+        return traderOrderBeanList == null ? 0 : traderOrderBeanList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -178,6 +137,8 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
         TextView tvFloatPrice;
         @Bind(R.id.tv_colse_position)
         TextView tvClosePosition;
+        @Bind(R.id.ll_quick_do)
+        LinearLayout llQuickDo;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -188,8 +149,8 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
 
     public interface OnItemClickListener {
 
-        void onItemClick();
+        void onItemClick(OrderPositionModel.DataBean.TraderOrderBean tb);
 
-        void onClosePositionClick();
+        void onClosePositionClick(OrderPositionModel.DataBean.TraderOrderBean tb);
     }
 }

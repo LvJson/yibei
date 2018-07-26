@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="600px"
         android:layout_height="wrap_content"
@@ -198,5 +199,6 @@
 
 
     </com.zhy.autolayout.AutoLinearLayout>
+
 
 </com.zhy.autolayout.AutoLinearLayout>

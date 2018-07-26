@@ -67,7 +67,10 @@
     <string name="trade_variety">交易品种</string>
     <string name="opening_direction">开仓方向</string>
     <string name="opening_price">开仓价格</string>
+    <string name="position_time">开仓时间</string>
+
     <string name="user_margin">占用保证金</string>
+    <string name="user_margin2">占用金额</string>
     <string name="konw_it">知道了</string>
     <string name="view_order_record">查看订单记录</string>
 
@@ -75,7 +78,8 @@
     <string name="pending_price2">挂单价格</string>
 
     <string name="pending">挂单</string>
-    <string name="pending_direction">开仓方向</string>
+    <string name="pending_success">挂单成功</string>
+    <string name="pending_direction">挂单方向</string>
 
 
     <string name="float_profit_loss">浮动盈亏</string>
@@ -92,6 +96,7 @@
     <string name="confirm_close_position">确认平仓</string>
     <string name="expected_profit_loss">预计盈亏</string>
     <string name="current_price">当前价格</string>
+    <string name="current_price2">当前价</string>
     <string name="order_number">订单编号</string>
     <string name="margin_and_null">保证金&#12288;</string>
 
@@ -176,4 +181,14 @@
     <string name="day_profit">每日收益</string>
     <string name="total_profit">总收益</string>
     <string name="net_worth">净值</string>
+    <string name="loading_all">已加载全部！</string>
+    <string name="cancel_pending">您确定撤销</string>
+    <string name="order">订单</string>
+    <string name="can_not_deal">暂时无法操作</string>
+    <string name="do_nothing">操作无效</string>
+    <string name="pending_time">挂单时间</string>
+    <string name="order_pending_details_closetype_2">买入限价</string>
+    <string name="order_pending_details_closetype_3">卖出限价</string>
+    <string name="order_pending_details_closetype_4">买入止损</string>
+    <string name="order_pending_details_closetype_5">卖出止损</string>
 </resources>

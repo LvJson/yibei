@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
@@ -154,6 +155,7 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
          * 成交价格
          */
         dealPriceAdv.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 2 * baseHeight);
+
         /**
          * 交易手数
          */
@@ -497,7 +499,7 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
 
         }
         setMargin();
-        dealPriceAdv.setLimit(0, 0, parentActivity.digits);
+        dealPriceAdv.setLimit(0, 10000000, parentActivity.digits);
         dealPriceAdv.setnumber(currentCurrency[0]);
         initPendingPrice();
         initstopLossLimit();
@@ -727,6 +729,7 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
 
         PendingOrder.DataBean.PendingOrderBean pob = pendingOrder.getData().getPendingOrder();
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_trade_back_info_layout, null);
+        TextView tvTitle = contentView.findViewById(R.id.tv_title);
         TextView tvSymbol = contentView.findViewById(R.id.tv_symbol);
         TextView tvDirection = contentView.findViewById(R.id.tv_direction);
         TextView tvOpenPri = contentView.findViewById(R.id.tv_open_price);
@@ -738,6 +741,8 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
         TextView tvSeeOrder = contentView.findViewById(R.id.tv_see_order);
         TextView tvPendingDirection = contentView.findViewById(R.id.tv_pending_direction);
         TextView tvPendingPrice = contentView.findViewById(R.id.tv_pending_price);
+        LinearLayout llUserMargin = contentView.findViewById(R.id.ll_used_margin);
+        llUserMargin.setVisibility(View.GONE);
 
         final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
                 .setView(contentView)
@@ -746,8 +751,9 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
                 .create()
                 .showAtLocation(parentActivity.keyboardLayout, Gravity.CENTER, 0, 0);
 
-        tvPendingDirection.setText(getString(R.string.pending_direction));
-        tvPendingPrice.setText(getString(R.string.pending_price));
+        tvTitle.setText(getString(R.string.pending_success));
+        tvPendingDirection.setText(getResources().getString(R.string.pending_direction));
+        tvPendingPrice.setText(getResources().getString(R.string.pending_price2));
         tvSymbol.setText(pob.getSymbolCn());
         tvDirection.setText(pob.getCmd() == 0 ? getString(R.string.purchase) : getString(R.string.sell_out));
         tvOpenPri.setText(BaseUtils.getDigitsData(pob.getPendingPrice(), parentActivity.digits));
@@ -766,7 +772,8 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
             @Override
             public void onClick(View v) {
                 customPopWindow.dissmiss();
-                showToast("TODO：查看订单记录");
+                parentActivity.finish();
+                EventBus.getDefault().post(new EventBean(EventContents.NEW_PENDING, null));
             }
         });
 

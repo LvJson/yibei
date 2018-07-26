@@ -13,17 +13,21 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.EventBean;
+import com.ts.lys.yibei.bean.OrderPendingModel;
 import com.ts.lys.yibei.bean.RealTimeBean;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.bean.SymbolInfo;
 import com.ts.lys.yibei.bean.SymbolPrice;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
+import com.ts.lys.yibei.mvppresenter.PendingListPresenter;
 import com.ts.lys.yibei.mvppresenter.QuotationPresenter;
 import com.ts.lys.yibei.mvppresenter.RealTimeDataPresenter;
+import com.ts.lys.yibei.mvpview.IPendingFragmentView;
 import com.ts.lys.yibei.mvpview.IQuotationView;
 import com.ts.lys.yibei.mvpview.IRealTimeView;
 import com.ts.lys.yibei.ui.fragment.KLineFragment;
+import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.Logger;
 import com.zhy.autolayout.AutoFrameLayout;
@@ -43,7 +47,7 @@ import butterknife.OnClick;
  * Created by jcdev1 on 2018/7/12.
  */
 
-public class PendingDetailActivity extends BaseFragmentActivity implements IQuotationView, IRealTimeView {
+public class PendingDetailActivity extends BaseFragmentActivity implements IQuotationView, IRealTimeView, IPendingFragmentView {
 
     @Bind(R.id.frame_layout_k_line)
     AutoFrameLayout frameLayoutKLine;
@@ -63,14 +67,20 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
     TextView tvStopProfitPri;
     @Bind(R.id.tv_date)
     TextView tvDate;
+    @Bind(R.id.tv_pending_style)
+    TextView tvPendingStyle;
     @Bind(R.id.tv_pending_price)
     TextView tvPendingPrice;
     @Bind(R.id.rl_father)
     RelativeLayout rlFather;
+    @Bind(R.id.tv_six)
+    TextView tvSix;
 
     private KLineFragment kLineFragment;
     private QuotationPresenter quotationPresenter = new QuotationPresenter(this);
     private RealTimeDataPresenter realTimeDataPresenter = new RealTimeDataPresenter(this);
+    private PendingListPresenter presenter = new PendingListPresenter(this);
+
 
     public String symbol;//只用于参数调用
     private String symbolCN;//只用于展示
@@ -100,6 +110,9 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
      */
     private double[] profitCalCurrencyArray = new double[]{0, 0};
 
+    private OrderPendingModel.DataBean.PendOrderBean tb;
+    private String[] cmdStr;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +129,9 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
         symbolEN = getIntent().getStringExtra("symbol");
         symbolCN = getIntent().getStringExtra("symbolCn");
         digits = getIntent().getIntExtra("digits", 2);
+        cmdStr = new String[]{getResources().getString(R.string.order_pending_details_closetype_2), getResources().getString(R.string.order_pending_details_closetype_3),
+                getResources().getString(R.string.order_pending_details_closetype_4), getResources().getString(R.string.order_pending_details_closetype_5)};
+        setDataToUI();
 
         setBackButton();
         FragmentManager manager = getSupportFragmentManager();
@@ -129,10 +145,37 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
         transaction.commit();
     }
 
+    private void setDataToUI() {
+        Bundle extras = getIntent().getExtras();
+        tb = (OrderPendingModel.DataBean.PendOrderBean) extras.getSerializable("bean");
+        if (tb != null) {
+            tvOrderNum.setText(tb.getTicket());
+            tvOpenPrice.setText(cmdStr[tb.getCmd() - 2]);
+            tvCurrentPrice.setText(BaseUtils.getDigitsData(tb.getMarket(), tb.getDigits()));
+            if (tb.getSl() == 0)
+                tvStopLossPri.setText(getString(R.string.not_setting));
+            else
+                tvStopLossPri.setText(BaseUtils.getDigitsData(tb.getSl(), tb.getDigits()));
+            if (tb.getTp() == 0)
+                tvStopProfitPri.setText(getString(R.string.not_setting));
+            else
+                tvStopProfitPri.setText(BaseUtils.getDigitsData(tb.getTp(), tb.getDigits()));
+
+            tvTradeLots.setText(String.valueOf(tb.getVolume()));
+
+            tvSix.setText(getString(R.string.pending_price2));
+            tvMargin.setText(BaseUtils.getDigitsData(tb.getOpenPrice(), digits));
+            tvDate.setText(getString(R.string.pending_time) + "：" + tb.getOpenTime());
+
+        }
+
+    }
 
     private void initData() {
         quotationPresenter.attachView(this);
         realTimeDataPresenter.attachView(this);
+        presenter.attachView(this);
+
 
         setTitle(symbolEN + " " + symbolCN);
 
@@ -147,28 +190,51 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_cancel:
-                showCancelPop();
+                showCancelPendingPop(tb);
                 break;
         }
     }
 
     /**
-     * 撤销前确认
+     * 取消挂单
+     *
+     * @param pb
      */
-    private void showCancelPop() {
-
+    private void showCancelPendingPop(final OrderPendingModel.DataBean.PendOrderBean pb) {
         View contentView = LayoutInflater.from(this).inflate(R.layout.pop_base_remind_layout, null);
         TextView tvTitle = contentView.findViewById(R.id.tv_title);
-        tvTitle.setText("您确定撤销（订单123456）挂单？");
-
-        CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
+        TextView tvCancel = contentView.findViewById(R.id.tv_cancle);
+        TextView tvConfirm = contentView.findViewById(R.id.tv_confirm);
+        tvTitle.setText(getString(R.string.cancel_pending) + "（" + getString(R.string.order) + pb.getTicket() + "）" + getString(R.string.pending) + "?");
+        final CustomPopWindow customPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                 .setView(contentView)
                 .enableBackgroundDark(true)
                 .setBgDarkAlpha(0.7f)
                 .create()
                 .showAtLocation(rlFather, Gravity.CENTER, 0, 0);
-    }
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+            }
+        });
 
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopWindow.dissmiss();
+                Map<String, String> map = new HashMap<>();
+                map.put("ticket", pb.getTicket());
+                map.put("userId", userId);
+                map.put("accessToken", accessToken);
+                map.put("symbol", pb.getSymbolEn());
+                map.put("volume", String.valueOf(pb.getVolume()));
+                map.put("cmd", String.valueOf(pb.getCmd()));
+                map.put("openPrice", String.valueOf(pb.getOpenPrice()));
+                presenter.getCancelPendingBackInfo(map, className + "3");
+            }
+        });
+    }
 
     /**
      * 实时数据
@@ -202,8 +268,10 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
                 profitCalCurrencyArray[0] = realTimeBeanAll.getAsk();
                 profitCalCurrencyArray[1] = realTimeBeanAll.getBid();
             }
-
-            //TODO 计算盈亏
+            if (tb.getCmd() == 2 || tb.getCmd() == 4)
+                tvCurrentPrice.setText(BaseUtils.getDigitsData(realTimeBeanAll.getAsk(), digits));
+            else
+                tvCurrentPrice.setText(BaseUtils.getDigitsData(realTimeBeanAll.getBid(), digits));
 
         }
     }
@@ -255,6 +323,27 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
         realTimeDataPresenter.getRealTimeQuotoDatas(map, className + "2");
     }
 
+    /**
+     * 暂时无用
+     *
+     * @param pendingList
+     */
+    @Override
+    public void setPendingList(List<OrderPendingModel.DataBean.PendOrderBean> pendingList) {
+
+    }
+
+    /**
+     * 取消挂单
+     *
+     * @param result
+     */
+    @Override
+    public void setCancelPendingBackInfo(boolean result) {
+        EventBus.getDefault().post(new EventBean(EventContents.NEW_PENDING, null));
+        finish();
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -262,8 +351,13 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
         EventBus.getDefault().unregister(this);
         quotationPresenter.detachView();
         realTimeDataPresenter.detachView();
+        presenter.detachView();
         CustomHttpUtils.cancelHttp(className + "1");
         CustomHttpUtils.cancelHttp(className + "2");
+        CustomHttpUtils.cancelHttp(className + "3");
+
 
     }
+
+
 }

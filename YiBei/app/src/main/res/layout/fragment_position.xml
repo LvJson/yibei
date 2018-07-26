@@ -12,4 +12,6 @@
         android:layout_height="match_parent">
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+    <include layout="@layout/include_net_error_and_not_data_layout" />
 </com.zhy.autolayout.AutoLinearLayout>

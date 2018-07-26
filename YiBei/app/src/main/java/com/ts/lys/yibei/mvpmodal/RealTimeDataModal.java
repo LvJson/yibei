@@ -1,10 +1,10 @@
 package com.ts.lys.yibei.mvpmodal;
 
-import com.google.gson.Gson;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
 import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.JsonAnalysisUtils;
 
 import java.util.Map;
 
@@ -26,12 +26,25 @@ public class RealTimeDataModal {
 
             @Override
             public void success(String response, int id) {
-                Gson gson = new Gson();
-                RealTimeQuoteDatas scd = gson.fromJson(response, RealTimeQuoteDatas.class);
-                if (scd.getErr_code().equals("0"))
-                    listener.success(scd);
-                else
-                    listener.faild(scd.getErr_msg());
+
+                new JsonAnalysisUtils<RealTimeQuoteDatas>(RealTimeQuoteDatas.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<RealTimeQuoteDatas>() {
+                    @Override
+                    public void success(RealTimeQuoteDatas realTimeQuoteDatas) {
+                        listener.success(realTimeQuoteDatas);
+                    }
+
+                    @Override
+                    public void fail(String str) {
+                        listener.faild(str);
+                    }
+                });
+
+//                Gson gson = new Gson();
+//                RealTimeQuoteDatas scd = gson.fromJson(response, RealTimeQuoteDatas.class);
+//                if (scd.getErr_code().equals("0"))
+//                    listener.success(scd);
+//                else
+//                    listener.faild(scd.getErr_msg());
 
             }
         });

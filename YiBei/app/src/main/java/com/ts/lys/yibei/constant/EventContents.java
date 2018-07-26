@@ -19,5 +19,10 @@ public class EventContents {
     public static final String MARKET_CLICK = "007";//行情Tab被点击
     public static final String MARKET_NOT_CLICK = "008";//行情Tab没有被点击
 
+    public static final String ORDER_CLICK = "009";//订单Tab被点击
+    public static final String ORDER_NOT_CLICK = "010";//订单Tab被点击
+    public static final String NEW_TRADING = "011";//有新的开仓
+    public static final String NEW_PENDING = "012";//有新的挂单
+
 
 }

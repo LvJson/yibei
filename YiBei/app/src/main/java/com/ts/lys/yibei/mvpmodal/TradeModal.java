@@ -1,13 +1,11 @@
 package com.ts.lys.yibei.mvpmodal;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.ts.lys.yibei.bean.OpenTrader;
 import com.ts.lys.yibei.bean.PendingOrder;
 import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.JsonAnalysisUtils;
 
 import java.util.Map;
 
@@ -29,18 +27,18 @@ public class TradeModal {
 
             @Override
             public void success(String response, int id) {
-                if (response != null) {
-                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
-                    if (jsonObject.get("data").isJsonObject()) {
-                        Gson gson = new Gson();
-                        PendingOrder getQuotesModel = gson.fromJson(response, PendingOrder.class);
-                        if (getQuotesModel.getErr_code().equals("0")) {
-                            listener.success(getQuotesModel);
-                        } else
-                            listener.faild(getQuotesModel.getErr_msg());
-                    } else
-                        listener.faild("no data");
-                }
+
+                new JsonAnalysisUtils<PendingOrder>(PendingOrder.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<PendingOrder>() {
+                    @Override
+                    public void success(PendingOrder pendingOrder) {
+                        listener.success(pendingOrder);
+                    }
+
+                    @Override
+                    public void fail(String str) {
+                        listener.faild(str);
+                    }
+                });
 
             }
         });
@@ -57,18 +55,19 @@ public class TradeModal {
 
             @Override
             public void success(String response, int id) {
-                if (response != null) {
-                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
-                    if (jsonObject.get("data").isJsonObject()) {
-                        Gson gson = new Gson();
-                        OpenTrader getQuotesModel = gson.fromJson(response, OpenTrader.class);
-                        if (getQuotesModel.getErr_code().equals("0")) {
-                            listener.success(getQuotesModel);
-                        } else
-                            listener.faild(getQuotesModel.getErr_msg());
-                    } else
-                        listener.faild("no data");
-                }
+
+
+                new JsonAnalysisUtils<OpenTrader>(OpenTrader.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<OpenTrader>() {
+                    @Override
+                    public void success(OpenTrader openTrader) {
+                        listener.success(openTrader);
+                    }
+
+                    @Override
+                    public void fail(String str) {
+                        listener.faild(str);
+                    }
+                });
 
             }
         });

@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.OrderHistoryModel;
+import com.ts.lys.yibei.utils.BaseUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -35,7 +37,7 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private LayoutInflater mInflater;
     private Context mContext;
     private OnItemClickListenerr listenerr;
-    private List<?> activityBeanList;
+    List<OrderHistoryModel.DataBean.HistoryOrderBean> historyOrderBeanList;
     private int llMoreHegiht;
     private boolean isFirst = true;
 
@@ -48,14 +50,14 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public HistoryAdapterAdapter(Context mContext) {
         this.mContext = mContext;
         mInflater = LayoutInflater.from(mContext);
-        for (int i = 0; i < 10; i++) {
-            map.put(i, false);
-        }
     }
 
-    public void setData(List<?> activityBeanList) {
-        this.activityBeanList = null;
-        this.activityBeanList = activityBeanList;
+    public void setData(List<OrderHistoryModel.DataBean.HistoryOrderBean> historyOrderBeanList) {
+        this.historyOrderBeanList = null;
+        this.historyOrderBeanList = historyOrderBeanList;
+        for (int i = 0; i < historyOrderBeanList.size(); i++) {
+            map.put(i, false);
+        }
         notifyDataSetChanged();
 
     }
@@ -74,6 +76,36 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof HistoryViewholder) {
+
+            OrderHistoryModel.DataBean.HistoryOrderBean hb = historyOrderBeanList.get(position);
+            ((HistoryViewholder) holder).tvSymbolCn.setText(hb.getSymbolCn());
+            ((HistoryViewholder) holder).tvSymbolEn.setText(hb.getSymbolEn());
+            ((HistoryViewholder) holder).tvOpenPrice.setText(String.valueOf(hb.getOpenPrice()));
+            ((HistoryViewholder) holder).tvPositionPrice.setText(String.valueOf(hb.getClosePrice()));
+            ((HistoryViewholder) holder).tvIncome.setText(BaseUtils.dealSymbol(hb.getProfit()));
+            if (hb.getProfit() < 0)
+                ((HistoryViewholder) holder).tvIncome.setTextColor(mContext.getResources().getColor(R.color.fall_color));
+            else
+                ((HistoryViewholder) holder).tvIncome.setTextColor(mContext.getResources().getColor(R.color.rise_color));
+            if (hb.getCmd() == 0)
+                ((HistoryViewholder) holder).ivStatus.setImageResource(R.mipmap.buy_icon);
+            else
+                ((HistoryViewholder) holder).ivStatus.setImageResource(R.mipmap.sell_icon);
+
+            ((HistoryViewholder) holder).tvDate.setText(hb.getCloseTime());
+            ((HistoryViewholder) holder).tvOrderNum.setText(mContext.getString(R.string.order_number) + "：" + hb.getTicket());
+
+            ((HistoryViewholder) holder).inventoryFee.setText(mContext.getString(R.string.inventory_fee) + "：" + hb.getSwaps());
+            ((HistoryViewholder) holder).tvHandlingFee.setText(mContext.getString(R.string.handling_fee) + "：" + hb.getCommission());
+
+            ((HistoryViewholder) holder).tvTradeLots.setText(mContext.getString(R.string.trade_times) + "：" + hb.getVolume() + mContext.getString(R.string.lots));
+            ((HistoryViewholder) holder).tvUseMargin.setText(mContext.getString(R.string.user_margin2) + "：" + BaseUtils.dealSymbol(hb.getMargin()));
+            ((HistoryViewholder) holder).tvStopLoss.setText(mContext.getString(R.string.stop_loss_price) + "：" + hb.getSl());
+            ((HistoryViewholder) holder).tvStopProfit.setText(mContext.getString(R.string.stop_profit_price) + "：" + hb.getTp());
+            ((HistoryViewholder) holder).tvOpenPositionTime.setText(mContext.getString(R.string.position_time) + "：" + hb.getOpenTime());
+
+
+            /********************************************************************************************************/
             if (isFirst) {
                 ((HistoryViewholder) holder).llMore.measure(0, 0);
                 llMoreHegiht = ((HistoryViewholder) holder).llMore.getMeasuredHeight();
@@ -130,7 +162,7 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemCount() {
 
-        return 10;
+        return historyOrderBeanList == null ? 0 : historyOrderBeanList.size();
     }
 
     public class HistoryViewholder extends RecyclerView.ViewHolder {
@@ -184,7 +216,7 @@ public class HistoryAdapterAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public static String millionToDate(Long million) {
-        DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(million);
         return formatter.format(calendar.getTime());

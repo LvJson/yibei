@@ -23,6 +23,7 @@ import com.ts.lys.yibei.customeview.RecycleViewDivider;
 import com.ts.lys.yibei.customeview.ScrollRecyclerView;
 import com.ts.lys.yibei.customeview.SwitcherView;
 import com.ts.lys.yibei.customeview.Xcircleindicator;
+import com.ts.lys.yibei.ui.activity.MainActivity;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.Logger;
@@ -65,11 +66,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initBaseView() {
-    }
-
-    @Override
-    public void initBase() {
-        super.initBase();
         initBanner();
         initHotForeignAdapter();
         initNoticeView();
@@ -199,6 +195,7 @@ public class HomeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_see_all:
+                ((MainActivity) getActivity()).goSomeTab("订单", 2);
                 break;
             case R.id.ll_notice:
                 break;

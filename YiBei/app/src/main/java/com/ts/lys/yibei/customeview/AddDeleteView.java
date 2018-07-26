@@ -37,7 +37,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
     Integer number;
     private ImageView txtDelete;
     private ImageView txtAdd;
-    private EditText et_number;
+    public EditText et_number;
     private RelativeLayout rlHead;
     private TextView tvExplain;
 
@@ -105,6 +105,7 @@ public class AddDeleteView extends AutoLinearLayout implements View.OnTouchListe
         void onDelClick();
 
         void onEditText(double lots);
+
     }
 
     public void setOnAddDelClickLstener(OnAddDelClickLstener lister) {

@@ -1,7 +1,7 @@
 package com.ts.lys.yibei.mvpmodal;
 
-import com.ts.lys.yibei.bean.SymbolInfo;
-import com.ts.lys.yibei.bean.SymbolPrice;
+import com.ts.lys.yibei.bean.CloseTraderModel;
+import com.ts.lys.yibei.bean.OrderPositionModel;
 import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
@@ -15,11 +15,11 @@ import okhttp3.Call;
  * Created by jcdev1 on 2018/6/27.
  */
 
-public class QuotationModal {
+public class PositionListModal {
 
-    public void getSymbolCalInfo(Map<String, String> map, String tag, final IRequestServiceListener<SymbolInfo> listener) {
+    public void getPositionList(Map<String, String> map, String tag, final IRequestServiceListener<OrderPositionModel> listener) {
 
-        CustomHttpUtils.getServiceDatas(map, UrlContents.SYMBOL_SYMBOLCALINFO, tag, new CustomHttpUtils.ServiceStatus() {
+        CustomHttpUtils.getServiceDatas(map, UrlContents.TRADER_POSITIONORDERLIST, tag, new CustomHttpUtils.ServiceStatus() {
             @Override
             public void faild(Call call, Exception e, int id) {
                 listener.faild(BaseContents.NET_ERROR);
@@ -28,10 +28,10 @@ public class QuotationModal {
             @Override
             public void success(String response, int id) {
 
-                new JsonAnalysisUtils<SymbolInfo>(SymbolInfo.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<SymbolInfo>() {
+                new JsonAnalysisUtils<OrderPositionModel>(OrderPositionModel.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<OrderPositionModel>() {
                     @Override
-                    public void success(SymbolInfo symbolInfo) {
-                        listener.success(symbolInfo);
+                    public void success(OrderPositionModel orderPositionModel) {
+                        listener.success(orderPositionModel);
                     }
 
                     @Override
@@ -44,11 +44,11 @@ public class QuotationModal {
 //                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
 //                    if (jsonObject.get("data").isJsonObject()) {
 //                        Gson gson = new Gson();
-//                        SymbolInfo getQuotesModel = gson.fromJson(response, SymbolInfo.class);
-//                        if (getQuotesModel.getErr_code().equals("0")) {
-//                            listener.success(getQuotesModel);
+//                        OrderPositionModel traderAccInfoModel = gson.fromJson(response, OrderPositionModel.class);
+//                        if (traderAccInfoModel.getErr_code().equals("0")) {
+//                            listener.success(traderAccInfoModel);
 //                        } else
-//                            listener.faild(getQuotesModel.getErr_msg());
+//                            listener.faild(traderAccInfoModel.getErr_msg());
 //                    } else
 //                        listener.faild("no data");
 //                }
@@ -58,9 +58,9 @@ public class QuotationModal {
     }
 
 
-    public void getSymbolPriceData(Map<String, String> map, String tag, final IRequestServiceListener<SymbolPrice> listener) {
+    public void getClosePositionBackInfo(Map<String, String> map, String tag, final IRequestServiceListener<CloseTraderModel> listener) {
 
-        CustomHttpUtils.getServiceDatas(map, UrlContents.QUOTE_SYMBOL_PRICE, tag, new CustomHttpUtils.ServiceStatus() {
+        CustomHttpUtils.getServiceDatas(map, UrlContents.TRADER_CLOSE, tag, new CustomHttpUtils.ServiceStatus() {
             @Override
             public void faild(Call call, Exception e, int id) {
                 listener.faild(BaseContents.NET_ERROR);
@@ -69,10 +69,10 @@ public class QuotationModal {
             @Override
             public void success(String response, int id) {
 
-                new JsonAnalysisUtils<SymbolPrice>(SymbolPrice.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<SymbolPrice>() {
+                new JsonAnalysisUtils<CloseTraderModel>(CloseTraderModel.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<CloseTraderModel>() {
                     @Override
-                    public void success(SymbolPrice symbolPrice) {
-                        listener.success(symbolPrice);
+                    public void success(CloseTraderModel closeTraderModel) {
+                        listener.success(closeTraderModel);
                     }
 
                     @Override
@@ -85,11 +85,11 @@ public class QuotationModal {
 //                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
 //                    if (jsonObject.get("data").isJsonObject()) {
 //                        Gson gson = new Gson();
-//                        SymbolPrice getQuotesModel = gson.fromJson(response, SymbolPrice.class);
-//                        if (getQuotesModel.getErr_code().equals("0")) {
-//                            listener.success(getQuotesModel);
+//                        CloseTraderModel traderAccInfoModel = gson.fromJson(response, CloseTraderModel.class);
+//                        if (traderAccInfoModel.getErr_code().equals("0")) {
+//                            listener.success(traderAccInfoModel);
 //                        } else
-//                            listener.faild(getQuotesModel.getErr_msg());
+//                            listener.faild(traderAccInfoModel.getErr_msg());
 //                    } else
 //                        listener.faild("no data");
 //                }
@@ -97,5 +97,4 @@ public class QuotationModal {
             }
         });
     }
-
 }
