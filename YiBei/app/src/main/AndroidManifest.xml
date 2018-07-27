@@ -56,6 +56,14 @@
         <activity
             android:name=".ui.activity.TradeReportActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.AccountLoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.activity.RegistActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <meta-data
             android:name="design_width"

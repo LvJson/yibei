@@ -6,11 +6,29 @@ package com.ts.lys.yibei.constant;
 
 public class UrlContents {
 
+    /**
+     * 测试环境
+     */
+
+//    public static final String URLHEAD = "http://115.236.88.130:4417/api";
+
+
+    /**
+     * 测试环境：实时数据
+     */
+//    public static final String SOCKETIO_URL = "http://115.236.88.130:7489";
+
+
+    /**
+     * 线上环境
+     */
     public static final String URLHEAD = "http://hyapi.trademaster168.com/api";
     /**
      * 实时数据
      */
     public static final String SOCKETIO_URL = "http://sc.trademaster168.com";
+
+
     /**
      * k线图历史数据
      */

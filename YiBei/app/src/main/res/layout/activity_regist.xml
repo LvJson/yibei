@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ts.lys.yibei.customeview.KeyboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/in_one"
+        layout="@layout/bar_white_bg_layout" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/in_one"
+        android:fillViewport="true">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15px"
+                android:paddingTop="10dp"
+                android:text="@string/regist"
+                android:textColor="@color/nine_text_color"
+                android:textSize="@dimen/text_size_64" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px"
+                android:gravity="center"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="@dimen/padding_left_and_right">
+
+                <TextView
+                    android:layout_width="100px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mail_box"
+                    android:textColor="@color/nine_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40px"
+                    android:layout_marginRight="35px"
+                    android:background="@color/four_text_color" />
+
+
+                <EditText
+                    android:id="@+id/et_mail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:hint="@string/please_write_mail_box"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:textColor="@color/nine_text_color"
+                    android:textColorHint="@color/two_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+                <ImageView
+                    android:id="@+id/iv_delete_mail"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@mipmap/login_delete_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30px"
+                android:background="@color/four_text_color" />
+
+            <TextView
+                android:id="@+id/tv_mail_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:text="@string/mail_box_error"
+                android:textColor="@color/err_color"
+                android:textSize="@dimen/text_size_26"
+                android:visibility="gone" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40px"
+                android:gravity="center"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="@dimen/padding_left_and_right">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/country_area"
+                    android:textColor="@color/nine_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/two_text_color"
+                    android:spinnerMode="dropdown">
+
+                </Spinner>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30px"
+                android:background="@color/four_text_color" />
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40px"
+                android:gravity="center"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="@dimen/padding_left_and_right">
+
+                <TextView
+                    android:layout_width="100px"
+                    android:layout_height="wrap_content"
+                    android:text="+86"
+                    android:textColor="@color/nine_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40px"
+                    android:layout_marginRight="35px"
+                    android:background="@color/four_text_color" />
+
+
+                <EditText
+                    android:id="@+id/et_phone_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:hint="@string/please_write_phone"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:textColor="@color/nine_text_color"
+                    android:textColorHint="@color/two_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+                <ImageView
+                    android:id="@+id/iv_delete_phone"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@mipmap/login_delete_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30px"
+                android:background="@color/four_text_color" />
+
+            <TextView
+                android:id="@+id/tv_phone_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:text="@string/phone_num_error"
+                android:textColor="@color/err_color"
+                android:textSize="@dimen/text_size_26"
+                android:visibility="gone" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56px"
+                android:gravity="center"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="@dimen/padding_left_and_right">
+
+                <TextView
+                    android:layout_width="100px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password"
+                    android:textColor="@color/nine_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="40px"
+                    android:layout_marginRight="35px"
+                    android:background="@color/four_text_color" />
+
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:hint="@string/password_style"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:textColor="@color/nine_text_color"
+                    android:textColorHint="@color/two_text_color"
+                    android:textSize="@dimen/text_size_34" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30px"
+                android:background="@color/four_text_color" />
+
+            <TextView
+                android:id="@+id/tv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:text="@string/password_error"
+                android:textColor="@color/err_color"
+                android:textSize="@dimen/text_size_26"
+                android:visibility="gone" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp">
+
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/i_have_agree"
+                    android:textColor="@color/nine_text_color"
+                    android:textSize="@dimen/text_size_26" />
+
+                <TextView
+                    android:id="@+id/tv_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_agreement"
+                    android:textColor="@color/two_text_color"
+                    android:textSize="@dimen/text_size_26" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:layout_marginBottom="30px"
+                android:layout_marginLeft="@dimen/padding_left_and_right"
+                android:layout_marginRight="@dimen/padding_left_and_right"
+                android:layout_marginTop="56px"
+                android:background="@drawable/btn_select"
+                android:enabled="false"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_32" />
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+
+</com.ts.lys.yibei.customeview.KeyboardLayout>

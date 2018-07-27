@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ts.lys.yibei.customeview.KeyboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/in_one"
+        layout="@layout/bar_white_bg_layout" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/in_one"
+        android:fillViewport="true">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_two"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15px"
+                android:paddingTop="10dp"
+                android:text="@string/account_login"
+                android:textColor="@color/one_text_color"
+                android:textSize="@dimen/text_size_64" />
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px"
+                android:gravity="bottom"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="20dp">
+
+                <ImageView
+                    android:layout_width="30px"
+                    android:layout_height="41px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/login_account_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/et_phone_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50px"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:hint="@string/please_write_phone_num"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/one_text_color"
+                        android:textColorHint="@color/two_text_color"
+                        android:textSize="18dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/iv_delete"
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@mipmap/login_delete_icon"
+                    app:layout_auto_basewidth="height" />
+
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30px"
+                android:background="@color/four_text_color" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100px"
+                android:gravity="bottom"
+                android:paddingLeft="@dimen/padding_left_and_right"
+                android:paddingRight="@dimen/padding_left_and_right">
+
+                <ImageView
+                    android:layout_width="30px"
+                    android:layout_height="38px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/login_pass_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/two_text_color">
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50px"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="bottom"
+                        android:hint="@string/please_write_password"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/one_text_color"
+                        android:textColorHint="@color/two_text_color"
+                        android:textSize="18dp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30px"
+                android:background="@color/four_text_color" />
+
+            <TextView
+                android:id="@+id/tv_forgit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="50px"
+                android:paddingRight="@dimen/padding_left_and_right"
+                android:text="@string/forgit_password"
+                android:textColor="@color/two_text_color"
+                android:textSize="@dimen/text_size_30" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="90px"
+                android:layout_marginLeft="@dimen/padding_left_and_right"
+                android:layout_marginRight="@dimen/padding_left_and_right"
+                android:layout_marginTop="89px"
+                android:background="@drawable/btn_select"
+                android:enabled="false"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_32" />
+
+            <TextView
+                android:id="@+id/tv_regist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="70px"
+                android:text="@string/no_account_to_regise"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_size_32" />
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </ScrollView>
+
+
+</com.ts.lys.yibei.customeview.KeyboardLayout>

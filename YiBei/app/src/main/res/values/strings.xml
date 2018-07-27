@@ -101,11 +101,32 @@
     <string name="margin_and_null">保证金&#12288;</string>
 
     <string name="phone_quick_login">手机快捷登录</string>
+    <string name="account_login">账号登录</string>
     <string name="login_explain">未注册易贝外汇的手机号，登录时将自动注册</string>
-    <string name="please_write_phone_num">请输入手机号码</string>
+    <string name="please_write_phone_num">请输入手机号码/邮箱</string>
     <string name="please_write_verify_code">请输入验证码</string>
+    <string name="please_write_password">请输入密码</string>
+    <string name="forgit_password">忘记密码</string>
+    <string name="no_account_to_regise">没有账号？直接注册</string>
     <string name="get_verify_code">获取验证码</string>
     <string name="login">登录</string>
+    <string name="regist">注册</string>
+    <string name="mail_box">邮箱</string>
+    <string name="please_write_mail_box">请填写您的邮箱</string>
+    <string name="mail_box_error">您的邮箱格式有误</string>
+    <string name="country_area">国家/地区</string>
+    <string name="china_mainland">（CHINA）中国大陆</string>
+    <string name="china_hongkong">（Hong Kong）中國香港</string>
+    <string name="please_write_phone">请填写您的手机号</string>
+    <string name="phone_num_error">您的手机号输入有误,请重新输入</string>
+    <string name="password">密码</string>
+    <string name="password_style">10-15位,数字和字母的混合</string>
+    <string name="password_error">密码必须为10-15位,数字和字母的混合</string>
+
+    <string name="i_have_agree">我已经阅读并同意</string>
+    <string name="register_agreement">《易贝APP的注册协议》</string>
+    <string name="next">下一步</string>
+
 
     <string name="yibei_forex">易贝外汇</string>
     <string name="asset_balance">资产余额</string>

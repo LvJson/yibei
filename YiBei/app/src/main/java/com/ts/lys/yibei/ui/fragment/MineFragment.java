@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
+import com.ts.lys.yibei.ui.activity.AccountLoginActivity;
 import com.ts.lys.yibei.ui.activity.ChooseBrokerActivity;
-import com.ts.lys.yibei.ui.activity.LoginActivity;
 import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
 import com.ts.lys.yibei.ui.activity.TradeReportActivity;
 import com.ts.lys.yibei.ui.activity.WebViewActivity;
@@ -76,7 +76,7 @@ public class MineFragment extends BaseFragment {
             case R.id.btn_open_new_account:
                 break;
             case R.id.iv_head:
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(), AccountLoginActivity.class));
                 break;
             case R.id.ll_data_statis:
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);

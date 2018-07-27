@@ -3,6 +3,7 @@ package com.ts.lys.yibei.ui.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class LoginActivity extends BaseActivity {
     TextView tvOne;
     @Bind(R.id.tv_two)
     TextView tvTwo;
+    @Bind(R.id.text_input)
+    TextInputLayout textInput;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class LoginActivity extends BaseActivity {
                 timer.start();
                 break;
             case R.id.btn_login:
+
                 String phoneNum = etPhoneNum.getText().toString().trim();
                 String verifyCode = etVerifyCode.getText().toString().trim();
                 verifyData(phoneNum, verifyCode);
