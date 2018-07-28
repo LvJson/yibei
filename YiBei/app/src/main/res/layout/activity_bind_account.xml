@@ -139,8 +139,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="50px"
-                android:background="@drawable/gradual_change_up_down_bg"
-                android:enabled="true"
+                android:background="@drawable/btn_select"
+                android:enabled="false"
                 android:text="@string/quick_bind2"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_32" />

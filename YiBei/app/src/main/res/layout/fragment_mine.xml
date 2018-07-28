@@ -53,6 +53,7 @@
                     android:paddingBottom="69px">
 
                     <TextView
+                        android:id="@+id/tv_account_num"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="63px"
@@ -181,8 +182,8 @@
                 android:layout_height="140px"
                 android:layout_below="@+id/iv_customer"
                 android:layout_marginLeft="77px"
-                android:background="@drawable/circle_gray"
                 android:elevation="10px"
+                android:src="@mipmap/default_avatar_icon"
                 app:layout_auto_basewidth="height" />
 
         </com.zhy.autolayout.AutoRelativeLayout>

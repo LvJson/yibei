@@ -115,8 +115,8 @@
     <string name="please_write_mail_box">请填写您的邮箱</string>
     <string name="mail_box_error">您的邮箱格式有误</string>
     <string name="country_area">国家/地区</string>
-    <string name="china_mainland">（CHINA）中国大陆</string>
-    <string name="china_hongkong">（Hong Kong）中國香港</string>
+    <string name="china_mainland">(CHINA)中国大陆</string>
+    <string name="china_hongkong">(Hong Kong)中國香港</string>
     <string name="please_write_phone">请填写您的手机号</string>
     <string name="phone_num_error">您的手机号输入有误,请重新输入</string>
     <string name="password">密码</string>
@@ -126,6 +126,16 @@
     <string name="i_have_agree">我已经阅读并同意</string>
     <string name="register_agreement">《易贝APP的注册协议》</string>
     <string name="next">下一步</string>
+    <string name="regis_success">恭喜你，注册成功</string>
+    <string name="your_account">您的账号</string>
+    <string name="have_rigist">已经完成注册!</string>
+    <string name="rigst_get_this">您已免费获得</string>
+    <string name="experience_gold">体验金!</string>
+    <string name="finish">完成</string>
+
+    <string name="reset_pass">重置密码</string>
+    <string name="reset_pass_explain">如果需要重置密码，请填写您的邮箱地址</string>
+    <string name="please_your_addr">请填写你的邮箱地址</string>
 
 
     <string name="yibei_forex">易贝外汇</string>
@@ -172,7 +182,8 @@
     <string name="mt4_account">MT4账户</string>
     <string name="mt4_password">MT4账户密码</string>
     <string name="login_server">登录服务器</string>
-    <string name="bind_explain">说明：您在经纪商注册开户后，经纪商会将MT4账户和密码已经登录服务器名称通过邮件/短信的方式发送给您，您可以在您的注册邮箱中查看。此账户信息与易贝无关。</string>
+    <string name="mt4_bind_success">绑定成功</string>
+    <string name="bind_explain">说明：您在经纪商注册开户后，经纪商会将MT4账户和密码以及登录服务器名称通过邮件/短信的方式发送给您，您可以在您的注册邮箱中查看。此账户信息与易贝无关。</string>
 
     <string name="withdraw_recharge">&#8194;去出入金&#8194;</string>
 

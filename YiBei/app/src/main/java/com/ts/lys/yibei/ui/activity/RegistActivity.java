@@ -3,26 +3,38 @@ package com.ts.lys.yibei.ui.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.constant.BaseContents;
+import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.utils.BaseUtils;
-import com.ts.lys.yibei.utils.Logger;
+import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.SpUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 public class RegistActivity extends BaseActivity {
 
@@ -40,8 +52,8 @@ public class RegistActivity extends BaseActivity {
     TextView tvPhoneError;
     @Bind(R.id.et_password)
     EditText etPassword;
-    @Bind(R.id.tv_password)
-    TextView tvPassword;
+    @Bind(R.id.tv_password_error)
+    TextView tvPasswordRrror;
     @Bind(R.id.checkbox)
     CheckBox checkbox;
     @Bind(R.id.btn_next)
@@ -50,6 +62,8 @@ public class RegistActivity extends BaseActivity {
     ScrollView scrollView;
     @Bind(R.id.keyboard_layout)
     KeyboardLayout keyboardLayout;
+    @Bind(R.id.tv_code)
+    TextView tvCode;
 
     private String[] mItem;
     /**
@@ -64,8 +78,13 @@ public class RegistActivity extends BaseActivity {
      * 密码
      */
     private String password;
+    /**
+     * 地区编码
+     */
+    private String code = "+86";
 
     private boolean[] status = new boolean[3];
+    private static String[] codeStr = new String[]{"+86", "+99"};
 
     private static String passRegex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{10,15}$";
     private static String emailRegex = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
@@ -112,7 +131,9 @@ public class RegistActivity extends BaseActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Logger.e("position", position + "");
+                code = codeStr[position];
+                tvCode.setText(code);
+
             }
 
             @Override
@@ -123,6 +144,7 @@ public class RegistActivity extends BaseActivity {
 
 
         editTextTouchListener();
+        editTextOnTextChangeListener();
 
     }
 
@@ -133,6 +155,7 @@ public class RegistActivity extends BaseActivity {
         etMail.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                tvMailError.setVisibility(View.GONE);
                 int one = (int) (0.1124 * BaseUtils.getScreenHeight(getApplicationContext()));
                 scrollViewScrollTo(one);
                 return false;
@@ -141,7 +164,7 @@ public class RegistActivity extends BaseActivity {
         etPhoneNum.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
+                tvPhoneError.setVisibility(View.GONE);
                 scrollViewScrollTo(scrollView.getHeight());
 
                 return false;
@@ -151,6 +174,8 @@ public class RegistActivity extends BaseActivity {
         etPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                tvPasswordRrror.setVisibility(View.GONE);
                 scrollViewScrollTo(scrollView.getHeight());
 
                 return false;
@@ -158,37 +183,86 @@ public class RegistActivity extends BaseActivity {
         });
     }
 
+
     /**
-     * 校验输入内容
+     * 输入框输入内容变化监听
      */
-    private void verifyText(int position) {
+    private void editTextOnTextChangeListener() {
 
-        switch (position) {
-            case 0:
-                if (phoneNum != null) {
+        etMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                }
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mailAddre = etMail.getText().toString().trim();
+                haveNull();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etPhoneNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                phoneNum = etPhoneNum.getText().toString().trim();
+                haveNull();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                password = etPassword.getText().toString().trim();
+                haveNull();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                haveNull();
+            }
+        });
     }
+
 
     /**
      * 输入框内容是否为空
      */
-    private boolean haveNull() {
-        if (TextUtils.isEmpty(mailAddre) || TextUtils.isEmpty(phoneNum) || TextUtils.isEmpty(password))
-            return true;
+    private void haveNull() {
+        if (TextUtils.isEmpty(mailAddre) || TextUtils.isEmpty(phoneNum) || TextUtils.isEmpty(password) || !checkbox.isChecked())
+            btnNext.setEnabled(false);
         else
-            return false;
+            btnNext.setEnabled(true);
 
     }
+
 
     private void scrollViewScrollTo(final int toY) {
         scrollView.postDelayed(new Runnable() {
@@ -203,13 +277,87 @@ public class RegistActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_delete_mail:
+                etMail.setText(null);
                 break;
             case R.id.iv_delete_phone:
+                etPhoneNum.setText(null);
                 break;
             case R.id.tv_agree:
+                //TODO 注册协议
                 break;
             case R.id.btn_next:
+                if (verifyText())
+                    regist();
                 break;
         }
+    }
+
+    /**
+     * 校验输入内容是否合法
+     */
+    private boolean verifyText() {
+
+        boolean isRightMail = BaseUtils.matchString(mailAddre, emailRegex);
+        boolean isRightPassworld = BaseUtils.matchString(password, passRegex);
+        if (isRightMail && isRightPassworld) {
+            return true;
+        } else {
+
+            if (!isRightMail)
+                tvMailError.setVisibility(View.VISIBLE);
+            if (!isRightPassworld)
+                tvPasswordRrror.setVisibility(View.VISIBLE);
+            return false;
+        }
+
+    }
+
+
+    private void regist() {
+        Map<String, String> map = new HashMap<>();
+        map.put("email", mailAddre);
+        map.put("password", password);
+        map.put("telephone", "(" + code + ")" + phoneNum);
+
+        showCustomProgress();
+        CustomHttpUtils.getServiceDatas(map, UrlContents.REGISTER, className, new CustomHttpUtils.ServiceStatus() {
+            @Override
+            public void faild(Call call, Exception e, int id) {
+                disCustomProgress();
+                showToast(getString(R.string.net_error));
+            }
+
+            @Override
+            public void success(String response, int id) {
+                disCustomProgress();
+                if (response != null) {
+                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
+                    String errCode = "";
+                    String errMsg = "";
+
+                    if (jsonObject.has("err_code") && !jsonObject.get("err_code").isJsonNull())
+                        errCode = jsonObject.get("err_code").getAsString();
+                    if (jsonObject.has("err_msg") && !jsonObject.get("err_msg").isJsonNull())
+                        errMsg = jsonObject.get("err_msg").getAsString();
+
+                    if (errCode.equals("0")) {
+                        //TODO 保存邮箱和手机号
+                        SpUtils.putString(getApplicationContext(), BaseContents.MAIL_BOX, mailAddre);
+                        SpUtils.putString(getApplicationContext(), BaseContents.PHONE_NUMBER, phoneNum);
+                        startActivity(RegisSuccessActivity.class);
+                        finish();
+
+                    } else
+                        showToast(errMsg);
+                }
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CustomHttpUtils.cancelHttp(className);
     }
 }

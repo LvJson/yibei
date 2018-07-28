@@ -50,7 +50,7 @@ import java.util.Random;
 
 /**
  * @author yangyu
- *         功能描述：常量工具类
+ * 功能描述：常量工具类
  */
 public class BaseUtils {
     /**
@@ -607,5 +607,19 @@ public class BaseUtils {
             }
         }
         return count;
+    }
+
+
+    /**
+     * 匹配正则表达式
+     *
+     * @param content
+     * @param regex
+     * @return
+     */
+    public static boolean matchString(String content, String regex) {
+
+        return content.matches(regex);
+
     }
 }

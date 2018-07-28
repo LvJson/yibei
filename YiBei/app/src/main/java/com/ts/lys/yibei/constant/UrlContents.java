@@ -98,4 +98,32 @@ public class UrlContents {
     public static final String TRADER_UPDATE = URLHEAD + "/trader/update";
 
 
+    /************* 注册，登录 ********************/
+
+    /**
+     * 注册
+     */
+    public static final String REGISTER = URLHEAD + "/register";
+    /**
+     * 登录
+     */
+    public static final String LOGIN = URLHEAD + "/login";
+    /**
+     * 账号信息
+     */
+    public static final String USER_USERACCINFO = URLHEAD + "/user/userAccInfo";
+    /**
+     * 切换账户
+     */
+    public static final String ACCOUNT_CHECKTYPE = URLHEAD + "/account/checkType";
+    /**
+     * MT4绑定用户
+     */
+    public static final String BROKER_BIND = URLHEAD + "/broker/bind";
+
+    /**
+     * 找回密码
+     */
+    public static final String MODIFYPASSWD = URLHEAD + "/modifyPasswd";
+
 }

@@ -23,6 +23,7 @@ public class EventContents {
     public static final String ORDER_NOT_CLICK = "010";//订单Tab被点击
     public static final String NEW_TRADING = "011";//有新的开仓
     public static final String NEW_PENDING = "012";//有新的挂单
+    public static final String REGIST_SUCCESS = "013";//注册成功
 
 
 }

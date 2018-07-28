@@ -94,7 +94,8 @@
                 android:layout_marginTop="100px"
                 android:gravity="bottom"
                 android:paddingLeft="@dimen/padding_left_and_right"
-                android:paddingRight="@dimen/padding_left_and_right">
+                android:paddingRight="@dimen/padding_left_and_right"
+                app:layout_auto_basewidth="height">
 
                 <ImageView
                     android:layout_width="30px"

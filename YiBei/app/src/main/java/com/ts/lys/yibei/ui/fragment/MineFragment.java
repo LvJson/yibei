@@ -1,6 +1,8 @@
 package com.ts.lys.yibei.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +11,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.UserAccInfoModel;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
+import com.ts.lys.yibei.mvppresenter.AccInfoPresenter;
+import com.ts.lys.yibei.mvpview.IMineFragmentView;
 import com.ts.lys.yibei.ui.activity.AccountLoginActivity;
 import com.ts.lys.yibei.ui.activity.ChooseBrokerActivity;
 import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
 import com.ts.lys.yibei.ui.activity.TradeReportActivity;
 import com.ts.lys.yibei.ui.activity.WebViewActivity;
+import com.ts.lys.yibei.utils.AppUtils;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.zhy.autolayout.AutoLinearLayout;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -25,7 +35,7 @@ import butterknife.OnClick;
  * Created by jcdev1 on 2018/6/8.
  */
 
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements IMineFragmentView {
 
     @Bind(R.id.tv_account_equity)
     TextView tvAccountEquity;
@@ -33,12 +43,18 @@ public class MineFragment extends BaseFragment {
     TextView tvAssetBalance;
     @Bind(R.id.tv_profit_rate)
     TextView tvProfitRate;
-    @Bind(R.id.include_no_account)
-    AutoLinearLayout includeNoAccount;
     @Bind(R.id.tv_account_style)
     TextView tvAccountStyle;
+
+
+    @Bind(R.id.include_no_account)
+    AutoLinearLayout includeNoAccount;
     @Bind(R.id.include_have_account)
     AutoLinearLayout includeHaveAccount;
+    @Bind(R.id.ll_have_real_account)
+    LinearLayout llHaverealAccount;
+
+
     @Bind(R.id.tv_bi)
     TextView tvBi;
     @Bind(R.id.tv_lots)
@@ -47,6 +63,12 @@ public class MineFragment extends BaseFragment {
     TextView tvCumulativeIncome;
     @Bind(R.id.ll_father)
     LinearLayout llFather;
+    @Bind(R.id.tv_account_num)
+    TextView tvAccountNum;
+
+    private AccInfoPresenter presenter = new AccInfoPresenter(this);
+
+    private UserAccInfoModel.DataBean accountInfo;
 
     @Override
     protected int getLayoutID() {
@@ -55,6 +77,17 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initBaseView() {
+        initData();
+
+    }
+
+    private void initData() {
+
+        presenter.attachView(this);
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("accessToken", accessToken);
+        presenter.getAccInfo(map, className);
 
 
     }
@@ -110,5 +143,46 @@ public class MineFragment extends BaseFragment {
                 .setAnimationStyle(R.style.mypopwindow_anim_style)
                 .create()
                 .showAtLocation(llFather, Gravity.BOTTOM, 0, 0);
+
+
+    }
+
+
+    /**
+     * 账户基本信息
+     *
+     * @param accountInfo
+     */
+    @Override
+    public void showAccountInfo(UserAccInfoModel.DataBean accountInfo) {
+
+        if (accountInfo != null) {
+            this.accountInfo = accountInfo;
+            tvAccountNum.setText(accountInfo.getTelephone());
+            tvAccountEquity.setText(BaseUtils.dealSymbol(accountInfo.getEquity()));
+            tvProfitRate.setText(AppUtils.getDigitsData(accountInfo.getYieldRate(), 2) + "%");
+
+
+        }
+
+    }
+
+
+    /**
+     * 切换账户返回信息
+     *
+     * @param state
+     */
+    @Override
+    public void showSwitchState(boolean state) {
+
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter.detachView();
+        CustomHttpUtils.cancelHttp(className);
     }
 }
