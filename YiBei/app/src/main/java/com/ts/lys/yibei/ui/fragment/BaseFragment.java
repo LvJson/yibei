@@ -13,6 +13,7 @@ import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.customeview.CustomProgress;
 import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.Logger;
+import com.ts.lys.yibei.utils.SpUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import butterknife.ButterKnife;
@@ -41,10 +42,10 @@ public abstract class BaseFragment extends Fragment implements BaseMvpView {
         mFragment = this;
         TAG = getClass().getSimpleName();
         className = getClass().getName();
-        accessToken = "d31303049b7224712b2073354d4cc92c8a196f1894b1876509d78b4cd9268149b9ab165da9a31a6251d2448261fd99d1a7d22133bb3ef018493849f4a7896993";
-        userId = "1403";
-//        accessToken = SpUtils.getString(getActivity(), "accessToken", "");
-//        userId = SpUtils.getString(getActivity(), "userId");
+//        accessToken = "d31303049b7224712b2073354d4cc92c8a196f1894b1876509d78b4cd9268149b9ab165da9a31a6251d2448261fd99d1a7d22133bb3ef018493849f4a7896993";
+//        userId = "1403";
+        accessToken = SpUtils.getString(getActivity(), BaseContents.ACCESS_TOKEN, "");
+        userId = SpUtils.getString(getActivity(), BaseContents.USERID,"");
         Logger.e(TAG, "onCreat()");
     }
 

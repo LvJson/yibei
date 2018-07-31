@@ -1,5 +1,6 @@
 package com.ts.lys.yibei.mvpview;
 
+import com.ts.lys.yibei.bean.BrokerCheckListBean;
 import com.ts.lys.yibei.bean.UserAccInfoModel;
 
 /**
@@ -11,5 +12,7 @@ public interface IMineFragmentView extends BaseMvpView {
     void showAccountInfo(UserAccInfoModel.DataBean accountInfo);
 
     void showSwitchState(boolean state);
+
+    void showAccountList(BrokerCheckListBean.DataBean dataBean);
 
 }

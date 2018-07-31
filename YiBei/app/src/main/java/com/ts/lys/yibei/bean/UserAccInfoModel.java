@@ -1,19 +1,18 @@
 package com.ts.lys.yibei.bean;
+
+import java.util.List;
+
 /**
  * 账号信息
- * */
-public class UserAccInfoModel {
+ */
+public class UserAccInfoModel extends ErrorStatus {
 
 
     /**
-     * data : {"nick":"Trader..u","profitCount":104.97,"yieldRate":10.497,"destroyDay":13,"headUrl":"http://msg.trademaster168.com/img/userPortrait/man.jpg","accType":0,"accStatus":2,"mt4Id":null,"equity":1104.97,"email":"249762619@qq.com"}
-     * err_code : 0
-     * err_msg : successe
+     * data : {"totalVolume":0,"profitCount":0,"lossTrade":0,"destroyDay":-1,"profitMonth":{"month":["3","4","5","6","7"],"profit":[0,0,0,195.24,-34.29]},"headUrl":"http://forex-smart-trade-server.oss-cn-hangzhou.aliyuncs.com/IMG/UserImg/user_head_5493379_big.jpg","telephone":"18507150711","totalCount":0,"accStatus":2,"equity":653.1,"nick":"User_qji9","yieldRate":0,"accType":4,"profitTrade":0,"mt4Id":60029975}
      */
 
     private DataBean data;
-    private String err_code;
-    private String err_msg;
 
     public DataBean getData() {
         return data;
@@ -23,54 +22,47 @@ public class UserAccInfoModel {
         this.data = data;
     }
 
-    public String getErr_code() {
-        return err_code;
-    }
-
-    public void setErr_code(String err_code) {
-        this.err_code = err_code;
-    }
-
-    public String getErr_msg() {
-        return err_msg;
-    }
-
-    public void setErr_msg(String err_msg) {
-        this.err_msg = err_msg;
-    }
-
     public static class DataBean {
         /**
-         * nick : Trader..u
-         * profitCount : 104.97
-         * yieldRate : 10.497
-         * destroyDay : 13
-         * headUrl : http://msg.trademaster168.com/img/userPortrait/man.jpg
-         * accType : 0
+         * totalVolume : 0
+         * profitCount : 0
+         * lossTrade : 0
+         * destroyDay : -1
+         * profitMonth : {"month":["3","4","5","6","7"],"profit":[0,0,0,195.24,-34.29]}
+         * headUrl : http://forex-smart-trade-server.oss-cn-hangzhou.aliyuncs.com/IMG/UserImg/user_head_5493379_big.jpg
+         * telephone : 18507150711
+         * totalCount : 0
          * accStatus : 2
-         * mt4Id : null
-         * equity : 1104.97
-         * email : 249762619@qq.com
+         * equity : 653.1
+         * nick : User_qji9
+         * yieldRate : 0
+         * accType : 4
+         * profitTrade : 0
+         * mt4Id : 60029975
          */
 
-        private String nick;
+        private double totalVolume;
         private double profitCount;
-        private double yieldRate;
+        private double lossTrade;
         private int destroyDay;
+        private ProfitMonthBean profitMonth;
         private String headUrl;
-        private int accType;
-        private int accStatus;
-        private String mt4Id;
-        private double equity;
-        private String email;
         private String telephone;
+        private int totalCount;
+        private int accStatus;
+        private double equity;
+        private String nick;
+        private double yieldRate;
+        private int accType;
+        private double profitTrade;
+        private String mt4Id;
 
-        public String getNick() {
-            return nick;
+        public double getTotalVolume() {
+            return totalVolume;
         }
 
-        public void setNick(String nick) {
-            this.nick = nick;
+        public void setTotalVolume(double totalVolume) {
+            this.totalVolume = totalVolume;
         }
 
         public double getProfitCount() {
@@ -81,12 +73,12 @@ public class UserAccInfoModel {
             this.profitCount = profitCount;
         }
 
-        public double getYieldRate() {
-            return yieldRate;
+        public double getLossTrade() {
+            return lossTrade;
         }
 
-        public void setYieldRate(double yieldRate) {
-            this.yieldRate = yieldRate;
+        public void setLossTrade(double lossTrade) {
+            this.lossTrade = lossTrade;
         }
 
         public int getDestroyDay() {
@@ -97,6 +89,14 @@ public class UserAccInfoModel {
             this.destroyDay = destroyDay;
         }
 
+        public ProfitMonthBean getProfitMonth() {
+            return profitMonth;
+        }
+
+        public void setProfitMonth(ProfitMonthBean profitMonth) {
+            this.profitMonth = profitMonth;
+        }
+
         public String getHeadUrl() {
             return headUrl;
         }
@@ -105,12 +105,20 @@ public class UserAccInfoModel {
             this.headUrl = headUrl;
         }
 
-        public int getAccType() {
-            return accType;
+        public String getTelephone() {
+            return telephone;
         }
 
-        public void setAccType(int accType) {
-            this.accType = accType;
+        public void setTelephone(String telephone) {
+            this.telephone = telephone;
+        }
+
+        public int getTotalCount() {
+            return totalCount;
+        }
+
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
         }
 
         public int getAccStatus() {
@@ -121,14 +129,6 @@ public class UserAccInfoModel {
             this.accStatus = accStatus;
         }
 
-        public String getMt4Id() {
-            return mt4Id;
-        }
-
-        public void setMt4Id(String mt4Id) {
-            this.mt4Id = mt4Id;
-        }
-
         public double getEquity() {
             return equity;
         }
@@ -137,20 +137,65 @@ public class UserAccInfoModel {
             this.equity = equity;
         }
 
-        public String getEmail() {
-            return email;
+        public String getNick() {
+            return nick;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setNick(String nick) {
+            this.nick = nick;
         }
 
-        public String getTelephone() {
-            return telephone;
+        public double getYieldRate() {
+            return yieldRate;
         }
 
-        public void setTelephone(String telephone) {
-            this.telephone = telephone;
+        public void setYieldRate(double yieldRate) {
+            this.yieldRate = yieldRate;
+        }
+
+        public int getAccType() {
+            return accType;
+        }
+
+        public void setAccType(int accType) {
+            this.accType = accType;
+        }
+
+        public double getProfitTrade() {
+            return profitTrade;
+        }
+
+        public void setProfitTrade(double profitTrade) {
+            this.profitTrade = profitTrade;
+        }
+
+        public String getMt4Id() {
+            return mt4Id;
+        }
+
+        public void setMt4Id(String mt4Id) {
+            this.mt4Id = mt4Id;
+        }
+
+        public static class ProfitMonthBean {
+            private List<String> month;
+            private List<Double> profit;
+
+            public List<String> getMonth() {
+                return month;
+            }
+
+            public void setMonth(List<String> month) {
+                this.month = month;
+            }
+
+            public List<Double> getProfit() {
+                return profit;
+            }
+
+            public void setProfit(List<Double> profit) {
+                this.profit = profit;
+            }
         }
     }
 }

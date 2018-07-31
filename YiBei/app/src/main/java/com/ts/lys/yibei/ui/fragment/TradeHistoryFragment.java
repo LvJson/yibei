@@ -108,7 +108,7 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
 
     @Override
     public void setTradeHistoryList(OrderHistoryModel orderHistoryModel) {
-
+        parentFragment.setRefleshEnable(false);
         List<OrderHistoryModel.DataBean.HistoryOrderBean> beanList = orderHistoryModel.getData().getHistoryOrder();
         if (beanList == null || beanList.size() == 0) {
             setErrorStatus(1);
@@ -127,7 +127,6 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
             showToast(getString(R.string.loading_all));
         }
 
-        parentFragment.setRefleshEnable(false);
 
     }
 

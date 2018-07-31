@@ -145,14 +145,15 @@ public class PendingFragment extends BaseFragment implements IPendingFragmentVie
 
     @Override
     public void setPendingList(List<OrderPendingModel.DataBean.PendOrderBean> pendingList) {
+        parentFragment.setRefleshEnable(false);
         if (pendingList == null || pendingList.size() == 0) {
             setErrorStatus(1);
+            this.pendingList = null;
             return;
         } else
             setErrorStatus(2);
         this.pendingList = pendingList;
         adapter.setData(pendingList);
-        parentFragment.setRefleshEnable(false);
     }
 
     @Override
@@ -205,6 +206,7 @@ public class PendingFragment extends BaseFragment implements IPendingFragmentVie
         if (content.equals(BaseContents.NET_ERROR))
             setErrorStatus(0);
     }
+
     @OnClick(R.id.tv_reload)
     public void onViewClicked() {
         refreshData();

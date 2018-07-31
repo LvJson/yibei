@@ -2,6 +2,7 @@ package com.ts.lys.yibei.ui.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +70,15 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         initView();
+//        mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                mTabHost.setCurrentTabByTag(mTextviewArray[2]);
+//                updateTab(mTabHost);
+//
+//            }
+//        });
     }
 
     /**
@@ -127,9 +137,18 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     @Override
     public void onTabChanged(String tabId) {
         clickNum = 0;
-        mTabHost.setCurrentTabByTag(tabId);
-        updateTab(mTabHost);
-        Logger.e(TAG, tabId);
+        /**
+         * 未登录状态点击"订单"和"我的"
+         */
+        if (TextUtils.isEmpty(userId) && (tabId.equals(mTextviewArray[3]) || tabId.equals(mTextviewArray[4]))) {
+            startActivity(AccountLoginActivity.class);
+            mTabHost.onTabChanged(mTextviewArray[1]);
+
+        } else {
+            mTabHost.setCurrentTabByTag(tabId);
+            updateTab(mTabHost);
+            Logger.e(TAG, tabId);
+        }
 
         if (tabId.equals("行情")) {
             EventBus.getDefault().post(new EventBean(EventContents.MARKET_CLICK, null));
@@ -140,6 +159,11 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
             EventBus.getDefault().post(new EventBean(EventContents.ORDER_CLICK, null));
         else
             EventBus.getDefault().post(new EventBean(EventContents.ORDER_NOT_CLICK, null));
+
+        if (tabId.equals("首页"))
+            EventBus.getDefault().post(new EventBean(EventContents.HOME_CLICK, null));
+        else
+            EventBus.getDefault().post(new EventBean(EventContents.HOME_NOT_CLICK, null));
 
     }
 
@@ -220,6 +244,21 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
                     goSomeTab("订单", 1);
                 }
             }, 300);
+        } else if (event.getTagOne().equals(EventContents.ALL_MAIN_REFRESH)) {
+            //一级界界面全局刷新
+            HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[0]);
+            MarketFragment marketFragment = (MarketFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[1]);
+            OrderFragment orderFragment = (OrderFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[3]);
+            MineFragment mineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[4]);
+
+            if (homeFragment != null)
+                homeFragment.refreshData();
+            if (marketFragment != null)
+                homeFragment.refreshData();
+            if (orderFragment != null)
+                orderFragment.setCurrentPosition(0);
+            if (mineFragment != null)
+                mineFragment.refreshData();
         }
     }
 

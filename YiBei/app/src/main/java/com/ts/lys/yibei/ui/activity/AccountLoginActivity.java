@@ -231,7 +231,7 @@ public class AccountLoginActivity extends BaseActivity {
                         SpUtils.putString(getApplicationContext(), BaseContents.USERID, String.valueOf(user.getUserId()));
                         SpUtils.putString(getApplicationContext(), BaseContents.INVITE_CODE, user.getInviteCode());
                         //TODO 登录成功，通知刷新界面
-
+                        EventBus.getDefault().post(new EventBean(EventContents.ALL_MAIN_REFRESH, null));
                         finish();
                     }
 

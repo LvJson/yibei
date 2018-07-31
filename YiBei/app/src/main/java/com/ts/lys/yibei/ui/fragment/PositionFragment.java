@@ -260,8 +260,10 @@ public class PositionFragment extends BaseFragment implements IPositionFragmentV
      */
     @Override
     public void setPositionList(List<OrderPositionModel.DataBean.TraderOrderBean> traderOrderBeanList) {
+        parentFragment.setRefleshEnable(false);
         if (traderOrderBeanList == null || traderOrderBeanList.size() == 0) {
             setErrorStatus(1);
+            this.traderOrderBeanList = null;
             return;
         } else
             setErrorStatus(2);
@@ -287,8 +289,6 @@ public class PositionFragment extends BaseFragment implements IPositionFragmentV
         Map<String, String> map = new HashMap<>();
         map.put("symbol", symbolMulti);
         realTimeDataPresenter.getRealTimeQuotoDatas(map, className + "2");
-
-        parentFragment.setRefleshEnable(false);
 
     }
 
@@ -344,6 +344,7 @@ public class PositionFragment extends BaseFragment implements IPositionFragmentV
         map.put("userId", userId);
         map.put("accessToken", accessToken);
         presenter.getPositionList(map, className + "1");
+        parentFragment.refreshData();
 
     }
 

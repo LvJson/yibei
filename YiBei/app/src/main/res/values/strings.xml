@@ -177,6 +177,9 @@
     <string name="have_trade_account">已有交易真实账号,</string>
     <string name="quick_bind">立即绑定>></string>
     <string name="quick_bind2">立即绑定</string>
+    <string name="account_id">账户ID</string>
+    <string name="maturity">到期时间</string>
+    <string name="have_maturity">该账户已过期</string>
 
     <string name="account_bind">账户绑定</string>
     <string name="mt4_account">MT4账户</string>

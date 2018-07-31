@@ -10,23 +10,24 @@ public class UrlContents {
      * 测试环境
      */
 
-//    public static final String URLHEAD = "http://115.236.88.130:4417/api";
+    public static final String URLHEAD = "http://115.236.88.130:4417/api";
 
 
     /**
      * 测试环境：实时数据
      */
-//    public static final String SOCKETIO_URL = "http://115.236.88.130:7489";
+    public static final String SOCKETIO_URL = "http://115.236.88.130:7489";
 
+/********************************************************************************************************/
 
     /**
      * 线上环境
      */
-    public static final String URLHEAD = "http://hyapi.trademaster168.com/api";
+//    public static final String URLHEAD = "http://hyapi.trademaster168.com/api";
     /**
      * 实时数据
      */
-    public static final String SOCKETIO_URL = "http://sc.trademaster168.com";
+//    public static final String SOCKETIO_URL = "http://sc.trademaster168.com";
 
 
     /**
@@ -111,7 +112,7 @@ public class UrlContents {
     /**
      * 账号信息
      */
-    public static final String USER_USERACCINFO = URLHEAD + "/user/userAccInfo";
+    public static final String USER_USERACCINFO = URLHEAD + "/user/userInfo";
     /**
      * 切换账户
      */
@@ -125,5 +126,14 @@ public class UrlContents {
      * 找回密码
      */
     public static final String MODIFYPASSWD = URLHEAD + "/modifyPasswd";
+    /**
+     * 首页数据
+     */
+    public static final String INDEX_URL = URLHEAD + "/new/index";
+    /**
+     * 账户列表
+     */
+    public static final String BROKER_CHECK_LIST = URLHEAD + "/broker/check/list";
+
 
 }

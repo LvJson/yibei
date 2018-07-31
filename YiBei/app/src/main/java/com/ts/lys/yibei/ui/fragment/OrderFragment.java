@@ -3,6 +3,7 @@ package com.ts.lys.yibei.ui.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -99,7 +100,7 @@ public class OrderFragment extends BaseFragment implements IOrderFragmentView {
     }
 
     private void initData() {
-
+        if (TextUtils.isEmpty(userId)) return;
         presenter.attachView(this);
         Map<String, String> map = new HashMap<>();
         Logger.e("userId", userId);
@@ -188,7 +189,7 @@ public class OrderFragment extends BaseFragment implements IOrderFragmentView {
         tvUsefulMargin.setText("$" + BaseUtils.getDigitsData(tradeAccInfo.getMarginFree(), 2));//可用保证金
         tvHaveUsedMargin.setText("$" + BaseUtils.getDigitsData(tradeAccInfo.getMargin(), 2));//已用保证金
         tvAccountBalance.setText("$" + BaseUtils.getDigitsData(tradeAccInfo.getBalance(), 2));//账户余额
-        tvFloatLossProfit.setText(BaseUtils.dealSymbol(tradeAccInfo.getTotalProfit()));//总的浮动盈亏
+        tvFloatLossProfit.setText(BaseUtils.dealSymbol(tradeAccInfo.getTotalProfit() == null ? 0 : tradeAccInfo.getTotalProfit()));//总的浮动盈亏
 
     }
 
@@ -220,6 +221,7 @@ public class OrderFragment extends BaseFragment implements IOrderFragmentView {
         if (fragmentList.get(position) != null) {
             if (position == 0) {// 刷新持仓列表
                 ((PositionFragment) fragmentList.get(position)).refreshData();
+                refreshData();
             } else if (position == 1) {// 刷新挂单列表
                 ((PendingFragment) fragmentList.get(position)).refreshData();
             } else if (position == 2) {// 刷新交易历史列表
@@ -227,6 +229,18 @@ public class OrderFragment extends BaseFragment implements IOrderFragmentView {
             }
         }
 
+    }
+
+    /**
+     * 刷新订单上部数据
+     */
+    public void refreshData() {
+
+        Map<String, String> map = new HashMap<>();
+        Logger.e("userId", userId);
+        map.put("userId", userId);
+        map.put("accessToken", accessToken);
+        presenter.getTraderAccInfo(map, className);
     }
 
     @Override

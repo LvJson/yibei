@@ -2,7 +2,8 @@
 <com.ts.lys.yibei.customeview.SmartImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/smart_view"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:scaleType="fitXY"
-    android:layout_height="match_parent">
+    android:src="@mipmap/home_no">
 
 </com.ts.lys.yibei.customeview.SmartImageView>

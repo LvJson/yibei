@@ -198,6 +198,7 @@ public class FragmentTabHost extends TabHost implements TabHost.OnTabChangeListe
     }
 
     public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
+
         tabSpec.setContent(new DummyTabFactory(mContext));
         String tag = tabSpec.getTag();
 
@@ -285,6 +286,7 @@ public class FragmentTabHost extends TabHost implements TabHost.OnTabChangeListe
 
     @Override
     public void onTabChanged(String tabId) {
+
         if (mAttached) {
             FragmentTransaction ft = doTabChanged(tabId, null);
             if (ft != null) {

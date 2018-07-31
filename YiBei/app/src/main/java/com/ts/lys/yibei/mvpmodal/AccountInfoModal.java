@@ -2,6 +2,7 @@ package com.ts.lys.yibei.mvpmodal;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ts.lys.yibei.bean.BrokerCheckListBean;
 import com.ts.lys.yibei.bean.UserAccInfoModel;
 import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
@@ -74,6 +75,32 @@ public class AccountInfoModal {
 
             }
         });
+    }
+
+    public void getAccountList(Map<String, String> map, String tag, final IRequestServiceListener<BrokerCheckListBean> listener) {
+        CustomHttpUtils.getServiceDatas(map, UrlContents.BROKER_CHECK_LIST, tag, new CustomHttpUtils.ServiceStatus() {
+            @Override
+            public void faild(Call call, Exception e, int id) {
+                listener.faild(BaseContents.NET_ERROR);
+            }
+
+            @Override
+            public void success(String response, int id) {
+
+                new JsonAnalysisUtils<BrokerCheckListBean>(BrokerCheckListBean.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<BrokerCheckListBean>() {
+                    @Override
+                    public void success(BrokerCheckListBean brokerCheckListBean) {
+                        listener.success(brokerCheckListBean);
+                    }
+
+                    @Override
+                    public void fail(String str) {
+                        listener.faild(str);
+                    }
+                });
+            }
+        });
+
     }
 
 }

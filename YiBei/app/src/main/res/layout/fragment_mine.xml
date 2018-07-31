@@ -1,471 +1,477 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_or_division_color"
-    android:gravity="center">
+    android:background="@color/bg_or_division_color">
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:id="@+id/ll_father"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.zhy.autolayout.AutoRelativeLayout
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_father"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
+            <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="320px"
-                android:scaleType="fitXY"
-                android:src="@mipmap/mine_head_bg"
-                app:layout_auto_basewidth="height" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="320px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_head_bg"
+                    app:layout_auto_basewidth="height" />
 
 
-            <ImageView
-                android:id="@+id/iv_customer"
-                android:layout_width="44px"
-                android:layout_height="37px"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="64px"
-                android:src="@mipmap/mine_customer"
-                app:layout_auto_basewidth="height" />
+                <ImageView
+                    android:id="@+id/iv_customer"
+                    android:layout_width="44px"
+                    android:layout_height="37px"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="64px"
+                    android:src="@mipmap/mine_customer"
+                    app:layout_auto_basewidth="height" />
 
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_customer"
-                android:layout_marginBottom="1dp"
-                android:layout_marginTop="72px"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
-
-                <com.zhy.autolayout.AutoLinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="69px">
-
-                    <TextView
-                        android:id="@+id/tv_account_num"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="63px"
-                        android:layout_marginTop="20px"
-                        android:gravity="center"
-                        android:text="@string/yibei_forex"
-                        android:textColor="@color/seven_text_color"
-                        android:textSize="@dimen/text_size_40" />
+                    android:layout_below="@+id/iv_customer"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="72px"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="true">
 
                     <com.zhy.autolayout.AutoLinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:orientation="vertical"
+                        android:paddingBottom="69px">
+
+                        <TextView
+                            android:id="@+id/tv_account_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="63px"
+                            android:layout_marginTop="20px"
+                            android:gravity="center"
+                            android:text="@string/yibei_forex"
+                            android:textColor="@color/seven_text_color"
+                            android:textSize="@dimen/text_size_40" />
 
                         <com.zhy.autolayout.AutoLinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:gravity="center">
 
-                            <TextView
-                                android:id="@+id/tv_account_equity"
-                                android:layout_width="wrap_content"
+                            <com.zhy.autolayout.AutoLinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="$0.00k"
-                                android:textColor="@color/seven_text_color"
-                                android:textSize="@dimen/text_size_26" />
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/tv_account_equity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$0.00k"
+                                    android:textColor="@color/seven_text_color"
+                                    android:textSize="@dimen/text_size_26" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="14px"
+                                    android:text="@string/account_worth"
+                                    android:textColor="@color/two_text_color"
+                                    android:textSize="@dimen/text_size_20" />
+
+                            </com.zhy.autolayout.AutoLinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="40px"
+                                android:background="@color/bg_or_division_color" />
+
+                            <com.zhy.autolayout.AutoLinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="14px"
-                                android:text="@string/account_worth"
-                                android:textColor="@color/two_text_color"
-                                android:textSize="@dimen/text_size_20" />
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_asset_balance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="$0.00k"
+                                    android:textColor="@color/seven_text_color"
+                                    android:textSize="@dimen/text_size_26" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="14px"
+                                    android:text="@string/asset_balance"
+                                    android:textColor="@color/two_text_color"
+                                    android:textSize="@dimen/text_size_20" />
+
+                            </com.zhy.autolayout.AutoLinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="40px"
+                                android:background="@color/bg_or_division_color" />
+
+                            <com.zhy.autolayout.AutoLinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_profit_rate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0.00%"
+                                    android:textColor="@color/seven_text_color"
+                                    android:textSize="@dimen/text_size_26" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="14px"
+                                    android:text="@string/profit_rate"
+                                    android:textColor="@color/two_text_color"
+                                    android:textSize="@dimen/text_size_20" />
+
+                            </com.zhy.autolayout.AutoLinearLayout>
 
                         </com.zhy.autolayout.AutoLinearLayout>
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40px"
-                            android:background="@color/bg_or_division_color" />
-
-                        <com.zhy.autolayout.AutoLinearLayout
-                            android:layout_width="0dp"
+                        <ImageView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:layout_marginBottom="71px"
+                            android:layout_marginLeft="30px"
+                            android:layout_marginRight="30px"
+                            android:layout_marginTop="39px"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/mine_dividing_line" />
 
-                            <TextView
-                                android:id="@+id/tv_asset_balance"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$0.00k"
-                                android:textColor="@color/seven_text_color"
-                                android:textSize="@dimen/text_size_26" />
+                        <include layout="@layout/include_mine_no_account_layout" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="14px"
-                                android:text="@string/asset_balance"
-                                android:textColor="@color/two_text_color"
-                                android:textSize="@dimen/text_size_20" />
+                        <include layout="@layout/include_mine_have_account_layout" />
 
-                        </com.zhy.autolayout.AutoLinearLayout>
+                        <include layout="@layout/include_mine_real_account_layout" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40px"
-                            android:background="@color/bg_or_division_color" />
-
-                        <com.zhy.autolayout.AutoLinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_profit_rate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0.00%"
-                                android:textColor="@color/seven_text_color"
-                                android:textSize="@dimen/text_size_26" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="14px"
-                                android:text="@string/profit_rate"
-                                android:textColor="@color/two_text_color"
-                                android:textSize="@dimen/text_size_20" />
-
-                        </com.zhy.autolayout.AutoLinearLayout>
 
                     </com.zhy.autolayout.AutoLinearLayout>
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="71px"
-                        android:layout_marginLeft="30px"
-                        android:layout_marginRight="30px"
-                        android:layout_marginTop="39px"
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/mine_dividing_line" />
+                </android.support.v7.widget.CardView>
 
-                    <include layout="@layout/include_mine_no_account_layout" />
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="140px"
+                    android:layout_height="140px"
+                    android:layout_below="@+id/iv_customer"
+                    android:layout_marginLeft="77px"
+                    android:elevation="10px"
+                    android:src="@mipmap/default_avatar_icon"
+                    app:layout_auto_basewidth="height" />
 
-                    <include layout="@layout/include_mine_have_account_layout" />
+            </com.zhy.autolayout.AutoRelativeLayout>
 
-                    <include layout="@layout/include_mine_real_account_layout" />
+            <!--**************************************************持仓量+累计收益*******************************************************-->
 
-
-                </com.zhy.autolayout.AutoLinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <ImageView
-                android:id="@+id/iv_head"
-                android:layout_width="140px"
-                android:layout_height="140px"
-                android:layout_below="@+id/iv_customer"
-                android:layout_marginLeft="77px"
-                android:elevation="10px"
-                android:src="@mipmap/default_avatar_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoRelativeLayout>
-
-        <!--**************************************************持仓量+累计收益*******************************************************-->
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:paddingBottom="30px"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="30px">
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="0dp"
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/white">
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingBottom="30px"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="30px">
 
-                <TextView
-                    android:id="@+id/tv_one"
-                    android:layout_width="wrap_content"
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/position_amount"
-                    android:textColor="@color/two_text_color"
-                    android:textSize="@dimen/text_size_24" />
+                    android:layout_weight="1"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/tv_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/position_amount"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_24" />
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_one"
+                        android:layout_marginTop="10dp"
+                        android:gravity="bottom">
+
+                        <TextView
+                            android:id="@+id/tv_bi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:text="0"
+                            android:textColor="@color/main_color"
+                            android:textSize="@dimen/text_size_32" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="1dp"
+                            android:text="@string/bi"
+                            android:textColor="@color/two_text_color"
+                            android:textSize="@dimen/text_size_20" />
+
+                        <TextView
+                            android:id="@+id/tv_lots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="5dp"
+                            android:text="0.00"
+                            android:textColor="@color/main_color"
+                            android:textSize="@dimen/text_size_32" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="1dp"
+                            android:text="@string/standard_hand"
+                            android:textColor="@color/two_text_color"
+                            android:textSize="@dimen/text_size_20" />
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_one"
-                    android:layout_marginTop="10dp"
-                    android:gravity="bottom">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_bi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cumulative_income"
+                        android:textColor="@color/two_text_color"
+                        android:textSize="@dimen/text_size_24" />
+
+                    <TextView
+                        android:id="@+id/tv_cumulative_income"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:text="0"
+                        android:layout_marginTop="10dp"
+                        android:text="$0.00"
                         android:textColor="@color/main_color"
                         android:textSize="@dimen/text_size_32" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="1dp"
-                        android:text="@string/bi"
-                        android:textColor="@color/two_text_color"
-                        android:textSize="@dimen/text_size_20" />
-
-                    <TextView
-                        android:id="@+id/tv_lots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="@color/main_color"
-                        android:textSize="@dimen/text_size_32" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="1dp"
-                        android:text="@string/standard_hand"
-                        android:textColor="@color/two_text_color"
-                        android:textSize="@dimen/text_size_20" />
                 </com.zhy.autolayout.AutoLinearLayout>
 
 
-            </com.zhy.autolayout.AutoRelativeLayout>
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cumulative_income"
-                    android:textColor="@color/two_text_color"
-                    android:textSize="@dimen/text_size_24" />
-
-                <TextView
-                    android:id="@+id/tv_cumulative_income"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="10dp"
-                    android:text="$0.00"
-                    android:textColor="@color/main_color"
-                    android:textSize="@dimen/text_size_32" />
             </com.zhy.autolayout.AutoLinearLayout>
 
+            <!--**************************************************拓展功能跳转列表*******************************************************-->
 
+            <include layout="@layout/incloud_division_10dp_layout" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_data_statis"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="44px"
+                    android:layout_height="44px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_data_statistics_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22px"
+                    android:layout_weight="1"
+                    android:text="@string/data_statistics"
+                    android:textColor="@color/one_text_color"
+                    android:textSize="@dimen/text_size_30" />
+
+                <ImageView
+                    android:layout_width="17px"
+                    android:layout_height="31px"
+                    android:src="@mipmap/right_gray_arrow_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/incloud_division_1dp_layout" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_trade_report"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="44px"
+                    android:layout_height="44px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_trade_report_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22px"
+                    android:layout_weight="1"
+                    android:text="@string/trade_report"
+                    android:textColor="@color/one_text_color"
+                    android:textSize="@dimen/text_size_30" />
+
+                <ImageView
+                    android:layout_width="17px"
+                    android:layout_height="31px"
+                    android:src="@mipmap/right_gray_arrow_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/incloud_division_10dp_layout" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_help_center"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="44px"
+                    android:layout_height="44px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_help_center_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22px"
+                    android:layout_weight="1"
+                    android:text="@string/help_center"
+                    android:textColor="@color/one_text_color"
+                    android:textSize="@dimen/text_size_30" />
+
+                <ImageView
+                    android:layout_width="17px"
+                    android:layout_height="31px"
+                    android:src="@mipmap/right_gray_arrow_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/incloud_division_1dp_layout" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="44px"
+                    android:layout_height="44px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_feedback_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22px"
+                    android:layout_weight="1"
+                    android:text="@string/feedback"
+                    android:textColor="@color/one_text_color"
+                    android:textSize="@dimen/text_size_30" />
+
+                <ImageView
+                    android:layout_width="17px"
+                    android:layout_height="31px"
+                    android:src="@mipmap/right_gray_arrow_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/incloud_division_1dp_layout" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_about_yibei"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="44px"
+                    android:layout_height="44px"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_about_yibei_icon"
+                    app:layout_auto_basewidth="height" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22px"
+                    android:layout_weight="1"
+                    android:text="@string/about_yibei"
+                    android:textColor="@color/one_text_color"
+                    android:textSize="@dimen/text_size_30" />
+
+                <ImageView
+                    android:layout_width="17px"
+                    android:layout_height="31px"
+                    android:src="@mipmap/right_gray_arrow_icon"
+                    app:layout_auto_basewidth="height" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/incloud_division_10dp_layout" />
         </com.zhy.autolayout.AutoLinearLayout>
 
-        <!--**************************************************拓展功能跳转列表*******************************************************-->
+    </ScrollView>
 
-        <include layout="@layout/incloud_division_10dp_layout" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_data_statis"
-            android:layout_width="match_parent"
-            android:layout_height="80px"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <ImageView
-                android:layout_width="44px"
-                android:layout_height="44px"
-                android:scaleType="fitXY"
-                android:src="@mipmap/mine_data_statistics_icon"
-                app:layout_auto_basewidth="height" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22px"
-                android:layout_weight="1"
-                android:text="@string/data_statistics"
-                android:textColor="@color/one_text_color"
-                android:textSize="@dimen/text_size_30" />
-
-            <ImageView
-                android:layout_width="17px"
-                android:layout_height="31px"
-                android:src="@mipmap/right_gray_arrow_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <include layout="@layout/incloud_division_1dp_layout" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_trade_report"
-            android:layout_width="match_parent"
-            android:layout_height="80px"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <ImageView
-                android:layout_width="44px"
-                android:layout_height="44px"
-                android:scaleType="fitXY"
-                android:src="@mipmap/mine_trade_report_icon"
-                app:layout_auto_basewidth="height" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22px"
-                android:layout_weight="1"
-                android:text="@string/trade_report"
-                android:textColor="@color/one_text_color"
-                android:textSize="@dimen/text_size_30" />
-
-            <ImageView
-                android:layout_width="17px"
-                android:layout_height="31px"
-                android:src="@mipmap/right_gray_arrow_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <include layout="@layout/incloud_division_10dp_layout" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_help_center"
-            android:layout_width="match_parent"
-            android:layout_height="80px"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <ImageView
-                android:layout_width="44px"
-                android:layout_height="44px"
-                android:scaleType="fitXY"
-                android:src="@mipmap/mine_help_center_icon"
-                app:layout_auto_basewidth="height" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22px"
-                android:layout_weight="1"
-                android:text="@string/help_center"
-                android:textColor="@color/one_text_color"
-                android:textSize="@dimen/text_size_30" />
-
-            <ImageView
-                android:layout_width="17px"
-                android:layout_height="31px"
-                android:src="@mipmap/right_gray_arrow_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <include layout="@layout/incloud_division_1dp_layout" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_feedback"
-            android:layout_width="match_parent"
-            android:layout_height="80px"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <ImageView
-                android:layout_width="44px"
-                android:layout_height="44px"
-                android:scaleType="fitXY"
-                android:src="@mipmap/mine_feedback_icon"
-                app:layout_auto_basewidth="height" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22px"
-                android:layout_weight="1"
-                android:text="@string/feedback"
-                android:textColor="@color/one_text_color"
-                android:textSize="@dimen/text_size_30" />
-
-            <ImageView
-                android:layout_width="17px"
-                android:layout_height="31px"
-                android:src="@mipmap/right_gray_arrow_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <include layout="@layout/incloud_division_1dp_layout" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_about_yibei"
-            android:layout_width="match_parent"
-            android:layout_height="80px"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <ImageView
-                android:layout_width="44px"
-                android:layout_height="44px"
-                android:scaleType="fitXY"
-                android:src="@mipmap/mine_about_yibei_icon"
-                app:layout_auto_basewidth="height" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22px"
-                android:layout_weight="1"
-                android:text="@string/about_yibei"
-                android:textColor="@color/one_text_color"
-                android:textSize="@dimen/text_size_30" />
-
-            <ImageView
-                android:layout_width="17px"
-                android:layout_height="31px"
-                android:src="@mipmap/right_gray_arrow_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <include layout="@layout/incloud_division_10dp_layout" />
-    </com.zhy.autolayout.AutoLinearLayout>
-
-</ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

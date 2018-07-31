@@ -1,5 +1,6 @@
 package com.ts.lys.yibei.mvppresenter;
 
+import com.ts.lys.yibei.bean.BrokerCheckListBean;
 import com.ts.lys.yibei.bean.UserAccInfoModel;
 import com.ts.lys.yibei.mvpmodal.AccountInfoModal;
 import com.ts.lys.yibei.mvpmodal.IRequestServiceListener;
@@ -55,6 +56,27 @@ public class AccInfoPresenter extends BasePresenter {
             public void success(Boolean result) {
                 iMineFragmentView.showSwitchState(result);
                 dissDialog(iMineFragmentView);
+
+            }
+
+            @Override
+            public void faild(String msg) {
+                showToast(iMineFragmentView, msg);
+                dissDialog(iMineFragmentView);
+            }
+        });
+
+    }
+
+
+    public void getAccountList(Map<String, String> map, String tag) {
+
+        showDialog(iMineFragmentView);
+        accountInfoModal.getAccountList(map, tag, new IRequestServiceListener<BrokerCheckListBean>() {
+            @Override
+            public void success(BrokerCheckListBean result) {
+                dissDialog(iMineFragmentView);
+                iMineFragmentView.showAccountList(result.getData());
 
             }
 

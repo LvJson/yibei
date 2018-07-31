@@ -123,6 +123,7 @@ public class AllSymbolMarketFragment extends BaseFragment {
      * @param firstList
      */
     public void setFirstList(List<GetQuotesModel.DataBean.SymbolsBean> firstList) {
+        if (firstList == null) return;
         selfSelectAdapter.setData(firstList);
 
         if (tag.equals("自选")) {

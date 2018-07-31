@@ -31,105 +31,35 @@
             android:layout_marginTop="29px"
             android:background="@color/four_text_color" />
 
-        <com.zhy.autolayout.AutoLinearLayout
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="21px"
-            android:gravity="center">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="149px"
-                android:layout_height="46px"
-                android:src="@mipmap/mmignz_icon"
-                app:layout_auto_basewidth="height" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="账户净值:$1.23K"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_22" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
+        </android.support.v7.widget.RecyclerView>
 
         <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_demo_acc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="21px"
-            android:layout_marginTop="17px"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="21px">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="账户ID:12345"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_22" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="总收益:-$1.23"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_22" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/four_text_color" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="21px"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
                 android:text="@string/simulation_account"
                 android:textColor="@color/one_text_color"
                 android:textSize="@dimen/text_size_36" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="账户净值:$1.23K"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_22" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="21px"
-            android:layout_marginTop="17px"
-            android:gravity="center">
-
-            <TextView
+                android:id="@+id/tv_explain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
                 android:gravity="right"
-                android:text="七天后到期"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_22" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="总收益:-$1.23"
                 android:textColor="@color/two_text_color"
                 android:textSize="@dimen/text_size_22" />
         </com.zhy.autolayout.AutoLinearLayout>
@@ -137,9 +67,11 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="29px"
             android:background="@color/four_text_color" />
 
         <TextView
+            android:id="@+id/tv_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

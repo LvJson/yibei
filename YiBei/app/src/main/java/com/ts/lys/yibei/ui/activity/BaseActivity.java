@@ -17,6 +17,7 @@ import com.ts.lys.yibei.customeview.CustomProgress;
 import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.SpUtils;
 
 import butterknife.ButterKnife;
 
@@ -42,10 +43,10 @@ public class BaseActivity extends Activity implements BaseMvpView {
 
     private void initBaseData() {
         TAG = getClass().getSimpleName();
-//        accessToken = SpUtils.getString(this, "accessToken", "");
-//        userId = SpUtils.getString(this, "userId");
-        accessToken = "d31303049b7224712b2073354d4cc92c8a196f1894b1876509d78b4cd9268149b9ab165da9a31a6251d2448261fd99d1a7d22133bb3ef018493849f4a7896993";
-        userId = "1403";
+        accessToken = SpUtils.getString(this, BaseContents.ACCESS_TOKEN, "");
+        userId = SpUtils.getString(this, BaseContents.USERID, "");
+//        accessToken = "d31303049b7224712b2073354d4cc92c8a196f1894b1876509d78b4cd9268149b9ab165da9a31a6251d2448261fd99d1a7d22133bb3ef018493849f4a7896993";
+//        userId = "1403";
     }
 
     @Override

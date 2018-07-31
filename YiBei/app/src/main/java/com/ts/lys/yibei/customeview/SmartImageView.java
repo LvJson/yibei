@@ -19,7 +19,7 @@ public class SmartImageView extends ImageView {
     /**
      * 图片宽和高的比例
      */
-    private float ratio = 1.66f;
+    private float ratio = 2.027f;
 
     public SmartImageView(Context context) {
         super(context);
