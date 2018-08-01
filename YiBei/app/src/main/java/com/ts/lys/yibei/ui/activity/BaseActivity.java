@@ -18,6 +18,7 @@ import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.SpUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -73,11 +74,15 @@ public class BaseActivity extends Activity implements BaseMvpView {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(getClass().getSimpleName());
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(getClass().getSimpleName());
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -198,4 +203,5 @@ public class BaseActivity extends Activity implements BaseMvpView {
         if (customProgress != null)
             customProgress.dismiss();
     }
+
 }

@@ -46,6 +46,7 @@ public class CustomHttpUtils {
         mapPublic.put("rd", rd);
         mapPublic.put("t", t + "");
         mapPublic.put("sign", sign);
+        mapPublic.put("language", "zh");
         if (map == null || map.size() == 0)
             map = mapPublic;
         else

@@ -17,12 +17,14 @@
         android:paddingRight="@dimen/padding_left_and_right">
 
         <ImageView
+            android:id="@+id/iv_acc_icon"
             android:layout_width="144px"
             android:layout_height="44px"
             android:src="@mipmap/mmignz_icon"
             app:layout_auto_basewidth="height" />
 
         <TextView
+            android:id="@+id/tv_acc_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="19px"
@@ -30,72 +32,48 @@
             android:textColor="@color/two_text_color"
             android:textSize="@dimen/text_size_22" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:src="@mipmap/mine_choose_account_icon" />
-
-        <TextView
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_switch_acc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@mipmap/mine_choose_account_icon" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
 
         <TextView
+            android:id="@+id/tv_entry_and_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_select"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="15px"
+            android:paddingLeft="30px"
+            android:paddingRight="30px"
+            android:paddingTop="15px"
             android:text="@string/withdraw_recharge"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_22" />
+            android:textSize="@dimen/text_size_22"
+            app:layout_auto_basewidth="height" />
     </com.zhy.autolayout.AutoLinearLayout>
 
     <include layout="@layout/incloud_division_1dp_layout" />
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <TextView
+        android:id="@+id/tv_open_more_acc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/padding_left_and_right"
-        android:paddingRight="@dimen/padding_left_and_right"
-        android:paddingTop="26px">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10px"
-            android:text="@string/account_manager"
-            android:textColor="@color/one_text_color"
-            android:textSize="@dimen/text_size_30" />
-
-        <ImageView
-            android:layout_width="17px"
-            android:layout_height="31px"
-            android:src="@mipmap/right_gray_arrow_icon"
-            app:layout_auto_basewidth="height" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_select"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:text="@string/open_new_account"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_22" />
-    </com.zhy.autolayout.AutoLinearLayout>
+        android:gravity="center"
+        android:paddingTop="26px"
+        android:text="@string/open_more_account"
+        android:textColor="@color/main_color"
+        android:textSize="@dimen/text_size_22" />
 
 </com.zhy.autolayout.AutoLinearLayout>

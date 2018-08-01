@@ -3,6 +3,7 @@ package com.ts.lys.yibei.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -216,7 +217,8 @@ public class PendingFragment extends BaseFragment implements IPendingFragmentVie
      * 刷新数据
      */
     public void refreshData() {
-
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
         map.put("accessToken", accessToken);

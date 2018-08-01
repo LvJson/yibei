@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -325,6 +326,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
      * 刷新数据
      */
     public void refreshData() {
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
         map.put("accessToken", accessToken);

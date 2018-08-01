@@ -235,7 +235,8 @@ public class OrderFragment extends BaseFragment implements IOrderFragmentView {
      * 刷新订单上部数据
      */
     public void refreshData() {
-
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         Logger.e("userId", userId);
         map.put("userId", userId);

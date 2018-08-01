@@ -339,7 +339,8 @@ public class PositionFragment extends BaseFragment implements IPositionFragmentV
      * 刷新数据
      */
     public void refreshData() {
-
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
         map.put("accessToken", accessToken);

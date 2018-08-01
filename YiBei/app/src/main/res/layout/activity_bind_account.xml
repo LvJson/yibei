@@ -104,22 +104,14 @@
                 android:layout_marginTop="50px"
                 android:gravity="center_vertical|bottom">
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:backgroundTint="@color/two_text_color"
+                    android:spinnerMode="dropdown">
 
-                    <EditText
-                        android:id="@+id/et_login_server"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="@string/login_server"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/one_text_color"
-                        android:textColorHint="@color/two_text_color"
-                        android:textSize="18dp" />
-                </android.support.design.widget.TextInputLayout>
+                </Spinner>
 
 
             </com.zhy.autolayout.AutoLinearLayout>

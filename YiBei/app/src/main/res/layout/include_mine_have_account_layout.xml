@@ -41,43 +41,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_manager_account"
+
+        <TextView
+            android:id="@+id/btn_open_new_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingRight="30dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:paddingRight="10dp"
-                android:text="@string/account_manager"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_30" />
-
-            <ImageView
-                android:layout_width="17px"
-                android:layout_height="31px"
-                android:src="@mipmap/right_gray_arrow_icon"
-                app:layout_auto_basewidth="height" />
-
-        </com.zhy.autolayout.AutoLinearLayout>
+            android:layout_marginRight="30dp"
+            android:background="@drawable/btn_gradual_change_bg"
+            android:paddingBottom="15px"
+            android:paddingLeft="30px"
+            android:paddingRight="30px"
+            android:paddingTop="15px"
+            android:text="@string/open_new_account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_22"
+            app:layout_auto_basewidth="height" />
 
     </com.zhy.autolayout.AutoLinearLayout>
-
-    <Button
-        android:id="@+id/btn_open_new_account"
-        android:layout_width="match_parent"
-        android:layout_height="80px"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="27px"
-        android:background="@drawable/btn_gradual_change_bg"
-        android:text="@string/open_new_account"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_26" />
 
 
 </com.zhy.autolayout.AutoLinearLayout>

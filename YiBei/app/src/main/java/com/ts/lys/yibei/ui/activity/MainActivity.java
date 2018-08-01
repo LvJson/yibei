@@ -54,6 +54,8 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
 
     private int clickNum = 0;
 
+    private boolean isQuitApp = false;
+
     private Socket socket;
 
     {
@@ -70,6 +72,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         initView();
+        Logger.e("userId", userId + "  accessToken: " + accessToken);
 //        mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -245,6 +248,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
                 }
             }, 300);
         } else if (event.getTagOne().equals(EventContents.ALL_MAIN_REFRESH)) {
+            initBaseData();
             //一级界界面全局刷新
             HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[0]);
             MarketFragment marketFragment = (MarketFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[1]);
@@ -259,6 +263,9 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
                 orderFragment.setCurrentPosition(0);
             if (mineFragment != null)
                 mineFragment.refreshData();
+        } else if (event.getTagOne().equals(EventContents.DROP_OUT_SUCCESS)) {
+            isQuitApp = true;
+
         }
     }
 
@@ -268,6 +275,10 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
         super.onResume();
         clickNum = 0;
         changeAcc();
+        if (isQuitApp) {
+            mTabHost.onTabChanged(mTextviewArray[1]);
+            isQuitApp = false;
+        }
     }
 
     @Override

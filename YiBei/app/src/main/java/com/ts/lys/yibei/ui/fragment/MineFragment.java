@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,8 +25,7 @@ import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.mvppresenter.AccInfoPresenter;
 import com.ts.lys.yibei.mvpview.IMineFragmentView;
-import com.ts.lys.yibei.ui.activity.AccountLoginActivity;
-import com.ts.lys.yibei.ui.activity.ChooseBrokerActivity;
+import com.ts.lys.yibei.ui.activity.BindAccountActivity;
 import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
 import com.ts.lys.yibei.ui.activity.TradeReportActivity;
 import com.ts.lys.yibei.ui.activity.WebViewActivity;
@@ -60,12 +60,10 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
     TextView tvAccountStyle;
 
 
-    @Bind(R.id.include_no_account)
-    AutoLinearLayout includeNoAccount;
     @Bind(R.id.include_have_account)
     AutoLinearLayout includeHaveAccount;
     @Bind(R.id.ll_have_real_account)
-    LinearLayout llHaverealAccount;
+    LinearLayout includeHaverealAccount;
 
 
     @Bind(R.id.tv_bi)
@@ -81,6 +79,11 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
 
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @Bind(R.id.tv_acc_id)
+    TextView tvAccId;
+    @Bind(R.id.iv_acc_icon)
+    ImageView ivAccIcon;
 
     private AccInfoPresenter presenter = new AccInfoPresenter(this);
 
@@ -124,25 +127,25 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
 
     }
 
-    @OnClick({R.id.iv_customer, R.id.tv_open_real_account, R.id.ll_choose_account, R.id.ll_manager_account,
-            R.id.btn_open_new_account, R.id.iv_head, R.id.ll_data_statis, R.id.ll_trade_report, R.id.ll_help_center, R.id.ll_feedback, R.id.ll_about_yibei})
+    @OnClick({R.id.iv_customer, R.id.ll_choose_account, R.id.btn_open_new_account, R.id.iv_head,
+            R.id.ll_data_statis, R.id.ll_trade_report, R.id.ll_help_center, R.id.ll_feedback,
+            R.id.ll_about_yibei, R.id.tv_open_more_acc, R.id.tv_entry_and_exit, R.id.ll_switch_acc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_customer:
+                //TODO 客服
+                startActivity(new Intent(getActivity(), BindAccountActivity.class));
+                break;
+            case R.id.ll_switch_acc:
+            case R.id.ll_choose_account:
                 if (accList != null)
                     switchAccount();
                 break;
-            case R.id.tv_open_real_account:
-                startActivity(new Intent(getActivity(), ChooseBrokerActivity.class));
-                break;
-            case R.id.ll_choose_account:
-                break;
-            case R.id.ll_manager_account:
-                break;
             case R.id.btn_open_new_account:
+                //TODO 开设新账户
                 break;
             case R.id.iv_head:
-                startActivity(new Intent(getActivity(), AccountLoginActivity.class));
+                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
                 break;
             case R.id.ll_data_statis:
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
@@ -153,11 +156,20 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
                 startActivity(new Intent(getActivity(), TradeReportActivity.class));
                 break;
             case R.id.ll_help_center:
+                //TODO 帮助中心
                 break;
             case R.id.ll_feedback:
-                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
+                //TODO 意见反馈
                 break;
             case R.id.ll_about_yibei:
+                //TODO 关于易贝
+
+                break;
+            case R.id.tv_open_more_acc:
+                //TODO 开设更多新账户
+                break;
+            case R.id.tv_entry_and_exit:
+                //TODO 去出入金
                 break;
         }
     }
@@ -255,12 +267,28 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
         if (accountInfo != null) {
             this.accountInfo = accountInfo;
             String phone = accountInfo.getTelephone();
-            tvAccountNum.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+            int index = phone.indexOf(")");
+            if (index == -1)
+                tvAccountNum.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+            else
+                tvAccountNum.setText(phone.substring(index + 1, index + 4) + "****" + phone.substring(phone.length() - 4, phone.length()));
             tvAccountEquity.setText(BaseUtils.dealSymbol(accountInfo.getEquity()));
             tvProfitRate.setText(AppUtils.getDigitsData(accountInfo.getYieldRate(), 2) + "%");
             tvBi.setText(String.valueOf(accountInfo.getTotalCount()));
             tvLots.setText(BaseUtils.getDigitsData(accountInfo.getTotalVolume(), 2));
             tvCumulativeIncome.setText(BaseUtils.dealSymbol(accountInfo.getProfitCount()));
+            switch (accountInfo.getAccType()) {
+                case 0:
+                    includeHaveAccount.setVisibility(View.VISIBLE);
+                    includeHaverealAccount.setVisibility(View.GONE);
+                    break;
+                case 6:
+                    includeHaveAccount.setVisibility(View.GONE);
+                    includeHaverealAccount.setVisibility(View.VISIBLE);
+                    String accid = TextUtils.isEmpty(accountInfo.getMt4Id()) ? "" : getString(R.string.account_id) + "：" + accountInfo.getMt4Id();
+                    tvAccId.setText(accid);
+                    break;
+            }
 
         }
 
@@ -297,7 +325,8 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
      * 刷新数据
      */
     public void refreshData() {
-
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
         map.put("accessToken", accessToken);

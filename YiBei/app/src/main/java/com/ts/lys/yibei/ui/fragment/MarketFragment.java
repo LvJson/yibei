@@ -3,6 +3,7 @@ package com.ts.lys.yibei.ui.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.ts.lys.yibei.R;
@@ -272,6 +273,8 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
      * 刷新数据
      */
     public void refreshData() {
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         map.put("accessToken", accessToken);
         map.put("userId", userId);

@@ -54,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingBottom="69px">
+                        android:paddingBottom="25px">
 
                         <TextView
                             android:id="@+id/tv_account_num"
@@ -162,14 +162,13 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="71px"
+                            android:layout_marginBottom="40px"
                             android:layout_marginLeft="30px"
                             android:layout_marginRight="30px"
                             android:layout_marginTop="39px"
                             android:scaleType="fitXY"
                             android:src="@mipmap/mine_dividing_line" />
 
-                        <include layout="@layout/include_mine_no_account_layout" />
 
                         <include layout="@layout/include_mine_have_account_layout" />
 
@@ -296,6 +295,7 @@
 
             <include layout="@layout/incloud_division_10dp_layout" />
 
+            <!--***********数据统计**********-->
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_data_statis"
                 android:layout_width="match_parent"
@@ -303,7 +303,8 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="44px"
@@ -329,8 +330,9 @@
 
             </com.zhy.autolayout.AutoLinearLayout>
 
-            <include layout="@layout/incloud_division_1dp_layout" />
+            <!--<include layout="@layout/incloud_division_1dp_layout" />-->
 
+            <!--***********交易报表**********-->
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_trade_report"
                 android:layout_width="match_parent"
@@ -338,7 +340,8 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="44px"
@@ -364,7 +367,7 @@
 
             </com.zhy.autolayout.AutoLinearLayout>
 
-            <include layout="@layout/incloud_division_10dp_layout" />
+            <!--<include layout="@layout/incloud_division_10dp_layout" />-->
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_help_center"
@@ -401,6 +404,7 @@
 
             <include layout="@layout/incloud_division_1dp_layout" />
 
+            <!--***********意见反馈**********-->
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_feedback"
                 android:layout_width="match_parent"
@@ -408,7 +412,8 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="44px"
@@ -434,7 +439,7 @@
 
             </com.zhy.autolayout.AutoLinearLayout>
 
-            <include layout="@layout/incloud_division_1dp_layout" />
+            <!--<include layout="@layout/incloud_division_1dp_layout" />-->
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_about_yibei"

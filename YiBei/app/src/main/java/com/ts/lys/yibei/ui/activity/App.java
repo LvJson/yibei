@@ -8,6 +8,8 @@ import android.webkit.WebSettings;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.utils.UserAgentInterceptor;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -50,6 +52,12 @@ public class App extends Application {
                 .build();
         OkHttpUtils.initClient(okHttpClient);
 
+        /**
+         * 友盟初始化
+         */
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
+        MobclickAgent.openActivityDurationTrack(false);
 
     }
 

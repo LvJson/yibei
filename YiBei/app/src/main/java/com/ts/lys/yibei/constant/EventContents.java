@@ -30,6 +30,7 @@ public class EventContents {
     public static final String REGIST_SUCCESS = "013";//注册成功
 
     public static final String ALL_MAIN_REFRESH = "016";//注册成功
+    public static final String DROP_OUT_SUCCESS = "017";//退出成功
 
 
 }

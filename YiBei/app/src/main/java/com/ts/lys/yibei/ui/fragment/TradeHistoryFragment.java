@@ -2,6 +2,7 @@ package com.ts.lys.yibei.ui.fragment;
 
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -147,7 +148,8 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
      * 刷新数据
      */
     public void refreshData() {
-
+        getUserIdAndToken();
+        if (TextUtils.isEmpty(userId)) return;
         page = 1;
         size = 0;
         historyOrder.clear();

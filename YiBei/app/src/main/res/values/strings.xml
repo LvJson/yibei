@@ -156,6 +156,7 @@
     <string name="demo_account">模拟账户</string>
     <string name="account_manager">账户管理</string>
     <string name="open_new_account">开设新账户</string>
+    <string name="open_more_account">开设更多经纪商账号>></string>
     <string name="illegal_phone">手机号码输入错误</string>
     <string name="incomplete_info">请将信息填写完整</string>
     <string name="net_not_work">网络不可用</string>
@@ -163,6 +164,7 @@
     <string name="reload">重新加载</string>
     <string name="not_data">暂时没有相关数据</string>
     <string name="net_error">网络异常</string>
+    <string name="drop_out_app">确认退出应用？</string>
 
 
     <string name="choose_broker_explain">易贝外汇平台选择的经济商是经过严格筛选审核的，具有从事相关行业牌照，且受相关机构和部门的监管的合法正规平台，xxx并不给你提供交易软件(如MT4)及交易技术支持，也不对交易资金做任何担保。您在合作经纪商平台交易的资金风险和使用交易软件存在风险，xxx概不负担任何法律风险。</string>

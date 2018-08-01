@@ -104,4 +104,12 @@ public class SpUtils {
         editor.putLong(strKey, strData);
         editor.commit();
     }
+
+    public static void cleanSP(Context context) {
+        SharedPreferences setPreferences = context.getSharedPreferences(
+                spFileName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setPreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
 }

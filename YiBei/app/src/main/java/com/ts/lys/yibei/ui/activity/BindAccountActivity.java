@@ -1,23 +1,34 @@
 package com.ts.lys.yibei.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.AccountServiceBean;
+import com.ts.lys.yibei.bean.EventBean;
+import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.JsonAnalysisUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -40,14 +51,15 @@ public class BindAccountActivity extends BaseActivity {
     EditText etMTAccount;
     @Bind(R.id.et_mt_password)
     EditText etMTPassword;
-    @Bind(R.id.et_login_server)
-    EditText etloginServer;
     @Bind(R.id.btn_login)
     Button btnLogin;
+    @Bind(R.id.spinner)
+    Spinner spinner;
 
     private String mt4Acc;
     private String mt4Pass;
     private String loginServer;
+    private String[] mItem;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +69,7 @@ public class BindAccountActivity extends BaseActivity {
 
         initView();
         initListener();
+        initData();
     }
 
 
@@ -119,23 +132,65 @@ public class BindAccountActivity extends BaseActivity {
             }
         });
 
-        etloginServer.addTextChangedListener(new TextWatcher() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                loginServer = etloginServer.getText().toString().trim();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                loginServer = (String) adapterView.getSelectedItem();
                 haveNull();
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
+    }
+
+    private void initData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("accessToken", accessToken);
+        map.put("accType", "6");//TODO  账户类型
+
+        showCustomProgress();
+        CustomHttpUtils.getServiceDatas(map, UrlContents.BROKER_LOGINSHOW, className + "2", new CustomHttpUtils.ServiceStatus() {
+            @Override
+            public void faild(Call call, Exception e, int id) {
+                disCustomProgress();
+                showToast(getString(R.string.net_error));
+            }
+
+            @Override
+            public void success(String response, int id) {
+                disCustomProgress();
+                if (response != null) {
+                    new JsonAnalysisUtils<AccountServiceBean>(AccountServiceBean.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<AccountServiceBean>() {
+                        @Override
+                        public void success(AccountServiceBean accountServiceBean) {
+                            List<String> servers = accountServiceBean.getData().getServers();
+                            if (servers != null && servers.size() > 0) {
+                                mItem = new String[servers.size()];
+                                loginServer = servers.get(0);
+                                for (int i = 0; i < servers.size(); i++) {
+                                    mItem[i] = servers.get(i);
+                                }
+                                ArrayAdapter adapter = new ArrayAdapter(BindAccountActivity.this, R.layout.spinner_item, mItem);
+                                adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+                                spinner.setAdapter(adapter);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                                    spinner.setDropDownVerticalOffset(100);
+                            }
+                        }
+
+                        @Override
+                        public void fail(String str) {
+                            showToast(str);
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
 
@@ -162,7 +217,7 @@ public class BindAccountActivity extends BaseActivity {
         map.put("userId", userId);
         map.put("accessToken", accessToken);
         map.put("password", mt4Pass);
-        map.put("accType", "");//TODO  账户类型
+        map.put("accType", "6");//TODO  账户类型
         map.put("mt4Id", mt4Acc);
         map.put("server", loginServer);
 
@@ -190,6 +245,8 @@ public class BindAccountActivity extends BaseActivity {
                     if (errCode.equals("0")) {
                         showToast(getString(R.string.mt4_bind_success));
                         //TODO MT4账户绑定成功
+                        finish();
+                        EventBus.getDefault().post(new EventBean(EventContents.ALL_MAIN_REFRESH, null));
 
                     } else
                         showToast(errMsg);

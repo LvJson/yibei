@@ -14,6 +14,7 @@ import com.ts.lys.yibei.customeview.CustomProgress;
 import com.ts.lys.yibei.mvpview.BaseMvpView;
 import com.ts.lys.yibei.utils.Logger;
 import com.ts.lys.yibei.utils.SpUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import butterknife.ButterKnife;
@@ -44,8 +45,7 @@ public abstract class BaseFragment extends Fragment implements BaseMvpView {
         className = getClass().getName();
 //        accessToken = "d31303049b7224712b2073354d4cc92c8a196f1894b1876509d78b4cd9268149b9ab165da9a31a6251d2448261fd99d1a7d22133bb3ef018493849f4a7896993";
 //        userId = "1403";
-        accessToken = SpUtils.getString(getActivity(), BaseContents.ACCESS_TOKEN, "");
-        userId = SpUtils.getString(getActivity(), BaseContents.USERID,"");
+        getUserIdAndToken();
         Logger.e(TAG, "onCreat()");
     }
 
@@ -62,6 +62,11 @@ public abstract class BaseFragment extends Fragment implements BaseMvpView {
             parent.removeView(mRootView);
         }
         return mRootView;
+    }
+
+    public void getUserIdAndToken() {
+        accessToken = SpUtils.getString(getActivity(), BaseContents.ACCESS_TOKEN, "");
+        userId = SpUtils.getString(getActivity(), BaseContents.USERID, "");
     }
 
     @Override
@@ -118,4 +123,17 @@ public abstract class BaseFragment extends Fragment implements BaseMvpView {
         toast.show();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        String className = getClass().getSimpleName();
+        MobclickAgent.onPageStart(className);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String className = getClass().getSimpleName();
+        MobclickAgent.onPageEnd(className);
+    }
 }

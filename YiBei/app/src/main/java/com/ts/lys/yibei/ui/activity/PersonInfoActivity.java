@@ -1,13 +1,16 @@
 package com.ts.lys.yibei.ui.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +23,15 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.constant.BaseContents;
+import com.ts.lys.yibei.constant.EventContents;
+import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.customeview.PhotoDialog;
 import com.ts.lys.yibei.utils.Logger;
+import com.ts.lys.yibei.utils.SpUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -45,6 +54,8 @@ public class PersonInfoActivity extends TakePhotoActivity {
     TextView tvNickname;
     @Bind(R.id.tv_phone_num)
     TextView tvPhoneNum;
+    @Bind(R.id.ll_father)
+    LinearLayout llFather;
 
     private PhotoDialog photoDialog;
     private Uri imageUri;
@@ -141,13 +152,48 @@ public class PersonInfoActivity extends TakePhotoActivity {
                 finish();
                 break;
             case R.id.ll_choose_head:
-                photoDialog.show();
+//                photoDialog.show();
                 break;
             case R.id.ll_nickname:
                 break;
             case R.id.btn_sign_out:
+
+                showQuitPop();
                 break;
         }
+    }
+
+    private void showQuitPop() {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_base_remind_layout, null);
+        TextView tvTitle = contentView.findViewById(R.id.tv_title);
+        TextView tvCancel = contentView.findViewById(R.id.tv_cancle);
+        TextView tvConfirm = contentView.findViewById(R.id.tv_confirm);
+        tvTitle.setText(getString(R.string.drop_out_app));
+        final CustomPopWindow popupWindowBuilder = new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .create()
+                .showAtLocation(llFather, Gravity.CENTER, 0, 0);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindowBuilder.dissmiss();
+            }
+        });
+
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SpUtils.cleanSP(PersonInfoActivity.this);
+                startActivity(new Intent(PersonInfoActivity.this, AccountLoginActivity.class));
+                EventBus.getDefault().post(new EventBean(EventContents.ALL_MAIN_REFRESH, null));
+                EventBus.getDefault().post(new EventBean(EventContents.DROP_OUT_SUCCESS, null));
+                finish();
+                popupWindowBuilder.dissmiss();
+
+            }
+        });
     }
 
     @Override

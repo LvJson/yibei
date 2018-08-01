@@ -121,6 +121,10 @@ public class UrlContents {
      * MT4绑定用户
      */
     public static final String BROKER_BIND = URLHEAD + "/broker/bind";
+    /**
+     * MT4服务器
+     */
+    public static final String BROKER_LOGINSHOW = URLHEAD + "/broker/show";
 
     /**
      * 找回密码
