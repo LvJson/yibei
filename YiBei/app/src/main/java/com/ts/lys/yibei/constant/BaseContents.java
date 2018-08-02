@@ -22,5 +22,7 @@ public class BaseContents {
 
     public static final String INVITE_CODE = "inviteCode";//邀请码
 
+    public static final String SOBOT_KEY = "0442410e1b9d4965b8619582f85df085";//智齿Key
+
 
 }

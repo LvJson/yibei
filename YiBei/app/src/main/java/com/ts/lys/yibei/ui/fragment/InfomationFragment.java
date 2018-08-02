@@ -99,4 +99,14 @@ public class InfomationFragment extends BaseFragment {
         textView.setText(tabTitles[tab.getPosition()]);
         tabText.setTextColor(getResources().getColor(R.color.white));
     }
+
+    /**
+     * viewPager滚动到指定位置
+     *
+     * @param position
+     */
+    public void setCurrentPosition(int position) {
+        if (viewPager != null)
+            viewPager.setCurrentItem(position, true);
+    }
 }

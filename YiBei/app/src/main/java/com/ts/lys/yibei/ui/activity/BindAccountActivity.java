@@ -22,6 +22,7 @@ import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.JsonAnalysisUtils;
 
@@ -206,6 +207,7 @@ public class BindAccountActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
+                if (ButtonUtils.isFastDoubleClick(R.id.btn_login, 1500)) return;
                 bindServer();
                 break;
         }

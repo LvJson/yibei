@@ -224,10 +224,25 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         tvChName.setText(symbolCN);
         tvEnName.setText(symbolEN);
         String tags = getIntent().getStringExtra("tag");
-        if (tags.equals("自选")) {
-            ivCollection.setImageResource(R.mipmap.kline_have_collection);
-        } else
+        if (symbolList == null || symbolList.size() == 0) {
+            collectionStatus = false;
             ivCollection.setImageResource(R.mipmap.kline_not_collection);
+        } else {
+            boolean isColl = false;
+            for (int i = 0; i < symbolList.size(); i++) {
+                if (symbolList.get(i).equals(symbol)) {
+                    isColl = true;
+                }
+            }
+            if (isColl) {
+                collectionStatus = true;
+                ivCollection.setImageResource(R.mipmap.kline_have_collection);
+            } else {
+                collectionStatus = false;
+                ivCollection.setImageResource(R.mipmap.kline_not_collection);
+            }
+
+        }
 
         realTimeDataPresenter = new RealTimeDataPresenter(this);
         realTimeDataPresenter.attachView(this);
@@ -407,7 +422,6 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
 
     @OnClick({R.id.tv_buy_in, R.id.tv_sell_out, R.id.btn_buy_or_sell, R.id.iv_collection})
     public void onViewClicked(View view) {
-
         switch (view.getId()) {
             case R.id.tv_buy_in:
                 if (!ButtonUtils.isFastDoubleClick(R.id.tv_buy_in, 1500)) {
@@ -450,7 +464,6 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
                 if (ButtonUtils.isFastDoubleClick(R.id.iv_collection, 1500)) return;
                 if (collectionStatus) {
                     //TODO 取消收藏
-                    collectionStatus = false;
                     for (int i = 0; i < symbolList.size(); i++) {
                         if (symbolList.get(i).equals(symbol)) {
                             symbolList.remove(i);
@@ -461,7 +474,6 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
 
                 } else {
                     //TODO 添加收藏
-                    collectionStatus = true;
                     symbolList.add(symbol);
                     ditySymbol(symbolList);
                 }
@@ -620,6 +632,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         showCustomProgress();
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
+        map.put("accessToken", accessToken);
         map.put("symbol", stringBuffer.toString());
         CustomHttpUtils.getServiceDatas(map, UrlContents.DEAL_SYMBOL_DIYSYMBOL, className + "4", new CustomHttpUtils.ServiceStatus() {
             @Override
@@ -643,11 +656,15 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
                         //通知更新行情自选列表
                         EventBus.getDefault().post(new EventBean(EventContents.UPDATED_SELF_SYMBOL, null));
                         if (collectionStatus) {
-                            showToast(getString(R.string.add_collection_success));
-                            ivCollection.setImageResource(R.mipmap.kline_have_collection);
-                        } else {
                             showToast(getString(R.string.cancle_collection_success));
                             ivCollection.setImageResource(R.mipmap.kline_not_collection);
+                            collectionStatus = false;
+
+                        } else {
+                            showToast(getString(R.string.add_collection_success));
+                            ivCollection.setImageResource(R.mipmap.kline_have_collection);
+                            collectionStatus = true;
+
                         }
                     } else
                         showToast(errMsg);

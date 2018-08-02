@@ -36,6 +36,7 @@ public class OrderPositionAdapter extends RecyclerView.Adapter<OrderPositionAdap
     }
 
     public void setData(List<OrderPositionModel.DataBean.TraderOrderBean> traderOrderBeanList) {
+        this.traderOrderBeanList = null;
         this.traderOrderBeanList = traderOrderBeanList;
         notifyDataSetChanged();
     }

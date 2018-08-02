@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.constant.UrlContents;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 
 import java.util.HashMap;
@@ -74,6 +75,7 @@ public class ResetPasswordActivity extends BaseActivity {
 
     @OnClick({R.id.iv_delete, R.id.btn_reset_pass})
     public void onViewClicked(View view) {
+        if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.iv_delete:
                 etMailBox.setText(null);

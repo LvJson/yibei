@@ -24,6 +24,7 @@ import com.ts.lys.yibei.mvpview.ITradeOrPendingView;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -368,6 +369,7 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
 
     @OnClick({R.id.ll_buy_price, R.id.ll_sell_price})
     public void onViewClicked(View view) {
+        if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.ll_buy_price:
                 parentActivity.pendingDealStatus = 0;
@@ -459,9 +461,9 @@ public class PendingTradeFragment extends BaseFragment implements ITradeOrPendin
         mapb.setSymbolInfoBean(sb);
         tradetimesLever = sb.getMinVolume();
         if (sb.getMinVolume() >= 1)
-            tradeTimesAdv.setLimit(sb.getMinVolume(), 10, 0);//TODO 第二个参数待定
+            tradeTimesAdv.setLimit(sb.getMinVolume(), 10000, 0);//TODO 第二个参数待定
         else
-            tradeTimesAdv.setLimit(sb.getMinVolume(), 10, 2);//TODO 第二个参数待定
+            tradeTimesAdv.setLimit(sb.getMinVolume(), 10000, 2);//TODO 第二个参数待定
         tradeTimesAdv.setnumber(sb.getMinVolume());
         //************************止盈/止损步长***********************************//
         stopLossLever = Arith.div(1, Math.pow(10, parentActivity.digits));

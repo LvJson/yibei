@@ -18,12 +18,15 @@ import com.ts.lys.yibei.adapter.SelfSelectAdapter;
 import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.bean.GetQuotesModel;
 import com.ts.lys.yibei.bean.RealTimeBean;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.RecycleViewDivider;
 import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.Logger;
+import com.ts.lys.yibei.utils.SpUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -201,9 +204,9 @@ public class AllSymbolMarketFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventBean event) {
         /**
-         * 实时数据
+         * 长安删除
          */
-        if (event.getTagOne().equals(EventContents.LONG_CLICK)) {
+        if (event.getTagOne().equals(EventContents.LONG_CLICK) && tag.equals("自选")) {
             selfSelectSymbol.remove(position);
             ditySymbol(selfSelectSymbol, position);
         }
@@ -213,6 +216,8 @@ public class AllSymbolMarketFragment extends BaseFragment {
      * 增减自选
      */
     private void ditySymbol(ArrayList<String> symbol, final int position) {
+        accessToken = SpUtils.getString(getActivity(), BaseContents.ACCESS_TOKEN, "");
+        userId = SpUtils.getString(getActivity(), BaseContents.USERID, "");
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < symbol.size(); i++) {
 
@@ -226,6 +231,7 @@ public class AllSymbolMarketFragment extends BaseFragment {
         showCustomProgress();
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
+        map.put("accessToken", accessToken);
         map.put("symbol", stringBuffer.toString());
         CustomHttpUtils.getServiceDatas(map, UrlContents.DEAL_SYMBOL_DIYSYMBOL, className, new CustomHttpUtils.ServiceStatus() {
             @Override
@@ -249,6 +255,7 @@ public class AllSymbolMarketFragment extends BaseFragment {
                     if (errCode.equals("0")) {
                         if (position != -1) {
                             selfSelectAdapter.removeItem(position);
+                            marketFragment.refreshData();
                         }
                         showToast(getString(R.string.cancle_collection_success));
                     } else

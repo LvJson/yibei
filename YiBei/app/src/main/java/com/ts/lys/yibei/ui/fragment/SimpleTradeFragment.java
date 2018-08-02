@@ -193,9 +193,9 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
         transQuanty = sb.getMinVolume();
         tvFreeMargin.setText(getString(R.string.userful_margin) + " ：" + BaseUtils.getDigitsData(sb.getAccAmt(), 2));
         if (sb.getMinVolume() >= 1)
-            addDeleteView.setLimit(sb.getMinVolume(), 10, 0);//TODO 第二个参数待定
+            addDeleteView.setLimit(sb.getMinVolume(), 10000, 0);//TODO 第二个参数待定
         else
-            addDeleteView.setLimit(sb.getMinVolume(), 10, 2);//TODO 第二个参数待定
+            addDeleteView.setLimit(sb.getMinVolume(), 10000, 2);//TODO 第二个参数待定
 
         addDeleteView.setnumber(sb.getMinVolume());
         chooseTimesLayout.setBaseTimes(sb.getMinVolume());
@@ -247,7 +247,7 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
         StringBuffer buffer = new StringBuffer();
         buffer.append(getString(R.string.remind_two));
         buffer.append(cmd == 0 ? getString(R.string.purchase) : getString(R.string.sell_out));
-        buffer.append(lots);
+        buffer.append(BaseUtils.getDigitsData(lots, 2));
         buffer.append(getString(R.string.lots));
         buffer.append(" ");
         buffer.append(parentActivity.symbol);

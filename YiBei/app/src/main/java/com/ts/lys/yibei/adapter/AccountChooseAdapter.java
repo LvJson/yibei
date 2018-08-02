@@ -58,8 +58,21 @@ public class AccountChooseAdapter extends RecyclerView.Adapter<AccountChooseAdap
         if (holder instanceof ViewHolder) {
             final BrokerCheckListBean.DataBean.BrokerBean ab = accountBeanList.get(position);
 
-            holder.ivIcon.setImageResource(R.mipmap.mmignz_icon);
-            holder.tvExplain.setText(mContext.getString(R.string.account_id) + "：" + ab.getAccount());
+            if (ab.getNow())
+                holder.ivCheckState.setVisibility(View.VISIBLE);
+            else
+                holder.ivCheckState.setVisibility(View.GONE);
+
+            if (ab.getName().equals(mContext.getString(R.string.demo_account))) {
+                holder.ivIcon.setImageResource(R.mipmap.demo_icon);
+                if (ab.getStatus() == 0)
+                    holder.tvExplain.setText(mContext.getString(R.string.have_maturity));
+                else
+                    holder.tvExplain.setText(mContext.getString(R.string.maturity) + "：" + ab.getDestory());
+            } else {
+                holder.ivIcon.setImageResource(R.mipmap.mmignz_icon);
+                holder.tvExplain.setText(mContext.getString(R.string.account_id) + "：" + ab.getAccount());
+            }
 
             ((ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,6 +96,8 @@ public class AccountChooseAdapter extends RecyclerView.Adapter<AccountChooseAdap
         ImageView ivIcon;
         @Bind(R.id.tv_explain)
         TextView tvExplain;
+        @Bind(R.id.iv_check_state)
+        ImageView ivCheckState;
 
         public ViewHolder(View itemView) {
             super(itemView);

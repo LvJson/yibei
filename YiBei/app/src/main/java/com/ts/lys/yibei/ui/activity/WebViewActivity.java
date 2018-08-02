@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.just.agentweb.AgentWeb;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.utils.AndroidInterface;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import butterknife.Bind;
@@ -51,6 +52,8 @@ public class WebViewActivity extends BaseActivity {
                 .createAgentWeb()
                 .ready()
                 .go(url);
+        mAgentWeb.getJsInterfaceHolder().addJavaObject("android", new AndroidInterface(WebViewActivity.this));
+
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

@@ -56,7 +56,6 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
     private List<GetQuotesModel.DataBean.SymbolsBean> list2 = new ArrayList<>();//贵金属
     private List<GetQuotesModel.DataBean.SymbolsBean> list3 = new ArrayList<>();//能源
 
-    private ArrayList<String> selfSelectSymbol = new ArrayList<>();
 
     public boolean isShowRealData;
 
@@ -115,7 +114,7 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         map.put("accessToken", accessToken);
         map.put("userId", userId);
         allSymbolPresenter.getCollectionSymbol(map, className + "1");
-        allSymbolPresenter.getAllSymbol(map, className + "1");
+        allSymbolPresenter.getAllSymbol(map, className + "2");
 
     }
 
@@ -187,6 +186,7 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         if (getActivity() == null) return;
         listColl.clear();
         List<GetQuotesModel.DataBean.SymbolsBean> sb = collectionSymbol.getData().getSymbols();
+        Logger.e("sb.size", sb.size() + "");
         listColl = sb;
         ((AllSymbolMarketFragment) fragmentList.get(0)).setFirstList(listColl);
         if (listColl == null || listColl.size() == 0)
@@ -194,6 +194,8 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         else
             ((AllSymbolMarketFragment) fragmentList.get(0)).setErrorStatus(2);
 
+
+        ArrayList<String> selfSelectSymbol = new ArrayList<>();
         for (int i = 0; i < sb.size(); i++) {
             selfSelectSymbol.add(sb.get(i).getSymbolEn());
         }
@@ -279,7 +281,7 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
         map.put("accessToken", accessToken);
         map.put("userId", userId);
         allSymbolPresenter.getCollectionSymbol(map, className + "1");
-        allSymbolPresenter.getAllSymbol(map, className + "1");
+        allSymbolPresenter.getAllSymbol(map, className + "2");
     }
 
     @Override

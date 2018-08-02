@@ -1,6 +1,5 @@
 package com.ts.lys.yibei.ui.fragment;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,8 +32,8 @@ import com.ts.lys.yibei.customeview.Xcircleindicator;
 import com.ts.lys.yibei.mvppresenter.HomePresenter;
 import com.ts.lys.yibei.mvpview.IHomeFragmentView;
 import com.ts.lys.yibei.ui.activity.MainActivity;
-import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.Logger;
 import com.ts.lys.yibei.utils.NetworkImageHolderView;
@@ -215,6 +214,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     @OnClick({R.id.tv_see_all, R.id.ll_notice, R.id.ll_more, R.id.tv_reload})
     public void onViewClicked(View view) {
+        if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.tv_see_all:
                 ((MainActivity) getActivity()).goSomeTab("订单", 2);
@@ -222,7 +222,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
             case R.id.ll_notice:
                 break;
             case R.id.ll_more:
-                startActivity(new Intent(getActivity(), QuotationsActivity.class));
+                ((MainActivity) getActivity()).goSomeTab("资讯", 1);
                 break;
             case R.id.tv_reload:
                 refreshData();

@@ -28,6 +28,7 @@ import com.ts.lys.yibei.mvpview.IQuotationView;
 import com.ts.lys.yibei.mvpview.IRealTimeView;
 import com.ts.lys.yibei.ui.fragment.KLineFragment;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.Logger;
 import com.zhy.autolayout.AutoFrameLayout;
@@ -190,6 +191,7 @@ public class PendingDetailActivity extends BaseFragmentActivity implements IQuot
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_cancel:
+                if (ButtonUtils.isFastDoubleClick(R.id.btn_cancel, 1500)) return;
                 showCancelPendingPop(tb);
                 break;
         }

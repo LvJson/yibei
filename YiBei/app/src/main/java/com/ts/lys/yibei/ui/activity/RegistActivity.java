@@ -25,6 +25,7 @@ import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.SpUtils;
 
@@ -84,7 +85,7 @@ public class RegistActivity extends BaseActivity {
     private String code = "+86";
 
     private boolean[] status = new boolean[3];
-    private static String[] codeStr = new String[]{"+86", "+99"};
+    private static String[] codeStr = new String[]{"+86", "+852"};
 
     private static String passRegex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{10,15}$";
     private static String emailRegex = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
@@ -275,6 +276,7 @@ public class RegistActivity extends BaseActivity {
 
     @OnClick({R.id.iv_delete_mail, R.id.iv_delete_phone, R.id.tv_agree, R.id.btn_next})
     public void onViewClicked(View view) {
+        if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.iv_delete_mail:
                 etMail.setText(null);

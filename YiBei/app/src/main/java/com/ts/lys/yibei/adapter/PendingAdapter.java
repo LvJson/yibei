@@ -38,7 +38,7 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
     }
 
     public void setData(List<OrderPendingModel.DataBean.PendOrderBean> pendingList) {
-
+        this.pendingList = null;
         this.pendingList = pendingList;
         notifyDataSetChanged();
     }

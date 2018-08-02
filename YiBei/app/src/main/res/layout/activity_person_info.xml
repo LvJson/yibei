@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_father"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ll_father"
     android:background="@color/bg_or_division_color"
     android:orientation="vertical">
 
@@ -33,8 +33,8 @@
             android:id="@+id/iv_head"
             android:layout_width="120px"
             android:layout_height="120px"
-            android:src="@mipmap/mine_head_icon"
-            app:civ_border_color="@color/main_color"
+            android:src="@mipmap/default_avatar_icon"
+            app:civ_border_color="@color/bg_or_division_color"
             app:civ_border_width="1dp"
             app:layout_auto_basewidth="height" />
 

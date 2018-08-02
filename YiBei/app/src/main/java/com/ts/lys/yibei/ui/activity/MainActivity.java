@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jaeger.library.StatusBarUtil;
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.EventBean;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.FragmentTabHost;
@@ -24,6 +25,7 @@ import com.ts.lys.yibei.ui.fragment.MineFragment;
 import com.ts.lys.yibei.ui.fragment.OrderFragment;
 import com.ts.lys.yibei.utils.CloseAllActivity;
 import com.ts.lys.yibei.utils.Logger;
+import com.ts.lys.yibei.utils.SpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -125,16 +127,11 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     }
 
     public void changeAcc() {
-        socket.emit("quote", "4");
-//        if (spImp.getUserId() != -1) {
-//            if (spImp.getAccType() == 0) {
-//                socket.emit("quote", "1");
-//            } else {
-//                socket.emit("quote", spImp.getAccType() + "");
-//            }
-//        } else {
-//            socket.emit("quote", "1");
-//        }
+        String accType = SpUtils.getString(this, BaseContents.TYPE, "");
+        if (TextUtils.isEmpty(accType) || accType.equals("0"))
+            SpUtils.putString(this, BaseContents.TYPE, "4");
+        Logger.e("acctype", SpUtils.getString(this, BaseContents.TYPE));
+        socket.emit("quote", SpUtils.getString(this, BaseContents.TYPE));
     }
 
     @Override
@@ -211,6 +208,18 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     public void goSomeTab(final String tagName, final int secondTab) {
         mTabHost.onTabChanged(tagName);
 
+        if (tagName.equals(mTextviewArray[2])) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    InfomationFragment infomationFragment = (InfomationFragment) getSupportFragmentManager().findFragmentByTag(tagName);
+                    if (infomationFragment != null)
+                        infomationFragment.setCurrentPosition(secondTab);
+
+                }
+            }, 300);
+        }
+
         /**
          *跳转到订单界面，并延迟0.5秒后定位到订单中的某个tab
          */
@@ -248,6 +257,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
                 }
             }, 300);
         } else if (event.getTagOne().equals(EventContents.ALL_MAIN_REFRESH)) {
+            changeAcc();
             initBaseData();
             //一级界界面全局刷新
             HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[0]);
@@ -258,7 +268,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
             if (homeFragment != null)
                 homeFragment.refreshData();
             if (marketFragment != null)
-                homeFragment.refreshData();
+                marketFragment.refreshData();
             if (orderFragment != null)
                 orderFragment.setCurrentPosition(0);
             if (mineFragment != null)

@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.customeview.PhotoDialog;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.Logger;
 import com.ts.lys.yibei.utils.SpUtils;
 
@@ -84,6 +86,15 @@ public class PersonInfoActivity extends TakePhotoActivity {
         photoDialog = new PhotoDialog(this,
                 getResources().getIdentifier("BottomDialog", "style", getPackageName()));
         photoDialog.getWindow().setGravity(Gravity.BOTTOM | Gravity.LEFT | Gravity.RIGHT);
+
+        String phone = SpUtils.getString(this, BaseContents.PHONE_NUMBER);
+        if (!TextUtils.isEmpty(phone)) {
+            int index = phone.indexOf(")");
+            if (index == -1)
+                tvPhoneNum.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4, phone.length()));
+            else
+                tvPhoneNum.setText(phone.substring(index + 1, index + 4) + "****" + phone.substring(phone.length() - 4, phone.length()));
+        }
     }
 
     /**
@@ -157,7 +168,7 @@ public class PersonInfoActivity extends TakePhotoActivity {
             case R.id.ll_nickname:
                 break;
             case R.id.btn_sign_out:
-
+                if (ButtonUtils.isFastDoubleClick(R.id.btn_sign_out, 1500)) return;
                 showQuitPop();
                 break;
         }

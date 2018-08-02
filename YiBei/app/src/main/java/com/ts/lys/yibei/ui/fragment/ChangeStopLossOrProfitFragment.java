@@ -21,6 +21,7 @@ import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.AddDeleteView;
 import com.ts.lys.yibei.ui.activity.PositionDetailActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 
@@ -248,6 +249,7 @@ public class ChangeStopLossOrProfitFragment extends DialogFragment {
 
     @OnClick({R.id.tv_cancle, R.id.tv_confirm})
     public void onViewClicked(View view) {
+        if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.tv_cancle:
                 dismiss();

@@ -34,6 +34,7 @@ import com.ts.lys.yibei.ui.fragment.ChangeStopLossOrProfitFragment;
 import com.ts.lys.yibei.ui.fragment.KLineFragment;
 import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.HiddenAnimUtils;
@@ -228,10 +229,12 @@ public class PositionDetailActivity extends BaseFragmentActivity implements IQuo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_float_profit:
+                if (ButtonUtils.isFastDoubleClick(R.id.ll_float_profit, 1500)) return;
                 llMore.measure(0, 0);
                 HiddenAnimUtils.newInstance(getApplicationContext(), llMore, ivArrow, llMore.getMeasuredHeight()).toggle();
                 break;
             case R.id.btn_stop_loss_profit:
+                if (ButtonUtils.isFastDoubleClick(R.id.btn_stop_loss_profit, 1500)) return;
                 if (tb != null && sbinfo != null) {
                     changeStopLossOrProfitFragment = new ChangeStopLossOrProfitFragment();
                     changeStopLossOrProfitFragment.show(getSupportFragmentManager(), "change");
@@ -240,6 +243,7 @@ public class PositionDetailActivity extends BaseFragmentActivity implements IQuo
 
                 break;
             case R.id.btn_position:
+                if (ButtonUtils.isFastDoubleClick(R.id.btn_position, 1500)) return;
                 showClosePositionPop(tb);
                 break;
         }

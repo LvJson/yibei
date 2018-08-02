@@ -7,23 +7,42 @@
     android:orientation="vertical"
     android:paddingTop="21px">
 
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="149px"
-        android:layout_height="46px"
-        android:src="@mipmap/mmignz_icon"
-        app:layout_auto_basewidth="height" />
-
-
-    <TextView
-        android:id="@+id/tv_explain"
-        android:layout_width="wrap_content"
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
-        android:gravity="right"
-        android:text="账户ID:12345"
-        android:textColor="@color/two_text_color"
-        android:textSize="@dimen/text_size_22" />
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="149px"
+            android:layout_height="46px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/mmignz_icon"
+            app:layout_auto_basewidth="height" />
+
+
+        <TextView
+            android:id="@+id/tv_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_icon"
+            android:layout_marginTop="10px"
+            android:gravity="right"
+            android:text="账户ID:12345"
+            android:textColor="@color/two_text_color"
+            android:textSize="@dimen/text_size_22" />
+
+        <ImageView
+            android:id="@+id/iv_check_state"
+            android:layout_width="43px"
+            android:layout_height="29px"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/checked_icon"
+            app:layout_auto_basewidth="height" />
+    </com.zhy.autolayout.AutoRelativeLayout>
 
 
     <View

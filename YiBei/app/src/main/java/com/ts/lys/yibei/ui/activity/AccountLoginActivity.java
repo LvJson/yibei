@@ -21,6 +21,7 @@ import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.utils.BaseUtils;
+import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.JsonAnalysisUtils;
 import com.ts.lys.yibei.utils.SpUtils;
@@ -177,15 +178,19 @@ public class AccountLoginActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_forgit:
+                if (ButtonUtils.isFastDoubleClick(R.id.tv_forgit, 1500)) return;
                 startActivity(ResetPasswordActivity.class);
                 break;
             case R.id.btn_login:
+                if (ButtonUtils.isFastDoubleClick(R.id.btn_login, 1500)) return;
                 loginApp();
                 break;
             case R.id.tv_regist:
+                if (ButtonUtils.isFastDoubleClick(R.id.tv_regist, 1500)) return;
                 startActivity(RegistActivity.class);
                 break;
             case R.id.iv_delete:
+                if (ButtonUtils.isFastDoubleClick(R.id.iv_delete, 1500)) return;
                 etPhoneNum.setText(null);
                 break;
         }
@@ -227,7 +232,7 @@ public class AccountLoginActivity extends BaseActivity {
                         LoginModel.DataBean.UserBean user = loginModel.getData().getUser();
                         SpUtils.putBoolean(getApplicationContext(), BaseContents.FIRST_LOGIN, user.isFirstLogin());
                         SpUtils.putString(getApplicationContext(), BaseContents.ACCESS_TOKEN, user.getAccessToken());
-                        SpUtils.putInt(getApplicationContext(), BaseContents.TYPE, user.getType());
+                        SpUtils.putString(getApplicationContext(), BaseContents.TYPE, String.valueOf(user.getType()));
                         SpUtils.putString(getApplicationContext(), BaseContents.USERID, String.valueOf(user.getUserId()));
                         SpUtils.putString(getApplicationContext(), BaseContents.INVITE_CODE, user.getInviteCode());
                         //TODO 登录成功，通知刷新界面

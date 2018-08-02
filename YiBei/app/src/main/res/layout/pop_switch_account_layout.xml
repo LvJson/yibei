@@ -39,37 +39,6 @@
 
         </android.support.v7.widget.RecyclerView>
 
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_demo_acc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="21px">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/simulation_account"
-                android:textColor="@color/one_text_color"
-                android:textSize="@dimen/text_size_36" />
-
-            <TextView
-                android:id="@+id/tv_explain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10px"
-                android:gravity="right"
-                android:textColor="@color/two_text_color"
-                android:textSize="@dimen/text_size_22" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="29px"
-            android:background="@color/four_text_color" />
-
         <TextView
             android:id="@+id/tv_cancel"
             android:layout_width="match_parent"

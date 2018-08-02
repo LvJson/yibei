@@ -72,6 +72,7 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
     }
 
     private void initData() {
+
         presenter.attachView(this);
         map.put("userId", userId);
         map.put("accessToken", accessToken);
@@ -111,23 +112,25 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
     public void setTradeHistoryList(OrderHistoryModel orderHistoryModel) {
         parentFragment.setRefleshEnable(false);
         List<OrderHistoryModel.DataBean.HistoryOrderBean> beanList = orderHistoryModel.getData().getHistoryOrder();
-        if (beanList == null || beanList.size() == 0) {
-            setErrorStatus(1);
-            return;
-        } else
-            setErrorStatus(2);
 
         if (beanList.size() != 0) {
             this.historyOrder.addAll(size, beanList);
             size += beanList.size();
             adapter.setData(this.historyOrder);
             xRecycler.refreshComplete();
+            xRecycler.setLoadingMoreEnabled(true);
         } else {
             xRecycler.setNoMore(true);
             xRecycler.loadMoreComplete();
+            xRecycler.setLoadingMoreEnabled(false);
             showToast(getString(R.string.loading_all));
         }
 
+        if (this.historyOrder == null || this.historyOrder.size() == 0) {
+            setErrorStatus(1);
+            return;
+        } else
+            setErrorStatus(2);
 
     }
 
@@ -148,11 +151,13 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
      * 刷新数据
      */
     public void refreshData() {
+        CustomHttpUtils.cancelHttp(className);
         getUserIdAndToken();
         if (TextUtils.isEmpty(userId)) return;
         page = 1;
         size = 0;
-        historyOrder.clear();
+        if (historyOrder.size() > 0)
+            historyOrder.clear();
         map.put("userId", userId);
         map.put("accessToken", accessToken);
         map.put("page", String.valueOf(page));
