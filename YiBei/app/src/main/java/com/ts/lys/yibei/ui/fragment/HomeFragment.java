@@ -1,12 +1,12 @@
 package com.ts.lys.yibei.ui.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +32,8 @@ import com.ts.lys.yibei.customeview.Xcircleindicator;
 import com.ts.lys.yibei.mvppresenter.HomePresenter;
 import com.ts.lys.yibei.mvpview.IHomeFragmentView;
 import com.ts.lys.yibei.ui.activity.MainActivity;
+import com.ts.lys.yibei.ui.activity.QuotationsActivity;
+import com.ts.lys.yibei.ui.activity.WebViewActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
@@ -73,6 +75,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     LinearLayout llNetNotWork;
     @Bind(R.id.ll_not_data)
     LinearLayout llNotData;
+    @Bind(R.id.ll_notice)
+    LinearLayout llNotice;
 
     private ArrayList<String> bannerUrl = new ArrayList<>();
     private HotForeignAdapter hotForeignAdapter;//热门外汇
@@ -170,9 +174,17 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
                 RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                 if (manager instanceof LinearLayoutManager) {
                     int findFirstVisibleItemPosition = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
+                    int lastVisibleItemPosition = ((LinearLayoutManager) manager).findLastVisibleItemPosition();
+                    int itemCount = recyclerView.getAdapter().getItemCount();
+                    Log.e("firstPosition", findFirstVisibleItemPosition + "  itemCount: " + itemCount + "  lastVisibleItemPosition: " + lastVisibleItemPosition);
+
                     if (findFirstVisibleItemPosition != positionTag) {
-                        Log.e("firstPosition", findFirstVisibleItemPosition + "");
-                        xcircleIndicator.setCurrentPage(findFirstVisibleItemPosition);
+                        if (findFirstVisibleItemPosition == 0)
+                            xcircleIndicator.setCurrentPage(0);
+                        else if (lastVisibleItemPosition == itemCount - 1)
+                            xcircleIndicator.setCurrentPage(2);
+                        else
+                            xcircleIndicator.setCurrentPage(1);
                         positionTag = findFirstVisibleItemPosition;
                     }
                 }
@@ -210,16 +222,34 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
             }
         });
 
+        hotRecommendAdapter.setOnItemClickListenerr(new HotRecommendAdapter.OnItemClickListenerr() {
+            @Override
+            public void onItemClick(IndexBean.DataBean.NewsBean newsBean) {
+                Intent intentWeb = new Intent(getActivity(), WebViewActivity.class);
+                intentWeb.putExtra("url", newsBean.getContent());
+                startActivity(intentWeb);
+            }
+        });
+
+        hotForeignAdapter.setOnItemClickListenerr(new HotForeignAdapter.OnItemClickListenerr() {
+            @Override
+            public void onItemClick(IndexBean.DataBean.HotsBean hb) {
+                Intent intent = new Intent(getActivity(), QuotationsActivity.class);
+                intent.putExtra("symbol", hb.getSymbol());
+                intent.putExtra("symbolCn", hb.getSymbolCn());
+                intent.putExtra("digits", hb.getDigits());
+                startActivity(intent);
+            }
+        });
+
     }
 
-    @OnClick({R.id.tv_see_all, R.id.ll_notice, R.id.ll_more, R.id.tv_reload})
+    @OnClick({R.id.tv_see_all, R.id.ll_more, R.id.tv_reload})
     public void onViewClicked(View view) {
         if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.tv_see_all:
                 ((MainActivity) getActivity()).goSomeTab("订单", 2);
-                break;
-            case R.id.ll_notice:
                 break;
             case R.id.ll_more:
                 ((MainActivity) getActivity()).goSomeTab("资讯", 1);
@@ -281,7 +311,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
      * 通知
      */
     private void initNoticeView(List<IndexBean.DataBean.NoticeBean> noticeList) {
-        if (noticeList == null || noticeList.size() == 0) return;
+        if (noticeList == null || noticeList.size() == 0) {
+            llNotice.setVisibility(View.GONE);
+            return;
+        }
+        llNotice.setVisibility(View.VISIBLE);
 
         ArrayList<String> noticeDta = new ArrayList<>();
         for (IndexBean.DataBean.NoticeBean nb : noticeList) {
@@ -293,7 +327,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         switcherView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("点击了第" + switcherView.getCurrentIndex() + "条数据");
+//                showToast("点击了第" + switcherView.getCurrentIndex() + "条数据");
             }
         });
 
@@ -327,7 +361,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
      */
     public void refreshData() {
         getUserIdAndToken();
-        if (TextUtils.isEmpty(userId)) return;
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
         map.put("accessToken", accessToken);

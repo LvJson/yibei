@@ -115,7 +115,8 @@
                 <ImageView
                     android:layout_width="11px"
                     android:layout_height="19px"
-                    android:src="@mipmap/right_gray_arrow_icon" />
+                    android:src="@mipmap/right_gray_arrow_icon"
+                    android:visibility="gone" />
             </com.zhy.autolayout.AutoLinearLayout>
 
             <include layout="@layout/incloud_division_10dp_layout" />

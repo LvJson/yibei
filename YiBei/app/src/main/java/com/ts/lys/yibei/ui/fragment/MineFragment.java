@@ -24,12 +24,13 @@ import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.bean.UserAccInfoModel;
 import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.EventContents;
+import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.CustomPopWindow;
 import com.ts.lys.yibei.mvppresenter.AccInfoPresenter;
 import com.ts.lys.yibei.mvpview.IMineFragmentView;
 import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
+import com.ts.lys.yibei.ui.activity.PictureWebViewActivity;
 import com.ts.lys.yibei.ui.activity.TradeReportActivity;
-import com.ts.lys.yibei.ui.activity.WebViewActivity;
 import com.ts.lys.yibei.utils.AppUtils;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.ButtonUtils;
@@ -150,16 +151,18 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
                 if (accList != null)
                     switchAccount();
                 break;
+            case R.id.tv_open_more_acc:
             case R.id.btn_open_new_account:
                 //TODO 开设新账户
+                Intent intentWeb = new Intent(getActivity(), PictureWebViewActivity.class);
+                intentWeb.putExtra("url", UrlContents.OPEN_ACCOUNT_WEB);
+                startActivity(intentWeb);
                 break;
             case R.id.iv_head:
                 startActivity(new Intent(getActivity(), PersonInfoActivity.class));
                 break;
             case R.id.ll_data_statis:
-                Intent intent = new Intent(getActivity(), WebViewActivity.class);
-                intent.putExtra("url", "https://rili-d.jin10.com/open.php");
-                startActivity(intent);
+                //数据统计
                 break;
             case R.id.ll_trade_report:
                 startActivity(new Intent(getActivity(), TradeReportActivity.class));
@@ -173,9 +176,6 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
             case R.id.ll_about_yibei:
                 //TODO 关于易贝
 
-                break;
-            case R.id.tv_open_more_acc:
-                //TODO 开设更多新账户
                 break;
             case R.id.tv_entry_and_exit:
                 //TODO 去出入金

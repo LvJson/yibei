@@ -64,11 +64,18 @@ public class HotRecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (holder instanceof HotForeignViewholder) {
 
-            IndexBean.DataBean.NewsBean newsBean = activityBeanList.get(position);
+            final IndexBean.DataBean.NewsBean newsBean = activityBeanList.get(position);
             ((HotForeignViewholder) holder).tvContent.setText(newsBean.getTitle());
             ((HotForeignViewholder) holder).tvLabel.setText(newsBean.getLabel());
             ((HotForeignViewholder) holder).tvTime.setText(newsBean.getTime());
             Glide.with(mContext).load(newsBean.getImage()).placeholder(R.mipmap.a_test_bg).error(R.mipmap.a_test_bg).into(((HotForeignViewholder) holder).ivPic);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listenerr.onItemClick(newsBean);
+                }
+            });
         }
 
     }
@@ -98,7 +105,7 @@ public class HotRecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public interface OnItemClickListenerr {
-
+        void onItemClick(IndexBean.DataBean.NewsBean newsBean);
     }
 
     public static String millionToDate(Long million) {

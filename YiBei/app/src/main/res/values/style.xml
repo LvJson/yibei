@@ -22,6 +22,23 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="customDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:windowAnimationStyle">@style/bottom_pop_anim</item>-->
+        <!-- 自己想要的背景 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+
+    </style>
+
     <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">12dp</item>
         <item name="android:textColor">@android:color/white</item>
@@ -62,4 +79,13 @@
         <item name="android:windowAnimationStyle">@style/mypopwindow_anim_style</item>
     </style>
 
+
+    <!--设置启动主题-->
+    <style name="YiBeiApp.Theme.CustomBackground" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/loading</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

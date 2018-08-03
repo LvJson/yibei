@@ -2,6 +2,7 @@ package com.ts.lys.yibei.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -157,27 +158,58 @@ public class BaseFragmentActivity extends FragmentActivity implements BaseMvpVie
     }
 
     /**
+     * 是否继续显示加载中的dialog；
+     */
+    private boolean isGoOnShow = true;
+
+    /**
      * 展示自定义dialog
      */
     public void showCustomProgress() {
-        customProgress = CustomProgress.show(this);
-        if (customProgress != null)
-            customProgress.show();
+        isGoOnShow = true;
+        //一秒倒计时
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (isGoOnShow) {
+                    if (customProgress == null)
+                        customProgress = CustomProgress.show(BaseFragmentActivity.this);
+                    else
+                        customProgress.show();
+                }
+
+            }
+        }, 1000);
+
     }
 
     /**
      * 展示自定义dialog
      */
     @Override
-    public void showCustomProgress(boolean cancelable) {
-        if (customProgress == null)
-            customProgress = CustomProgress.show(this, cancelable);
-        else
-            customProgress.show();
+    public void showCustomProgress(final boolean cancelable) {
+        isGoOnShow = true;
+        //一秒倒计时
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (isGoOnShow) {
+                    if (customProgress == null)
+                        customProgress = CustomProgress.show(BaseFragmentActivity.this, cancelable);
+                    else
+                        customProgress.show();
+                }
+
+            }
+        }, 1000);
+
     }
 
     @Override
     public void disCustomProgress() {
+        isGoOnShow = false;
         if (customProgress != null)
             customProgress.dismiss();
     }

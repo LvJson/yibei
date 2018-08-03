@@ -197,7 +197,11 @@ public class SelfSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             } else {
                 //计算百分比
-                double percent = (model.getBid() - model.getYesterdayClosePrice()) / model.getYesterdayClosePrice() * 100;
+
+                double percent = 0;
+                if (model.getYesterdayClosePrice() != 0) {
+                    percent = (model.getBid() - model.getYesterdayClosePrice()) / model.getYesterdayClosePrice() * 100;
+                }
                 ((HotForeignViewholder) holder).tvPersent.setText(df.format(percent) + "%");
 
                 if (model.getBid() > model.getYesterdayClosePrice()) {

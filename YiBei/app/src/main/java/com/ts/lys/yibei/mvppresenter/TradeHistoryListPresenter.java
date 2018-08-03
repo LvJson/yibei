@@ -28,6 +28,7 @@ public class TradeHistoryListPresenter extends BasePresenter {
      * @param tag
      */
     public void getTradeHistoryList(Map<String, String> map, String tag) {
+
         showDialog(iPositionFragmentView);
         tradeModal.getTradeHistoryList(map, tag, new IRequestServiceListener<OrderHistoryModel>() {
             @Override

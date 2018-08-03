@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.adapter.ViewPagerAdapter;
+import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.utils.BaseUtils;
 
 import java.util.ArrayList;
@@ -45,15 +46,15 @@ public class InfomationFragment extends BaseFragment {
         tabTitles[1] = getString(R.string.infomation);
         fragmentList.clear();
 
-        FinancialCalendarFragment financialCalendarFragment = new FinancialCalendarFragment();
+        WebViewFragment financialCalendarFragment = new WebViewFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putString("url", "https://rili-d.jin10.com/open.php");
+        bundle1.putString("url", UrlContents.FINANCIAL_CALENDAR);
         financialCalendarFragment.setArguments(bundle1);
         fragmentList.add(financialCalendarFragment);
 
         WebViewFragment webViewFragment = new WebViewFragment();
         Bundle bundle2 = new Bundle();
-        bundle2.putString("url", "https://rili-d.jin10.com/open.php");
+        bundle2.putString("url", UrlContents.NEWS);
         webViewFragment.setArguments(bundle2);
         fragmentList.add(webViewFragment);
 

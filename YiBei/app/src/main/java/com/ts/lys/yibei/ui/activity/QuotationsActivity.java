@@ -23,8 +23,10 @@ import com.ts.lys.yibei.R;
 import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.bean.RealTimeBean;
 import com.ts.lys.yibei.bean.RealTimeQuoteDatas;
+import com.ts.lys.yibei.bean.SelfSymbolBean;
 import com.ts.lys.yibei.bean.SymbolInfo;
 import com.ts.lys.yibei.bean.SymbolPrice;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.constant.UrlContents;
 import com.ts.lys.yibei.customeview.KeyboardLayout;
@@ -39,7 +41,9 @@ import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.JsonAnalysisUtils;
 import com.ts.lys.yibei.utils.Logger;
+import com.ts.lys.yibei.utils.SpUtils;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -194,7 +198,12 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         symbolEN = getIntent().getStringExtra("symbol");
         symbolCN = getIntent().getStringExtra("symbolCn");
         digits = getIntent().getIntExtra("digits", 2);
-        symbolList = getIntent().getStringArrayListExtra("symbolList");
+        if (getIntent().getStringArrayListExtra("symbolList") != null)
+            symbolList = getIntent().getStringArrayListExtra("symbolList");
+        else {
+            //获取自选品种列表
+            getSelfSymbol();
+        }
 
         initFragments();
         initMagicIndicator();
@@ -228,6 +237,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
             collectionStatus = false;
             ivCollection.setImageResource(R.mipmap.kline_not_collection);
         } else {
+            if (symbolList == null) return;
             boolean isColl = false;
             for (int i = 0; i < symbolList.size(); i++) {
                 if (symbolList.get(i).equals(symbol)) {
@@ -542,6 +552,7 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
         CustomHttpUtils.cancelHttp(className + "2");
         CustomHttpUtils.cancelHttp(className + "3");
         CustomHttpUtils.cancelHttp(className + "4");
+        CustomHttpUtils.cancelHttp(className + "5");
 
         quotationPresenter.detachView();
         realTimeDataPresenter.detachView();
@@ -672,6 +683,50 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
                 disCustomProgress();
             }
         });
+
+    }
+
+    /**
+     * 获取自选产品
+     */
+    private void getSelfSymbol() {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("symbol", symbol);
+        map.put("accessToken", accessToken);
+        map.put("accType", SpUtils.getString(this, BaseContents.TYPE));
+        CustomHttpUtils.getServiceDatas(map, UrlContents.SELF_SYMBOL, className + "5", new CustomHttpUtils.ServiceStatus() {
+            @Override
+            public void faild(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void success(String response, int id) {
+
+                new JsonAnalysisUtils<SelfSymbolBean>(SelfSymbolBean.class).jsonAnalysis(response, new JsonAnalysisUtils.JsonAnalysisListener<SelfSymbolBean>() {
+                    @Override
+                    public void success(SelfSymbolBean selfSymbolBean) {
+                        SelfSymbolBean.DataBean data = selfSymbolBean.getData();
+                        String isSub = data.getIsSub();
+                        ArrayList<String> symbols = data.getSymbols();
+                        symbolList = symbols;
+                        if (isSub.equals("true")) {
+                            collectionStatus = true;
+                            ivCollection.setImageResource(R.mipmap.kline_have_collection);
+                        } else {
+                            collectionStatus = false;
+                            ivCollection.setImageResource(R.mipmap.kline_not_collection);
+                        }
+                    }
+
+                    @Override
+                    public void fail(String str) {
+
+                    }
+                });
+            }
+        });
+
 
     }
 }

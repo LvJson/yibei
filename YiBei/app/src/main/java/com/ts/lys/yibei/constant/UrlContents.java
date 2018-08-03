@@ -10,13 +10,18 @@ public class UrlContents {
      * 测试环境
      */
 
-    public static final String URLHEAD = "http://115.236.88.130:4417/api";
-
+    public static final String URLHEAD = "http://118.31.47.128:9101/api";
 
     /**
      * 测试环境：实时数据
      */
-    public static final String SOCKETIO_URL = "http://115.236.88.130:7489";
+    public static final String SOCKETIO_URL = "http://118.31.47.128:8897";
+
+    /**
+     * H5测试环境
+     */
+
+    public static final String HFIVE_URL = "http://192.168.50.34:3101";
 
 /********************************************************************************************************/
 
@@ -135,9 +140,26 @@ public class UrlContents {
      */
     public static final String INDEX_URL = URLHEAD + "/new/index";
     /**
+     * 自选品种列表
+     */
+    public static final String SELF_SYMBOL = URLHEAD + "/symbol/isSub";
+    /**
      * 账户列表
      */
     public static final String BROKER_CHECK_LIST = URLHEAD + "/broker/check/list";
 
+    /**************************************************  H5页面  **********************************************************/
+    /**
+     * mt4服务器绑定
+     */
+    public static final String OPEN_ACCOUNT_WEB = HFIVE_URL + "/bind?clickSource=android";
+    /**
+     * 财经日历
+     */
+    public static final String FINANCIAL_CALENDAR = HFIVE_URL + "/index";
+    /**
+     * 新闻资讯
+     */
+    public static final String NEWS = HFIVE_URL + "/news";
 
 }

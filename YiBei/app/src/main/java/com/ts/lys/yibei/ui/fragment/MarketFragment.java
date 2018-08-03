@@ -11,6 +11,7 @@ import com.ts.lys.yibei.adapter.ViewPagerAdapter;
 import com.ts.lys.yibei.bean.EventBean;
 import com.ts.lys.yibei.bean.GetQuotesModel;
 import com.ts.lys.yibei.bean.RealTimeBean;
+import com.ts.lys.yibei.constant.BaseContents;
 import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.mvppresenter.AllSymbolPresenter;
 import com.ts.lys.yibei.mvpview.IMarketFragmentView;
@@ -229,18 +230,21 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
             map.put("accessToken", accessToken);
             map.put("userId", userId);
             allSymbolPresenter.getCollectionSymbol(map, className + "1");
-        } else if (tagOne.equals(EventContents.NET_NOT_ERROR)) {
-            for (int i = 0; i < fragmentList.size(); i++) {
-                ((AllSymbolMarketFragment) fragmentList.get(i)).setErrorStatus(0);
-                Logger.e("NET_NOT_ERROR", "收到消息");
-            }
-        } else if (tagOne.equals(EventContents.MARKET_CLICK)) {
+        }
+//        else if (tagOne.equals(EventContents.NET_NOT_ERROR)) {
+//            for (int i = 0; i < fragmentList.size(); i++) {
+//                ((AllSymbolMarketFragment) fragmentList.get(i)).setErrorStatus(0);
+//                Logger.e("NET_NOT_ERROR", "收到消息");
+//            }
+//        }
+        else if (tagOne.equals(EventContents.MARKET_CLICK)) {
             isShowRealData = true;
 
         } else if (tagOne.equals(EventContents.MARKET_NOT_CLICK)) {
             isShowRealData = false;
         }
     }
+
 
     @Override
     public void onResume() {
@@ -287,6 +291,12 @@ public class MarketFragment extends BaseFragment implements IMarketFragmentView 
     @Override
     public void showToast(String content) {
         super.showToast(content);
+        if (content.equals(BaseContents.NET_ERROR)) {
+            for (int i = 0; i < fragmentList.size(); i++) {
+                ((AllSymbolMarketFragment) fragmentList.get(i)).setErrorStatus(0);
+                Logger.e("NET_NOT_ERROR", "收到消息");
+            }
+        }
 
     }
 }

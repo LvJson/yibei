@@ -2,19 +2,19 @@ package com.ts.lys.yibei.ui.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.just.agentweb.AgentWeb;
 import com.ts.lys.yibei.R;
-import com.ts.lys.yibei.ui.activity.WebViewActivity;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import butterknife.Bind;
@@ -37,6 +37,7 @@ public class WebViewFragment extends BaseFragment {
 
     @Override
     protected void initBaseView() {
+
         mAgentWeb = AgentWeb.with(this)//传入Activity
                 .setAgentWebParent(llHead, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))//传入AgentWeb 的父控件 ，如果父控件为 RelativeLayout ， 那么第二参数需要传入 RelativeLayout.LayoutParams
                 .useDefaultIndicator()// 使用默认进度条
@@ -44,7 +45,8 @@ public class WebViewFragment extends BaseFragment {
                 .setWebChromeClient(webChromeClient)
                 .createAgentWeb()
                 .ready()
-                .go(getArguments().getString("url"));
+                .go(addUserIdAndTokenToUrl(getArguments().getString("url")));
+
     }
 
     private WebViewClient webViewClient = new WebViewClient() {
@@ -60,14 +62,18 @@ public class WebViewFragment extends BaseFragment {
             super.onPageFinished(view, url);
         }
 
-
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("url", url);
-            startActivity(intent);
-            return true;
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return super.shouldOverrideUrlLoading(view, request);
         }
+
+        //        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            Intent intent = new Intent(getActivity(), WebViewActivity.class);
+//            intent.putExtra("url", url);
+//            startActivity(intent);
+//            return true;
+//        }
     };
 
     private WebChromeClient webChromeClient = new WebChromeClient() {
@@ -130,6 +136,31 @@ public class WebViewFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         mAgentWeb.getWebLifeCycle().onDestroy();
+        mAgentWeb.clearWebCache();
         super.onDestroyView();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * 给webview里url添加UserId和Token字段
+     *
+     * @param url 原url
+     * @return 修改之后的url
+     */
+    private String addUserIdAndTokenToUrl(String url) {
+        getUserIdAndToken();
+        if (!TextUtils.isEmpty(userId)) {
+            if (url.indexOf("?") != -1) {
+                return url + "&userId=" + userId + "&accessToken=" + accessToken;
+            } else {
+                return url + "?userId=" + userId + "&accessToken=" + accessToken;
+            }
+        } else
+            return url;
     }
 }

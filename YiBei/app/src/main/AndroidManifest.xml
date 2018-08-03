@@ -15,14 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/YiBeiApp.Theme.CustomBackground">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.QuotationsActivity"
@@ -73,6 +78,9 @@
 
         <activity
             android:name=".ui.activity.ResetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.PictureWebViewActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

@@ -63,11 +63,14 @@ public class HotForeignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         hotsBean.setStatus(1);
 
                     hotsBean.setPrice(model.getBid());
-                    double percent = (model.getBid() - hotsBean.getYesterdayPrice()) / hotsBean.getYesterdayPrice() * 100;
+                    double percent = 0;
+                    if (hotsBean.getYesterdayPrice() != 0)
+                        percent = (model.getBid() - hotsBean.getYesterdayPrice()) / hotsBean.getYesterdayPrice() * 100;
                     hotsBean.setGains(percent);
 
                     if (hotsBean.getStatus() != 0) {
                         notifyDataSetChanged();
+
                     }
                     break;
                 }
@@ -92,7 +95,7 @@ public class HotForeignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         if (holder instanceof HotForeignViewholder) {
 
-            IndexBean.DataBean.HotsBean hb = activityBeanList.get(position);
+            final IndexBean.DataBean.HotsBean hb = activityBeanList.get(position);
             ((HotForeignViewholder) holder).tvNameOne.setText(hb.getSymbolCn());
 
             if (hb.getStatus() < 0)
@@ -107,6 +110,13 @@ public class HotForeignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((HotForeignViewholder) holder).tvSpreadOne.setTextColor(mContext.getResources().getColor(R.color.rise_color));
 
             ((HotForeignViewholder) holder).tvSpreadOne.setText(BaseUtils.getDigitsData(hb.getGains(), 2) + "%");
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listenerr.onItemClick(hb);
+                }
+            });
 
 
         }
@@ -142,7 +152,7 @@ public class HotForeignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public interface OnItemClickListenerr {
-
+        void onItemClick(IndexBean.DataBean.HotsBean hb);
     }
 
     public static String millionToDate(Long million) {

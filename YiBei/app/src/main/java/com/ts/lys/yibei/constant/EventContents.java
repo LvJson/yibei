@@ -32,5 +32,7 @@ public class EventContents {
     public static final String ALL_MAIN_REFRESH = "016";//注册成功
     public static final String DROP_OUT_SUCCESS = "017";//退出成功
 
+    public static final String BIND_MT4 = "018";//绑定mt4服务器
+
 
 }

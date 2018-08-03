@@ -2,9 +2,11 @@ package com.ts.lys.yibei.ui.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.webkit.JsPromptResult;
@@ -16,8 +18,14 @@ import android.widget.LinearLayout;
 
 import com.just.agentweb.AgentWeb;
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.bean.EventBean;
+import com.ts.lys.yibei.constant.EventContents;
 import com.ts.lys.yibei.utils.AndroidInterface;
 import com.zhy.autolayout.AutoLinearLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -37,6 +45,7 @@ public class WebViewActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
+        EventBus.getDefault().register(this);
         initView();
     }
 
@@ -51,7 +60,7 @@ public class WebViewActivity extends BaseActivity {
                 .setWebChromeClient(webChromeClient)
                 .createAgentWeb()
                 .ready()
-                .go(url);
+                .go(addUserIdAndTokenToUrl(url));
         mAgentWeb.getJsInterfaceHolder().addJavaObject("android", new AndroidInterface(WebViewActivity.this));
 
     }
@@ -137,6 +146,20 @@ public class WebViewActivity extends BaseActivity {
         }
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventBean event) {
+        String tagOne = event.getTagOne();
+        if (tagOne.equals(EventContents.BIND_MT4)) {
+
+            String accType = (String) event.getResponse();
+            Intent intent = new Intent(this, BindAccountActivity.class);
+            intent.putExtra("accType", accType);
+            startActivity(intent);
+
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -161,9 +184,29 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         mAgentWeb.clearWebCache();
         mAgentWeb.getWebLifeCycle().onDestroy();
         super.onDestroy();
+
+    }
+
+
+    /**
+     * 给webview里url添加UserId和Token字段
+     *
+     * @param url 原url
+     * @return 修改之后的url
+     */
+    private String addUserIdAndTokenToUrl(String url) {
+        if (!TextUtils.isEmpty(userId)) {
+            if (url.indexOf("?") != -1) {
+                return url + "&userId=" + userId + "&accessToken=" + accessToken;
+            } else {
+                return url + "?userId=" + userId + "&accessToken=" + accessToken;
+            }
+        } else
+            return url;
 
     }
 }

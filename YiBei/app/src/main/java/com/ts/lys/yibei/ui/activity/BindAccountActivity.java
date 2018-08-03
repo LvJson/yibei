@@ -1,5 +1,6 @@
 package com.ts.lys.yibei.ui.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.ts.lys.yibei.customeview.KeyboardLayout;
 import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
 import com.ts.lys.yibei.utils.JsonAnalysisUtils;
+import com.ts.lys.yibei.utils.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -62,12 +64,13 @@ public class BindAccountActivity extends BaseActivity {
     private String loginServer;
     private String[] mItem;
 
+    private String accType;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bind_account);
         ButterKnife.bind(this);
-
         initView();
         initListener();
         initData();
@@ -75,6 +78,11 @@ public class BindAccountActivity extends BaseActivity {
 
 
     private void initView() {
+        Intent intent = getIntent();
+        String accType = intent.getStringExtra("accType");
+        if (accType != null)
+            this.accType = accType;
+        Logger.e("accType", accType + "  ..........");
         setBackButton();
         setTitle(getString(R.string.choose_boker));
         setStatusBarStatus();
@@ -151,7 +159,7 @@ public class BindAccountActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId);
         map.put("accessToken", accessToken);
-        map.put("accType", "6");//TODO  账户类型
+        map.put("accType", accType);//TODO  账户类型
 
         showCustomProgress();
         CustomHttpUtils.getServiceDatas(map, UrlContents.BROKER_LOGINSHOW, className + "2", new CustomHttpUtils.ServiceStatus() {
@@ -219,7 +227,7 @@ public class BindAccountActivity extends BaseActivity {
         map.put("userId", userId);
         map.put("accessToken", accessToken);
         map.put("password", mt4Pass);
-        map.put("accType", "6");//TODO  账户类型
+        map.put("accType", accType);//TODO  账户类型
         map.put("mt4Id", mt4Acc);
         map.put("server", loginServer);
 

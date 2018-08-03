@@ -48,9 +48,12 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
     private Handler handler = new Handler();
     private OrderFragment parentFragment;
 
+    private boolean isFirstIn = false;
+
 
     @Override
     protected int getLayoutID() {
+        isFirstIn = true;
         return R.layout.fragment_position;
     }
 
@@ -110,6 +113,7 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
 
     @Override
     public void setTradeHistoryList(OrderHistoryModel orderHistoryModel) {
+        isFirstIn = false;
         parentFragment.setRefleshEnable(false);
         List<OrderHistoryModel.DataBean.HistoryOrderBean> beanList = orderHistoryModel.getData().getHistoryOrder();
 
@@ -137,6 +141,7 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
     @Override
     public void showToast(String content) {
         super.showToast(content);
+        isFirstIn = false;
         parentFragment.setRefleshEnable(false);
         if (content.equals(BaseContents.NET_ERROR))
             setErrorStatus(0);
@@ -151,18 +156,22 @@ public class TradeHistoryFragment extends BaseFragment implements ITradeHistoryF
      * 刷新数据
      */
     public void refreshData() {
-        CustomHttpUtils.cancelHttp(className);
-        getUserIdAndToken();
-        if (TextUtils.isEmpty(userId)) return;
-        page = 1;
-        size = 0;
-        if (historyOrder.size() > 0)
-            historyOrder.clear();
-        map.put("userId", userId);
-        map.put("accessToken", accessToken);
-        map.put("page", String.valueOf(page));
-        map.put("pagesize", String.valueOf(pagesize));
-        presenter.getTradeHistoryList(map, className);
+//        CustomHttpUtils.cancelHttp(className);
+        if (!isFirstIn) {
+            getUserIdAndToken();
+            if (TextUtils.isEmpty(userId)) return;
+            page = 1;
+            size = 0;
+            if (historyOrder.size() > 0)
+                historyOrder.clear();
+            map.put("userId", userId);
+            map.put("accessToken", accessToken);
+            map.put("page", String.valueOf(page));
+            map.put("pagesize", String.valueOf(pagesize));
+            presenter.getTradeHistoryList(map, className);
+        }
+        isFirstIn = false;
+
 
     }
 
