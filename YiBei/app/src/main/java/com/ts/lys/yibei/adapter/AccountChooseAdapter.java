@@ -70,7 +70,7 @@ public class AccountChooseAdapter extends RecyclerView.Adapter<AccountChooseAdap
                 else
                     holder.tvExplain.setText(mContext.getString(R.string.maturity) + "：" + ab.getDestory());
             } else {
-                holder.ivIcon.setImageResource(R.mipmap.mmignz_icon);
+                holder.ivIcon.setImageResource(R.mipmap.simple_mmig_icon);
                 holder.tvExplain.setText(mContext.getString(R.string.account_id) + "：" + ab.getAccount());
             }
 

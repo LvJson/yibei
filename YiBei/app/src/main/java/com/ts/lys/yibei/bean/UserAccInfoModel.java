@@ -56,6 +56,15 @@ public class UserAccInfoModel extends ErrorStatus {
         private int accType;
         private double profitTrade;
         private String mt4Id;
+        private double balance;
+
+        public double getBalance() {
+            return balance;
+        }
+
+        public void setBalance(double balance) {
+            this.balance = balance;
+        }
 
         public double getTotalVolume() {
             return totalVolume;

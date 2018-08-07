@@ -34,5 +34,7 @@ public class EventContents {
 
     public static final String BIND_MT4 = "018";//绑定mt4服务器
 
+    public static final String FORCE_QUIT_APP = "019";//token过期强制退出
+
 
 }

@@ -249,7 +249,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         if (ButtonUtils.isFastDoubleClick(view.getId(), 1500)) return;
         switch (view.getId()) {
             case R.id.tv_see_all:
-                ((MainActivity) getActivity()).goSomeTab("订单", 2);
+                ((MainActivity) getActivity()).goSomeTab("行情", 0);
                 break;
             case R.id.ll_more:
                 ((MainActivity) getActivity()).goSomeTab("资讯", 1);

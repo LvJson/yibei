@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="21px">
+    android:paddingTop="39px">
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
@@ -15,10 +15,10 @@
 
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="149px"
-            android:layout_height="46px"
+            android:layout_width="154px"
+            android:layout_height="47px"
             android:scaleType="fitXY"
-            android:src="@mipmap/mmignz_icon"
+            android:src="@mipmap/simple_mmig_icon"
             app:layout_auto_basewidth="height" />
 
 

@@ -17,7 +17,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        StatusBarUtil.setTranslucent(this);
+        StatusBarUtil.setTranslucent(this, 0);
 //        final boolean isFirst = SpUtils.getBoolean(this, "firstOpen", true);
 
         if (App.tag == 0) {

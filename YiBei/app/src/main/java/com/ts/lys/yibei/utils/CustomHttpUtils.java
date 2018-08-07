@@ -83,9 +83,8 @@ public class CustomHttpUtils {
                             String code = "";
                             if (!jsonObject.get("err_code").isJsonNull())
                                 code = jsonObject.get("err_code").getAsString();
-                            if (code.equals("10002")) {
-//                                EventBus.getDefault().post(new EventBean(EventContents.TOKEN_OVERDUE, ""));
-                                return;
+                            if (code.equals("-2")) {
+                                EventBus.getDefault().post(new EventBean(EventContents.FORCE_QUIT_APP, null));
                             }
                         }
 

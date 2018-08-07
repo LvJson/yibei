@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
+import com.ts.lys.yibei.utils.BaseUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 /**
@@ -94,7 +95,7 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
                     return;
                 else
                     clickItemtag = 0;
-                if (mintimes > ONE_TIMES) {
+                if (mintimes > ONE_TIMES && !BaseUtils.equal(mintimes, ONE_TIMES)) {
                     listener.onItemClick(ZERO_TIMES);
                     return;
                 }
@@ -106,7 +107,7 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
                     return;
                 else
                     clickItemtag = 1;
-                if (mintimes > TWO_TIMES) {
+                if (mintimes > TWO_TIMES && !BaseUtils.equal(mintimes, TWO_TIMES)) {
                     listener.onItemClick(ZERO_TIMES);
                     return;
                 }
@@ -118,7 +119,7 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
                     return;
                 else
                     clickItemtag = 2;
-                if (mintimes > THREE_TIMES) {
+                if (mintimes > THREE_TIMES && !BaseUtils.equal(mintimes, THREE_TIMES)) {
                     listener.onItemClick(ZERO_TIMES);
                     return;
                 }
@@ -130,7 +131,7 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
                     return;
                 else
                     clickItemtag = 3;
-                if (mintimes > FOUR_TIMES) {
+                if (mintimes > FOUR_TIMES && !BaseUtils.equal(mintimes, FOUR_TIMES)) {
                     listener.onItemClick(ZERO_TIMES);
                     return;
                 }
@@ -170,7 +171,6 @@ public class ChooseTimesLayout extends AutoLinearLayout implements View.OnClickL
                 break;
 
         }
-
 
     }
 

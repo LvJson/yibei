@@ -156,34 +156,7 @@
             android:layout_marginTop="88px"
             android:background="@color/four_text_color" />
 
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35px"
-            app:layout_auto_basewidth="height">
-
-            <TextView
-                android:id="@+id/tv_cancle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/cancle"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/text_size_32" />
-
-            <TextView
-                android:id="@+id/tv_confirm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/confirm"
-                android:textColor="@color/main_color"
-                android:textSize="@dimen/text_size_32" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        <include layout="@layout/pop_btn_layout" />
     </com.zhy.autolayout.AutoLinearLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>

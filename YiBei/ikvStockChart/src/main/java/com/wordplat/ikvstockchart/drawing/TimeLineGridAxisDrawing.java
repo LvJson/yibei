@@ -201,15 +201,15 @@ public class TimeLineGridAxisDrawing implements IDrawing {
 
             } else if (tag == 0) {
                 if (i == 0) {
-                    xLabal = "00:00";//++++++++++
+                    xLabal = "08:00";//++++++++++
                 } else if (i == 1) {
-                    xLabal = "06:00";//++++++++++
+                    xLabal = "14:00";//++++++++++
                 } else if (i == 2) {
-                    xLabal = "12:00";//++++++++++
+                    xLabal = "20:00";//++++++++++
                 } else if (i == 3) {
-                    xLabal = "18:00";//++++++++++
+                    xLabal = "02:00";//++++++++++
                 } else if (i == 4) {
-                    xLabal = "24:00";//++++++++++
+                    xLabal = "08:00";//++++++++++
                 }
 
             }

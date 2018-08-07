@@ -1,9 +1,11 @@
 package com.ts.lys.yibei.ui.fragment;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ts.lys.yibei.R;
@@ -25,6 +27,7 @@ import com.ts.lys.yibei.ui.activity.QuotationsActivity;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.CalMarginAndProfitUtil;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
+import com.ts.lys.yibei.utils.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,6 +48,8 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
     AddDeleteView addDeleteView;
     @Bind(R.id.choose_times_layout)
     ChooseTimesLayout chooseTimesLayout;
+    @Bind(R.id.iv_acc_icon)
+    ImageView ivAccIcon;
 
 
     QuotationsActivity parentActivity;
@@ -85,6 +90,11 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
     }
 
     private void initView() {
+
+        if (TextUtils.isEmpty(userId))
+            ivAccIcon.setImageResource(R.mipmap.demo_icon);
+        else
+            ivAccIcon.setImageResource(R.mipmap.simple_mmig_icon);
         tradePresenter.attachView(this);
         parentActivity = (QuotationsActivity) getActivity();
         addDeleteView.setScrollView(parentActivity.scrollView, parentActivity.llScrollContent, 0);
@@ -198,6 +208,7 @@ public class SimpleTradeFragment extends BaseFragment implements ITradeOrPending
             addDeleteView.setLimit(sb.getMinVolume(), 10000, 2);//TODO 第二个参数待定
 
         addDeleteView.setnumber(sb.getMinVolume());
+        Logger.e("MinVolume", sb.getMinVolume() + "");
         chooseTimesLayout.setBaseTimes(sb.getMinVolume());
     }
 

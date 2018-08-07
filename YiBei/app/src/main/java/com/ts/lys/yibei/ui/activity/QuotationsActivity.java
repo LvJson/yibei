@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -432,6 +433,10 @@ public class QuotationsActivity extends BaseFragmentActivity implements IQuotati
 
     @OnClick({R.id.tv_buy_in, R.id.tv_sell_out, R.id.btn_buy_or_sell, R.id.iv_collection})
     public void onViewClicked(View view) {
+        if (TextUtils.isEmpty(userId)) {
+            showToast(getString(R.string.login_first));
+            return;
+        }
         switch (view.getId()) {
             case R.id.tv_buy_in:
                 if (!ButtonUtils.isFastDoubleClick(R.id.tv_buy_in, 1500)) {

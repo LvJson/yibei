@@ -15,9 +15,10 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iv_acc_icon"
             android:layout_width="154px"
             android:layout_height="47px"
-            android:src="@mipmap/simple_mmig_icon"
+            android:src="@mipmap/demo_icon"
             app:layout_auto_basewidth="height" />
 
         <TextView

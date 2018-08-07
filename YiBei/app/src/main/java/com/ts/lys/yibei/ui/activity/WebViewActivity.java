@@ -201,9 +201,9 @@ public class WebViewActivity extends BaseActivity {
     private String addUserIdAndTokenToUrl(String url) {
         if (!TextUtils.isEmpty(userId)) {
             if (url.indexOf("?") != -1) {
-                return url + "&userId=" + userId + "&accessToken=" + accessToken;
+                return url + "&userId=" + userId + "&accessToken=" + accessToken + "&clickSource=android";
             } else {
-                return url + "?userId=" + userId + "&accessToken=" + accessToken;
+                return url + "?userId=" + userId + "&accessToken=" + accessToken + "&clickSource=android";
             }
         } else
             return url;

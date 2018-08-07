@@ -44,6 +44,16 @@ public class CloseAllActivity {
         }
     }
 
+    // 退出栈中除了MainActivity的所有Activity
+    public void clearAllApartFromMainActivity() {
+        while (!mActivityStack.isEmpty()) {
+            Activity activity = mActivityStack.pop();
+            if (activity != null && !(activity instanceof MainActivity)) {
+                activity.finish();
+            }
+        }
+    }
+
     public Activity getFirstActivity() {
         if (mActivityStack.size() > 0)
             return mActivityStack.get(mActivityStack.size() - 1);

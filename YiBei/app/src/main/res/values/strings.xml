@@ -228,4 +228,6 @@
     <string name="order_pending_details_closetype_3">卖出限价</string>
     <string name="order_pending_details_closetype_4">买入止损</string>
     <string name="order_pending_details_closetype_5">卖出止损</string>
+
+    <string name="login_first">请先登录</string>
 </resources>

@@ -196,15 +196,14 @@
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="114px"
             android:layout_marginRight="7px"
-            android:layout_marginTop="25px"
             app:layout_auto_basewidth="height">
 
             <TextView
                 android:id="@+id/tv_cancle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/konw_it"
@@ -214,7 +213,7 @@
             <TextView
                 android:id="@+id/tv_see_order"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/view_order_record"

@@ -622,4 +622,18 @@ public class BaseUtils {
         return content.matches(regex);
 
     }
+
+    /**
+     * float或者double类型比较是否相等
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static boolean equal(double a, double b) {
+        if ((a - b > -0.000001) && (a - b) < 0.000001)
+            return true;
+        else
+            return false;
+    }
 }

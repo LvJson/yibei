@@ -9,6 +9,7 @@ public class UrlContents {
     /**
      * 测试环境
      */
+//    public static final String URLHEAD = "http://118.31.47.128:9101/api";
 
     public static final String URLHEAD = "http://118.31.47.128:9101/api";
 
@@ -21,7 +22,7 @@ public class UrlContents {
      * H5测试环境
      */
 
-    public static final String HFIVE_URL = "http://192.168.50.34:3101";
+    public static final String HFIVE_URL = "http://47.100.210.200:3101";
 
 /********************************************************************************************************/
 
@@ -152,14 +153,30 @@ public class UrlContents {
     /**
      * mt4服务器绑定
      */
-    public static final String OPEN_ACCOUNT_WEB = HFIVE_URL + "/bind?clickSource=android";
+    public static final String OPEN_ACCOUNT_WEB = HFIVE_URL + "/bind";
     /**
      * 财经日历
      */
-    public static final String FINANCIAL_CALENDAR = HFIVE_URL + "/index";
+    public static final String FINANCIAL_CALENDAR = HFIVE_URL + "/";
     /**
      * 新闻资讯
      */
     public static final String NEWS = HFIVE_URL + "/news";
+    /**
+     * 帮助中心
+     */
+    public static final String HELP_CENTER = HFIVE_URL + "/help";
+    /**
+     * 关于易贝
+     */
+    public static final String ABOUT_YIBEI = HFIVE_URL + "/about";
+    /**
+     * 入金
+     */
+    public static final String RECHARGE = HFIVE_URL + "/inpage";
+    /**
+     * 注册协议
+     */
+    public static final String REGISTER_AGREE = HFIVE_URL + "/register-agreen";
 
 }

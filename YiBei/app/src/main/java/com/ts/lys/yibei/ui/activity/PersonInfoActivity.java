@@ -87,7 +87,7 @@ public class PersonInfoActivity extends TakePhotoActivity {
                 getResources().getIdentifier("BottomDialog", "style", getPackageName()));
         photoDialog.getWindow().setGravity(Gravity.BOTTOM | Gravity.LEFT | Gravity.RIGHT);
 
-        String phone = SpUtils.getString(this, BaseContents.PHONE_NUMBER);
+        String phone = getIntent().getStringExtra("phone");
         if (!TextUtils.isEmpty(phone)) {
             int index = phone.indexOf(")");
             if (index == -1)

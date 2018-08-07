@@ -129,7 +129,7 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
     public void changeAcc() {
         String accType = SpUtils.getString(this, BaseContents.TYPE, "");
         if (TextUtils.isEmpty(accType) || accType.equals("0"))
-            SpUtils.putString(this, BaseContents.TYPE, "4");
+            SpUtils.putString(this, BaseContents.TYPE, "6");
         Logger.e("acctype", SpUtils.getString(this, BaseContents.TYPE));
         socket.emit("quote", SpUtils.getString(this, BaseContents.TYPE));
     }
@@ -257,26 +257,41 @@ public class MainActivity extends BaseFragmentActivity implements TabHost.OnTabC
                 }
             }, 300);
         } else if (event.getTagOne().equals(EventContents.ALL_MAIN_REFRESH)) {
-            changeAcc();
-            initBaseData();
-            //一级界界面全局刷新
-            HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[0]);
-            MarketFragment marketFragment = (MarketFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[1]);
-            OrderFragment orderFragment = (OrderFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[3]);
-            MineFragment mineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[4]);
-
-            if (homeFragment != null)
-                homeFragment.refreshData();
-            if (marketFragment != null)
-                marketFragment.refreshData();
-            if (orderFragment != null)
-                orderFragment.setCurrentPosition(0);
-            if (mineFragment != null)
-                mineFragment.refreshData();
+            refreshAllData();
         } else if (event.getTagOne().equals(EventContents.DROP_OUT_SUCCESS)) {
             isQuitApp = true;
+        } else if (event.getTagOne().equals(EventContents.FORCE_QUIT_APP)) {
+
+            SpUtils.cleanSP(this);
+            CloseAllActivity.getScreenManager().clearAllApartFromMainActivity();
+            goSomeTab(mTextviewArray[0], 0);
+            refreshAllData();
+            startActivity(AccountLoginActivity.class);
+
 
         }
+    }
+
+    /**
+     * 刷新所有一级界面数据
+     */
+    private void refreshAllData() {
+        changeAcc();
+        initBaseData();
+        //一级界界面全局刷新
+        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[0]);
+        MarketFragment marketFragment = (MarketFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[1]);
+        OrderFragment orderFragment = (OrderFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[3]);
+        MineFragment mineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[4]);
+
+        if (homeFragment != null)
+            homeFragment.refreshData();
+        if (marketFragment != null)
+            marketFragment.refreshData();
+        if (orderFragment != null)
+            orderFragment.setCurrentPosition(0);
+        if (mineFragment != null)
+            mineFragment.refreshData();
     }
 
 

@@ -1,13 +1,17 @@
 package com.ts.lys.yibei.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,6 +79,11 @@ public class RegistActivity extends BaseActivity {
      * 电话号码
      */
     private String phoneNum;
+
+    /**
+     * 手机号码归属地
+     */
+    private int phoneFrom = 0;
     /**
      * 密码
      */
@@ -134,7 +143,11 @@ public class RegistActivity extends BaseActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 code = codeStr[position];
                 tvCode.setText(code);
-
+                phoneFrom = position;
+                if (position == 0)
+                    etPhoneNum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+                else
+                    etPhoneNum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
             }
 
             @Override
@@ -285,9 +298,13 @@ public class RegistActivity extends BaseActivity {
                 etPhoneNum.setText(null);
                 break;
             case R.id.tv_agree:
-                //TODO 注册协议
+                // 注册协议
+                Intent intentAgree = new Intent(this, WebViewActivity.class);
+                intentAgree.putExtra("url", UrlContents.REGISTER_AGREE);
+                startActivity(intentAgree);
                 break;
             case R.id.btn_next:
+                hideSoftWindow(view);
                 if (verifyText())
                     regist();
                 break;
@@ -301,7 +318,9 @@ public class RegistActivity extends BaseActivity {
 
         boolean isRightMail = BaseUtils.matchString(mailAddre, emailRegex);
         boolean isRightPassworld = BaseUtils.matchString(password, passRegex);
-        if (isRightMail && isRightPassworld) {
+        boolean isRightPhoneNum = verifyPhone(phoneFrom, phoneNum);
+
+        if (isRightMail && isRightPassworld && isRightPhoneNum) {
             return true;
         } else {
 
@@ -309,9 +328,47 @@ public class RegistActivity extends BaseActivity {
                 tvMailError.setVisibility(View.VISIBLE);
             if (!isRightPassworld)
                 tvPasswordRrror.setVisibility(View.VISIBLE);
+            if (!isRightPhoneNum)
+                tvPhoneError.setVisibility(View.VISIBLE);
             return false;
         }
 
+    }
+
+    /**
+     * 校验手机号
+     *
+     * @param tag
+     * @param phoneNum
+     * @return
+     */
+    private boolean verifyPhone(int tag, String phoneNum) {
+
+        if (tag == 0) {//中国大陆
+
+            if (phoneNum.length() == 11)
+                return true;
+            else
+                return false;
+
+        } else {//香港
+
+            if (phoneNum.length() == 8)
+                return true;
+            else
+                return false;
+        }
+    }
+
+    /**
+     * 隐藏软键盘
+     *
+     * @param view
+     */
+    private void hideSoftWindow(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        imm.showSoftInputFromInputMethod(view.getWindowToken(), 1);
     }
 
 

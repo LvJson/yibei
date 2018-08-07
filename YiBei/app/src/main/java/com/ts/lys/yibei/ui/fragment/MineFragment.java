@@ -31,7 +31,8 @@ import com.ts.lys.yibei.mvpview.IMineFragmentView;
 import com.ts.lys.yibei.ui.activity.PersonInfoActivity;
 import com.ts.lys.yibei.ui.activity.PictureWebViewActivity;
 import com.ts.lys.yibei.ui.activity.TradeReportActivity;
-import com.ts.lys.yibei.utils.AppUtils;
+import com.ts.lys.yibei.ui.activity.WebViewActivity;
+import com.ts.lys.yibei.utils.Arith;
 import com.ts.lys.yibei.utils.BaseUtils;
 import com.ts.lys.yibei.utils.ButtonUtils;
 import com.ts.lys.yibei.utils.CustomHttpUtils;
@@ -159,7 +160,10 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
                 startActivity(intentWeb);
                 break;
             case R.id.iv_head:
-                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
+                if (accountInfo == null) return;
+                Intent intentHead = new Intent(getActivity(), PersonInfoActivity.class);
+                intentHead.putExtra("phone", accountInfo.getTelephone());
+                startActivity(intentHead);
                 break;
             case R.id.ll_data_statis:
                 //数据统计
@@ -168,17 +172,25 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
                 startActivity(new Intent(getActivity(), TradeReportActivity.class));
                 break;
             case R.id.ll_help_center:
-                //TODO 帮助中心
+                // 帮助中心
+                Intent intentHelp = new Intent(getActivity(), WebViewActivity.class);
+                intentHelp.putExtra("url", UrlContents.HELP_CENTER);
+                startActivity(intentHelp);
                 break;
             case R.id.ll_feedback:
                 //TODO 意见反馈
                 break;
             case R.id.ll_about_yibei:
-                //TODO 关于易贝
-
+                // 关于易贝
+                Intent intentYibei = new Intent(getActivity(), WebViewActivity.class);
+                intentYibei.putExtra("url", UrlContents.ABOUT_YIBEI);
+                startActivity(intentYibei);
                 break;
             case R.id.tv_entry_and_exit:
-                //TODO 去出入金
+                // 去出入金
+                Intent intentEE = new Intent(getActivity(), WebViewActivity.class);
+                intentEE.putExtra("url", UrlContents.RECHARGE);
+                startActivity(intentEE);
                 break;
         }
     }
@@ -273,7 +285,13 @@ public class MineFragment extends BaseFragment implements IMineFragmentView {
             }
 
             tvAccountEquity.setText(BaseUtils.dealSymbol(accountInfo.getEquity()));
-            tvProfitRate.setText(AppUtils.getDigitsData(accountInfo.getYieldRate(), 2) + "%");
+            tvAssetBalance.setText(BaseUtils.dealSymbol(accountInfo.getBalance()));
+            String profitrate;
+            if (accountInfo.getTotalCount() == 0)
+                profitrate = "0.00";
+            else
+                profitrate = Arith.add2(accountInfo.getProfitTrade(), accountInfo.getTotalCount(), 2);
+            tvProfitRate.setText(profitrate + "%");
             tvBi.setText(String.valueOf(accountInfo.getTotalCount()));
             tvLots.setText(BaseUtils.getDigitsData(accountInfo.getTotalVolume(), 2));
             tvCumulativeIncome.setText(BaseUtils.dealSymbol(accountInfo.getProfitCount()));
